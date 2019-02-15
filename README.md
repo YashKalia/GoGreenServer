@@ -52,10 +52,12 @@ I am confident that my teammates will contribute to my goal by helping me unders
 **Step 3**: Organise the first Sprint and create the Scrum Board<br>
 **Step 4**: Hold a Sprint Review
 
+
 ## Amy Setropawiro
 
-**Name**: Amy Setropawiro 
-![amy] (https://imgur.com/a/tyNFf8i)
+**Name**: Amy Setropawiro
+
+![amy](https://imgur.com/a/tyNFf8i)
 
 -What are two of your strong points?
 I have a positive attitude and i’m persistent
@@ -77,7 +79,8 @@ Sometimes work can be done right that moment, but I have a tendency to procrasti
 I hope these points won’t be showing within my team. But if I really have to write an example down, it would be that my procrastination could be showing up in the team by waiting till last minute to finish stuff or whenever people talk about their ideas i could be really quiet.
 
 - Can you make a core quadrant of this?
-! [Amy's core quadrant] (https://imgur.com/a/VLNrtWN)
+
+![Amy's core quadrant](https://imgur.com/a/VLNrtWN)
 
 
 G - Goal
