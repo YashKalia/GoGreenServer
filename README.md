@@ -94,7 +94,7 @@ Whenever  i finish and pass this course, together with my team, with success.
 
 R�- Reality (Your current situation)
 - Are you actively working on your goal?
-At this moment we just started, so no, i�m not actively working yet on my goal.
+At this moment we just started, so no, I�m not actively working yet on my goal.
 
 - What is going well?
 We got to know each other at the first day and I think working together on this project will be a pleasurable experience.
@@ -128,9 +128,9 @@ By being patient and offering me a helping hand whenever i get stuck with someth
 - Can you make an action plan with concrete steps to help you achieve your goal?
 Yes, i can start by 1. Listening to others and their ideas 2. Actively programming at least 8 hours per week 3. Going to all the OOP project lectures.
 
-![Calin](https://i.imgur.com/gxzFf65.jpg)
-
 ## Calin
+
+![Calin](https://i.imgur.com/gxzFf65.jpg)
 
 **Personal Development plan**
 Strong points: structured workflow and communication skills. These features are relevant as the structure of the code is crucial for its quality and communicating with one’s team members can greatly enhance efficiency.
@@ -145,3 +145,21 @@ I am currently working towards my plan although in the limited capacity in the b
 The main option of achieving my goal is to be open and communicative with my teammates to make sure that we are all working towards a goal that we understand and agree with, channeling our work productively and avoiding arguments.
 
 To reach my goal, I am going to ask both my teammates and our coordinator for feedback as necessary in order to better understand not only their perception and expectations, but also the places where my approach could be improved to fit the situation.
+
+## Dorka
+
+![Dorka](https://scontent-amt2-1.xx.fbcdn.net/v/t1.0-9/38758780_1844053422307552_8222330935295606784_n.jpg?_nc_cat=104&_nc_ht=scontent-amt2-1.xx&oh=a7ebf3a3bfc90386d530ad85d6dda8c7&oe=5CE53C82)
+
+**Name**: Dorottya Anna Hevizi
+
+**Personal Developement Plan and Goals**
+
+Step 1: Develop a goal
+Strength: I am good at resolving conflicts between people. I listen to both sides of the story and try to come up with compromises and solutions that are most beneficial to all parties.
+Weaknesses: I procrastinate, because of fear of not being able to complete my part of the work, I have a hard time breaking up a huge task into smaller goals and thus easily get overwhelmed by the workload.
+
+Step 2: Create plan to achieve your goal
+My goal is to learn how an actual project is completed and to experience working in and with a team. It is important to me, because I am really anxious and worried about my future, specifically how I will function in a  work environment. I believe if this project is a success it will lessen my fears about my future, and maybe even boost my confidence in my own abilities.
+I am trying to complete everything and take active part in the project, I hope my motivation, dedication and work ethic will improve and I can learn self-discipline and other useful traits from my teammates.
+
+
