@@ -60,29 +60,29 @@ I am confident that my teammates will contribute to my goal by helping me unders
 ![amy](https://i.imgur.com/0DmsnKn.jpg)
 
 -What are two of your strong points?
-I have a positive attitude and i’m persistent
+I have a positive attitude and iï¿½m persistent
 
 -Do you have examples of this?
-I can be very persistent in getting what i want or where i want to be. So i don’t easily quit something. An example would be studying for the courses within this study, without some persistency you won’t make it.
-The same goes for a positive attitude. Sometimes a lot goes wrong or not  everything goes the way i planned it on the first try, that’s why a positive attitude is a necessary characteristic
+I can be very persistent in getting what i want or where i want to be. So i donï¿½t easily quit something. An example would be studying for the courses within this study, without some persistency you wonï¿½t make it.
+The same goes for a positive attitude. Sometimes a lot goes wrong or not  everything goes the way i planned it on the first try, thatï¿½s why a positive attitude is a necessary characteristic
 
 - How is this point shown in a team?
-It can be very helpful to have a positive attitude within a team, because this can help to motivate others when they aren’t feeling so positive. It’s also a good point, because in a team you have to adapt yourself sometimes and in this whole process a positive attitude is a plus.
+It can be very helpful to have a positive attitude within a team, because this can help to motivate others when they arenï¿½t feeling so positive. Itï¿½s also a good point, because in a team you have to adapt yourself sometimes and in this whole process a positive attitude is a plus.
 
 - What are two of your weaker points?
 I have a love for procrastination and can be introvert
 
 - Do you have examples of this?
-Sometimes work can be done right that moment, but I have a tendency to procrastinate till the last minute. I think being introvert speaks for itself. I think a lot, but don’t always express it.
+Sometimes work can be done right that moment, but I have a tendency to procrastinate till the last minute. I think being introvert speaks for itself. I think a lot, but donï¿½t always express it.
 
 - How is this point shown in a team?
-I hope these points won’t be showing within my team. But if I really have to write an example down, it would be that my procrastination could be showing up in the team by waiting till last minute to finish stuff or whenever people talk about their ideas i could be really quiet.
+I hope these points wonï¿½t be showing within my team. But if I really have to write an example down, it would be that my procrastination could be showing up in the team by waiting till last minute to finish stuff or whenever people talk about their ideas i could be really quiet.
 
-- Can you make a core quadrant of this?
+- Can you make aï¿½core quadrantï¿½of this?
 
 ![Amy's core quadrant](https://i.imgur.com/3El5g7h.png)
 
-G - Goal
+Gï¿½- Goal
 - What is your learning goal during this course?
 Gaining more programming experience but also learning how to work together on a big project with different people, who have different ideas.
 
@@ -92,9 +92,9 @@ Because gaining programming experience and learning how to work together on a bi
 - When will you have succeeded in achieving this goal?
 Whenever  i finish and pass this course, together with my team, with success.
 
-R - Reality (Your current situation)
+Rï¿½- Reality (Your current situation)
 - Are you actively working on your goal?
-At this moment we just started, so no, i’m not actively working yet on my goal.
+At this moment we just started, so no, iï¿½m not actively working yet on my goal.
 
 - What is going well?
 We got to know each other at the first day and I think working together on this project will be a pleasurable experience.
@@ -102,7 +102,7 @@ We got to know each other at the first day and I think working together on this 
 - What can use improvement?
 I think that my programming skills could use a LOT of improvement and maybe tips from my teammates.
 
-O - Options (Look at possible options)
+Oï¿½- Options (Look at possible options)
 - What are options you have to achieve your goal?
 Being more open to correction and advice from people around me and actively work on my programming skills and teamwork
 
@@ -110,11 +110,11 @@ Being more open to correction and advice from people around me and actively work
 The 1st option : being more open to correction and advice.
 
 - What is stopping you reaching your goal?
-My stubbornness, whenever i want to do something a certain way, it’s hard for me to listen to someone else and take their advice.
+My stubbornness, whenever i want to do something a certain way, itï¿½s hard for me to listen to someone else and take their advice.
 
-W - Will (Motivation, plan of action)
+Wï¿½- Will (Motivation, plan of action)
 - What are you going to do to reach your goal?
-I’m going to try to be really active within this team with an open mind.
+Iï¿½m going to try to be really active within this team with an open mind.
 
 - When are you going to do this?
 Right away, from the start of this course.
@@ -127,3 +127,21 @@ By being patient and offering me a helping hand whenever i get stuck with someth
 
 - Can you make an action plan with concrete steps to help you achieve your goal?
 Yes, i can start by 1. Listening to others and their ideas 2. Actively programming at least 8 hours per week 3. Going to all the OOP project lectures.
+
+![Calin](https://i.imgur.com/gxzFf65.jpg)
+
+## Calin
+
+**Personal Development plan**
+Strong points: structured workflow and communication skills. These features are relevant as the structure of the code is crucial for its quality and communicating with oneâ€™s team members can greatly enhance efficiency.
+Weak points: difficulty in coordinating with teammates and visualizing ideas. These are relevant as I have to improve splitting tasks with other people and the visualization of their ideas is important not only for the graphical interface the project requires, but also for the concepts that lay underneath it.
+
+**Goal**
+
+Efficiently working as part of a team and maximizing the extent of my knowledge to benefit all members. This is important because itâ€™s the foundation of a good team effort. Iâ€™ll hopefully succeed withing the span of the project.
+
+I am currently working towards my plan although in the limited capacity in the beginning of the project, as there is more conceptual work to be done rather than practical, both of which could be improved upon.
+
+The main option of achieving my goal is to be open and communicative with my teammates to make sure that we are all working towards a goal that we understand and agree with, channeling our work productively and avoiding arguments.
+
+To reach my goal, I am going to ask both my teammates and our coordinator for feedback as necessary in order to better understand not only their perception and expectations, but also the places where my approach could be improved to fit the situation.
