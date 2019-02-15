@@ -57,7 +57,7 @@ I am confident that my teammates will contribute to my goal by helping me unders
 
 **Name**: Amy Setropawiro
 
-![amy](https://imgur.com/a/tyNFf8i)
+![amy](https://i.imgur.com/0DmsnKn.jpg)
 
 -What are two of your strong points?
 I have a positive attitude and i’m persistent
@@ -80,8 +80,7 @@ I hope these points won’t be showing within my team. But if I really have to wri
 
 - Can you make a core quadrant of this?
 
-![Amy's core quadrant](https://imgur.com/a/VLNrtWN)
-
+![Amy's core quadrant](https://i.imgur.com/3El5g7h.png)
 
 G - Goal
 - What is your learning goal during this course?
