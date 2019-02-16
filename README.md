@@ -170,4 +170,9 @@ I am trying to complete everything and take active part in the project, I hope m
 
 **Personal Development Plan**
 
+Goal : 
+I want to learn how to work cohesively in a group and also improve my communication skills especially with a team I am not very familiar with, along with learning to code efficiently and responsibly.
+I also want to improve my time management skill. I want to improve these skills as working with a team will definitely happen for a future computer engineer so I need to perfect the skill of working with a team.
+As all work needs to be planned and completed in a timely fashion in a work environment.
+
 
