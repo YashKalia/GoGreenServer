@@ -185,5 +185,18 @@ the possible rules and regulations that will be imposed on the team members. The
 **Core Quadrant**
 
 ![Pradhyumnaa's Core Quadrant](https://imgur.com/DZQt6Cq.jpg)
+ 
+## Danila
+
+![Danila]()
+
+**Name**: Danila Romanov
+
+**Personal Development Plan**
+
+Strength: Flexible and able to adapt, so that others can do better. I'm also good at picking up new knowledge and learning how to use things.
+Weaknesses: I get overwhelmed when there is a lot of work, and work better under stress and leave things until later. This isn't very helpful in a team environment.
+
+Goal: I would like to work on my weakness, which I believe I would do by working with a plan, since our group would have one. This would let my tasks have multiple deadlines, letting me break up the work and not leave it until the end.
 
 
