@@ -170,9 +170,16 @@ I am trying to complete everything and take active part in the project, I hope m
 
 **Personal Development Plan**
 
-Goal : 
+**Strengths and Weaknesses**
+
+Strength: I am flexible in terms of my role in a team and I can adapt into any team composition, whether I am familiar with the team or not.
+Weakness: I am passive which means that I don't really like to argue when the supposed team leader gives me work that isn't really my work (Work of another person but isn't completed) so work gets piled up for me.
+
+**Goal**
+
 I want to learn how to work cohesively in a group and also improve my communication skills especially with a team I am not very familiar with, along with learning to code efficiently and responsibly.
-I also want to improve my time management skill. I want to improve these skills as working with a team will definitely happen for a future computer engineer so I need to perfect the skill of working with a team.
-As all work needs to be planned and completed in a timely fashion in a work environment.
+I also want to improve my time management skill. I want to improve these skills as working with a team will definitely happen for a future computer engineer so I need to perfect the skill of working with a team and also
+managing my time efficiently as all work needs to be planned and completed in a timely fashion in a work environment. We did start working cohesively as a group, we shared our ideas for the application features and discussed
+the possible rules and regulations that will be imposed on the team members. There's no real improvement needed so far :).
 
 
