@@ -164,7 +164,7 @@ I am trying to complete everything and take active part in the project, I hope m
 
 ## Pradhyumnaa
 
- ![Pradhyumnaa](https://imgur.com/UViDfR9) 
+ ![Pradhyumnaa](https://i.imgur.com/UViDfR9.jpg) 
 
 **Name**: Pradhyumnaa Ganapathi Subramanian
 
