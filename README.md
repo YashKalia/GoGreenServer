@@ -182,4 +182,8 @@ I also want to improve my time management skill. I want to improve these skills 
 managing my time efficiently as all work needs to be planned and completed in a timely fashion in a work environment. We did start working cohesively as a group, we shared our ideas for the application features and discussed
 the possible rules and regulations that will be imposed on the team members. There's no real improvement needed so far :).
 
+**Core Quadrant**
+
+![Pradhyumnaa's Core Quadrant](https://imgur.com/DZQt6Cq.jpg)
+
 
