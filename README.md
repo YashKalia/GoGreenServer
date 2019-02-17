@@ -186,4 +186,45 @@ the possible rules and regulations that will be imposed on the team members. The
 
 ![Pradhyumnaa's Core Quadrant](https://imgur.com/DZQt6Cq.jpg)
 
+## Yash
+
+![Yash](https://i.imgur.com/jWX4zsH.jpg)
+ 
+
+**Name**: Yash Kalia
+
+**Personal Development Plan**
+
+Strong Points:
+1.  Love to collaborate and work with others in a team.
+This point is shown when teammates agree with each other and work together in a well coordinated manner to achieve the task at hand.Even if one team member is not working well with the team it affects the performance of the entire team. Therefore its importance.
+2.  Believe that teamwork in quintessential for progress and I also have good communication skills.
+
+
+Weak Points:
+1. I sometimes tend to have a lackadaisical and laid back attitude which sharply affects my performance and my usefullnes in a team. I must learn to be more active and forward thinking.
+This point is shown when the dealines comes close and I still am finishing my work till the last few hours or when I miss my deadlines.
+2. I sometimes lag behind in my studies and therefore lose time catching up.
+
+
+Goal-
+My learning goal is to understand how software is developed at a larger scale,how to use the platforms which aid me in this for example GitHub and GitLab and how I can be a part of a team as a leader.
+As I pointed out lagging behind is one my weaknesses and by striving to become a leader I can not only stay current in my work but can also help others and direct them to do better. Also taking on the role of a leader will also help mend my lackadaisical attitude.
+
+I will consider myself succesful when I feel that at the end of the project I have done very well grade wise and as a team member as well and that I have made a significant contribution to the project. 
+
+Reality-
+Yes I am actively working to stay current and gather all the important details beforehand so I don't miss out on anything important. I am progressing swiftly and I am current with my studies. However I can improve in the area of asking and acting upon the advice given by thers and not turn a blind eye on important information.
+
+Options-
+I think the best way to achieve my goal is to be very consistent and regular and keep in mind what I need to do everyday by means of a to- do list. Everyday distractions,sometimes sway my mind and distract me and I am trying to get rid of them.The only thing stopping me from reaching my goal is having too much on my mind at one point in time and geting frustrated with my progress.
+
+Will-I'm gonna have to be willing to sacrific a few social outings and devote a lot of time to the project. Also succesfully doing the project means writing a lot of code so I will do that regularly and with discipline.The first step should be to make a list of the things that need to be done in the first couple of weeks. Convene with the teammates and decide who whill takle what so that we get as early a start as possible.
+The project would be impossible without the help of teammates as they help reduce the load on one person and also can give useful advice which they might have come across to the team thus benefitting us all.
+
+Action Plan-
+- Make a list of all the requirements the project must fulfill and then decide how we are going to tackle each and every one together(Monday meeting topic).
+- Make sure that there are plenty of tests for the project and that the work is cross checked by multiple people to spot erors or mistakes.
+
+
 
