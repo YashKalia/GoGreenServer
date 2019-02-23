@@ -17,7 +17,7 @@ public class ActionDao {
                 put(1,new Action(1,"Eating a vegan meal",10));
                 put(2,new Action(2,"Planting a tree", 20));
                 put(3,new Action(3,"Riding a bike to work",5));
-                put(4, new Action(4, "Committed Fraud", Integer.MIN_VALUE));
+                put(4,new Action(4,"Committed Fraud", Integer.MIN_VALUE));
             }
         };
     }
