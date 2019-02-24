@@ -2,11 +2,12 @@ package server;
 
 import com.server.Dao.ActionDao;
 import com.server.Entity.Action;
-import org.junit.*;
 
+import org.junit.*;
 import java.util.Collection;
 
 import static org.junit.Assert.*;
+
 
 public class ActionDaoTest {
 

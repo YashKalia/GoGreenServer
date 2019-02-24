@@ -1,21 +1,11 @@
 package server;
 
-import static org.mockito.BDDMockito.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.server.Controller.ActionController;
 import com.server.Entity.Action;
 import com.server.Service.ActionService;
+
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +16,15 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
+
+import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.BDDMockito.*;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 
 @RunWith(SpringRunner.class)
@@ -84,11 +83,13 @@ public class ActionControllerTest {
                 .willReturn(new Action(1,"Eating a vegan meal",10));
         mockMvc.perform(get("http://localhost:8080/actions/1").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string("{\"id\":1,\"name\":\"Eating a vegan meal\",\"points\":10}"));
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.name", is("Eating a vegan meal")))
+                .andExpect(jsonPath("$.points", is(10)));
     }
 
     @Test
-    public void testDeleteActionById() throws Exception {
+    public void testDeleteActionById() {
 
         actionService.deleteActionById(1);
 
@@ -114,7 +115,9 @@ public class ActionControllerTest {
                 .willReturn(new Action(1,"Installing a solar panel",10000));
         mockMvc.perform(get("http://localhost:8080/actions/1").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string("{\"id\":1,\"name\":\"Installing a solar panel\",\"points\":10000}"));
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.name", is("Installing a solar panel")))
+                .andExpect(jsonPath("$.points", is(10000)));
     }
 
     @Test
@@ -137,7 +140,9 @@ public class ActionControllerTest {
                 .willReturn(new Action(5,"Installing a solar panel",10000));
         mockMvc.perform(get("http://localhost:8080/actions/5").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string("{\"id\":5,\"name\":\"Installing a solar panel\",\"points\":10000}"));
+                .andExpect(jsonPath("$.id", is(5)))
+                .andExpect(jsonPath("$.name", is("Installing a solar panel")))
+                .andExpect(jsonPath("$.points", is(10000)));
     }
 
     @Test

@@ -1,15 +1,17 @@
 package server;
 
-import static org.junit.Assert.*;
-import java.util.Collection;
-
 import com.server.Entity.Action;
 import com.server.Service.ActionService;
+
+import java.util.Collection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.junit.Assert.*;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes={com.server.Service.ActionService.class, com.server.Dao.ActionDao.class})
@@ -19,7 +21,7 @@ public class ActionServiceTest {
     private ActionService actionService;
 
     @Test
-    public void getActionByIdTestTrue() {
+    public void testGetActionById() {
 
         Action action2 = actionService.getActionById(2);
 
@@ -27,7 +29,7 @@ public class ActionServiceTest {
     }
 
     @Test
-    public void getActionByIdTestException() {
+    public void testGetActionByIdException() {
 
         assertThrows(IllegalArgumentException.class, () -> {
 
@@ -37,7 +39,7 @@ public class ActionServiceTest {
     }
 
     @Test
-    public void getAllActionsTest() {
+    public void testGetAllActions() {
 
         Collection<Action> actions = actionService.getAllActions();
 
@@ -45,7 +47,7 @@ public class ActionServiceTest {
     }
 
     @Test
-    public void deleteActionByIdTest() {
+    public void testDeleteActionById() {
 
         actionService.deleteActionById(1);
 
@@ -59,7 +61,7 @@ public class ActionServiceTest {
     }
 
     @Test
-    public void insertActionTest() {
+    public void testInsertAction() {
 
         Action action = new Action(5,"Installing a solar panel",10000);
         actionService.insertAction(action);
@@ -73,7 +75,7 @@ public class ActionServiceTest {
     }
 
     @Test
-    public void updateActionTest() {
+    public void testUpdateAction() {
 
         Action action = new Action(1,"Installing a solar panel",10000);
         actionService.updateAction(action);
