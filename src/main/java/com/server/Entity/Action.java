@@ -11,7 +11,7 @@ public class Action {
         this.points = points;
     }
 
-    public Action(){};
+    public Action(){}
 
     public int getId() {
         return id;
@@ -36,4 +36,26 @@ public class Action {
     public void setPoints(int points) {
         this.points = points;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Action)) {
+            return false;
+        }
+        Action other = (Action) obj;
+        if (id != other.id) {
+            return false;
+        }
+        if (!name.equals(other.name)) {
+            return false;
+        }
+        if (points != other.points) {
+            return false;
+        }
+        return true;
+    }
+
 }

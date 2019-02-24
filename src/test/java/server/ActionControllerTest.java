@@ -1,18 +1,9 @@
 package server;
 
-import org.junit.*;
-import org.junit.runner.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.boot.test.autoconfigure.web.servlet.*;
-import org.springframework.boot.test.mock.mockito.*;
-
-import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -55,7 +46,7 @@ public class ActionControllerTest {
     private List<Action> actions;
 
     @Before
-    public void setup() throws Exception {
+    public void setup() {
 
         this.mockMvc = standaloneSetup(this.actionController).build();
 
