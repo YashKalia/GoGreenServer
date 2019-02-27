@@ -1,9 +1,17 @@
 package com.client;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import org.apache.commons.io.IOUtils;
+import org.json.JSONObject;
+
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
+
 public class Client {
     public static void main(String[] args) {
         try {
@@ -15,22 +23,80 @@ public class Client {
 
     public static void call_me() throws Exception {
         Scanner sc = new Scanner(System.in);
+        /*
+        Explanation of how stuff works right now:
+        it's an infinite loop in which you can select actions to do various http requests
+        1=get all
+        2=post something (hardcoded right now)
+        3=put something WIP
+        4= delete something
+        5=exit WIP
+        Still working on consistency throughout
+        I'm aware of the org.json.josnexception, more research needed.
+         */
         while(true) {
-            System.out.println("Enter the url to retrieve the information on the server or 'default'\nType exit to terminate");
-            String line = sc.nextLine();
-            String url;
-            if (line.equals("default"))
-                url = "http://localhost:8080/actions";
-            else if(line.equals("exit")) break;
-            else url = line;
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            String sv= "http://localhost:8080/actions";
+            URL url = new URL(sv);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            int option = sc.nextInt();
+            if(option==1) {
+                getRequst(con);
+            } else if(option==2) {
+                putRequest(con, "{ \"id\" : 5, \"name\" :  \"test\" , \"points\" : 13333 }");
+            } else if(option==4){
+                System.out.println("Select an action to delete by ID");
+                int action = sc.nextInt();
+                deleteRequest(sv,action);
+            }
 
-            // optional default is GET
+            }
+        }
+
+    private static void deleteRequest(String url, int action) {
+        url+="/"+action;
+        try {
+            URL u = new URL(url);
+            System.out.println("Trying to delete" + url);
+            HttpURLConnection con = (HttpURLConnection) u.openConnection();
+            con.setDoOutput(true);
+            con.setRequestProperty("Content-Type", "application/json" );
+            con.setRequestMethod("DELETE");
+            System.out.println(con.getResponseCode());
+        } catch (Exception e){
+            System.out.println("Error occurred in deleting request");
+        }
+    }
+
+    private static void putRequest(HttpURLConnection conn, String json) {
+        try {
+            conn.setConnectTimeout(5000);
+            conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            conn.setRequestMethod("POST");
+            OutputStream os = conn.getOutputStream();
+            os.write(json.getBytes("UTF-8"));
+            os.close();
+            // read the response
+            InputStream in = new BufferedInputStream(conn.getInputStream());
+            String result = IOUtils.toString(in, "UTF-8");
+            System.out.println(result);
+            System.out.println("result after Reading JSON Response");
+            JSONObject myResponse = new JSONObject(result);
+            System.out.println("jsonrpc- " + myResponse.getString("jsonrpc"));
+            System.out.println("id- " + myResponse.getInt("id"));
+            System.out.println("result- " + myResponse.getString("result"));
+            in.close();
+            conn.disconnect();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    private static void getRequst(HttpURLConnection con){
+        try {
             con.setRequestMethod("GET");
-            //add request header
             int responseCode = con.getResponseCode();
-            System.out.println("Sending GET request to URL " + url);
             System.out.println("Response Code " + responseCode);
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()));
@@ -42,8 +108,9 @@ public class Client {
             in.close();
             System.out.println(response.toString());
         }
-        //print in String
-
-
+        catch (Exception e){
+            System.out.print("Exception in GET request");
+        }
     }
+        //print in String
 }

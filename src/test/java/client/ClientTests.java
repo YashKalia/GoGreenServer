@@ -18,7 +18,7 @@ public class ClientTests {
 
     @Autowired
     private Client testClient;
-
+/*
     @Test
     public void getActionsTestTrue() {
 
@@ -42,5 +42,6 @@ public class ClientTests {
             e.printStackTrace();
         }
     }
+    */
 
 }
