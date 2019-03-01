@@ -28,13 +28,14 @@ public class ClientTests {
 
         catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
+
 
         assertTrue(1==1);
-
     }
+    */
 
-    @Test
+  /*  @Test
     public void getActionsTestFalse() {
 
         /*try {
@@ -43,11 +44,11 @@ public class ClientTests {
 
         catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
 
         assertTrue(1==1);
 
     }
-    */
 
+*/
 }
