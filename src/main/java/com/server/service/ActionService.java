@@ -1,7 +1,7 @@
-package com.server.Service;
+package com.server.service;
 
-import com.server.Dao.ActionDao;
-import com.server.Entity.Action;
+import com.server.dao.ActionDao;
+import com.server.entity.Action;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +13,11 @@ public class ActionService {
     @Autowired
     private ActionDao actionDao;
 
-    public Collection<Action> getAllActions(){
+    public Collection<Action> getAllActions() {
         return actionDao.getAllActions();
     }
 
-    public Action getActionById(int id){
+    public Action getActionById(int id) {
         return actionDao.getActionById(id);
     }
 
@@ -25,7 +25,7 @@ public class ActionService {
         actionDao.deleteActionById(id);
     }
 
-    public void updateAction(Action action){
+    public void updateAction(Action action) {
         actionDao.updateAction(action);
     }
 

@@ -1,6 +1,6 @@
 package server;
 
-import com.server.Entity.Action;
+import com.server.entity.Action;
 
 import org.junit.*;
 
