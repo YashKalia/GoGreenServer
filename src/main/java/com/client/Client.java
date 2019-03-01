@@ -28,7 +28,7 @@ public class Client {
      */
     public static void main(String[] args) {
         try {
-            Client.call_me();
+            System.out.print(Client.call_me());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -110,7 +110,7 @@ public class Client {
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
