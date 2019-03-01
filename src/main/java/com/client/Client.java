@@ -1,13 +1,31 @@
 package com.client;
+
 import org.apache.commons.io.IOUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
+/**
+ *Explanation of how stuff works right now:
+ *it's an infinite loop in which you can select actions to do various http requests
+        1=get all
+        2=post something (hardcoded right now)
+        3=put something WIP
+        4= delete something
+        5=exit WIP
+        Still working on consistency throughout
+        I'm aware of the org.json.josnexception, more research needed.
+         **/
 
 public class Client {
+
+    /**
+     * The main method.
+     * @param args it's args.
+     */
     public static void main(String[] args) {
         try {
             Client.call_me();
@@ -16,47 +34,42 @@ public class Client {
         }
     }
 
+    /**
+     * The method where everything else happens.
+     * @throws Exception cannot be more specific.
+     */
     public static void call_me() throws Exception {
         Scanner sc = new Scanner(System.in);
-        /*
-        Explanation of how stuff works right now:
-        it's an infinite loop in which you can select actions to do various http requests
-        1=get all
-        2=post something (hardcoded right now)
-        3=put something WIP
-        4= delete something
-        5=exit WIP
-        Still working on consistency throughout
-        I'm aware of the org.json.josnexception, more research needed.
-         */
-        while(true) {
-            String sv= "http://localhost:8080/actions";
+        while (true) {
+            String sv = "http://localhost:8080/actions";
             URL url = new URL(sv);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             int option = sc.nextInt();
-            if(option==1) {
+            if (option == 1) {
                 getRequst(con);
-            } else if(option==2) {
+            } else if (option == 2) {
                 putRequest(con, "{ \"id\" : 5, \"name\" :  \"test\" , \"points\" : 13333 }");
-            } else if(option==4){
+            } else if (option == 4) {
                 System.out.println("Select an action to delete by ID");
                 int action = sc.nextInt();
                 deleteRequest(sv,action);
-            } else if(option==5) break;
+            } else if (option == 5)  {
+                break;
             }
         }
+    }
 
     private static void deleteRequest(String url, int action) {
-        url+="/"+action;
+        url += "/" + action;
         try {
-            URL u = new URL(url);
+            URL ur = new URL(url);
             System.out.println("Trying to delete" + url);
-            HttpURLConnection con = (HttpURLConnection) u.openConnection();
+            HttpURLConnection con = (HttpURLConnection) ur.openConnection();
             con.setDoOutput(true);
             con.setRequestProperty("Content-Type", "application/json" );
             con.setRequestMethod("DELETE");
             System.out.println(con.getResponseCode());
-        } catch (Exception e){
+        } catch (IOException e) {
             System.out.println("Error occurred in deleting request");
         }
     }
@@ -82,12 +95,14 @@ public class Client {
             System.out.println("result- " + myResponse.getString("result"));
             in.close();
             conn.disconnect();
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println(e);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
-    private static void getRequst(HttpURLConnection con){
+    private static void getRequst(HttpURLConnection con) {
         try {
             con.setRequestMethod("GET");
             int responseCode = con.getResponseCode();
@@ -101,10 +116,8 @@ public class Client {
             }
             in.close();
             System.out.println(response.toString());
-        }
-        catch (Exception e){
+        } catch (IOException e) {
             System.out.print("Exception in GET request");
         }
     }
-        //print in String
 }

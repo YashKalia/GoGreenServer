@@ -1,10 +1,16 @@
-package com.server.Entity;
+package com.server.entity;
 
 public class Action {
     private int id;
     private String name;
     private int points;
 
+    /**
+     * Constructor.
+     * @param id the given unique id.
+     * @param name the name of the action.
+     * @param points the amount of points the action has.
+     */
     public Action(int id, String name, int points) {
         this.id = id;
         this.name = name;

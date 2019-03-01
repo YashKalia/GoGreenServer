@@ -1,7 +1,7 @@
 package server;
 
-import com.server.Dao.ActionDao;
-import com.server.Entity.Action;
+import com.server.dao.ActionDao;
+import com.server.entity.Action;
 
 import org.junit.*;
 import java.util.Collection;
