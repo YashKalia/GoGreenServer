@@ -5,12 +5,7 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
 
 public class Client {
     public static void main(String[] args) {
@@ -47,8 +42,7 @@ public class Client {
                 System.out.println("Select an action to delete by ID");
                 int action = sc.nextInt();
                 deleteRequest(sv,action);
-            }
-
+            } else if(option==5) break;
             }
         }
 
