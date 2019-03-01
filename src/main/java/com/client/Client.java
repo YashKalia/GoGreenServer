@@ -7,14 +7,15 @@ import java.util.Scanner;
 public class Client {
     public static void main(String[] args) {
         try {
-            Client.call_me();
+            System.out.print(Client.call_me());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void call_me() throws Exception {
+    public static String call_me() throws Exception {
         Scanner sc = new Scanner(System.in);
+        StringBuffer response = new StringBuffer();
         while(true) {
             System.out.println("Enter the url to retrieve the information on the server or 'default'\nType exit to terminate");
             String line = sc.nextLine();
@@ -35,15 +36,14 @@ public class Client {
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
             in.close();
-            System.out.println(response.toString());
         }
         //print in String
-
+        return response.toString();
 
     }
 }
