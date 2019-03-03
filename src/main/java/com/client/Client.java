@@ -1,5 +1,6 @@
 package com.client;
 
+import com.server.entity.Action;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,17 +50,28 @@ public class Client {
             if (option == 1) {
                 System.out.println(getRequst(con).toString());
             } else if (option == 2) {
-                postRequest(con, "{ \"id\" : 5, \"name\" :  \"test\" , \"points\" : 13333 }");
+                System.out.println(postRequest(con,new Action(5,"writing code",12)));
             } else if (option == 4) {
                 System.out.println("Select an action to delete by ID");
                 int action = sc.nextInt();
                 deleteRequest(sv,action);
             } else if (option == 5)  {
                 break;
+            } else if (option == 6) {
+                System.out.println("Select an action to get by ID");
+                int action = sc.nextInt();
+                URL newurl = new URL(sv+"/"+action);
+                System.out.println(getRequest(newurl));
             }
         }
     }
 
+    /**
+     * Deletes an action. Returns an exception if there is no action. Will be fixed with a custom JSON object later
+     * @param url the url of the repository where ALL actions are located
+     * @param action the action to be deleted
+     * @return the action that was deleted
+     */
     private static JSONObject deleteRequest(String url, int action) {
         url += "/" + action;
         JSONObject res = new JSONObject();
@@ -78,7 +90,14 @@ public class Client {
         return res;
     }
 
-    private static void postRequest(HttpURLConnection conn, String json) {
+    /**
+     * Puts a new action in an unused id slot.
+     * @param conn the connection
+     * @param js the action to be inserted
+     * @return the action at the index with the given id AFTER the insertion (testing purposes)
+     */
+    private static JSONObject postRequest(HttpURLConnection conn, Action js) {
+        JSONObject result = new JSONObject(js);
         try {
             conn.setConnectTimeout(5000);
             conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
@@ -86,23 +105,27 @@ public class Client {
             conn.setDoInput(true);
             conn.setRequestMethod("POST");
             OutputStream os = conn.getOutputStream();
-            os.write(json.getBytes("UTF-8"));
+            os.write(result.toString().getBytes("UTF-8"));
             os.close();
             // read the response
             InputStream in = new BufferedInputStream(conn.getInputStream());
-            String result = IOUtils.toString(in, "UTF-8");
-            System.out.println(result);
-            System.out.println("result after Reading JSON Response");
-            JSONObject myResponse = new JSONObject(result);
-            in.close();
+            String res = IOUtils.toString(in, "UTF-8");
+            String ur = conn.getURL().toString()+"/"+js.getId();
+            URL url = new URL(ur);
+           // result = new JSONObject(getRequest(url));
+            result = getRequest(url);
             conn.disconnect();
         } catch (IOException e) {
             System.out.println(e);
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
+        return result;
     }
 
+    /**
+     * Gets all the actions.
+     * @param con the HTTP connection
+     * @return an array of JSON Objects with all the actions in the 'database'
+     */
     private static JSONArray getRequst(HttpURLConnection con) {
         JSONArray myResult = null;
         try {
@@ -126,6 +149,11 @@ public class Client {
         return myResult;
     }
 
+    /**
+     * Gets a specific action.
+     * @param url the url of the action to be retrieved
+     * @return the action in JSON format.
+     */
     public static JSONObject getRequest(URL url){
         JSONObject res = new JSONObject();
         try {
@@ -145,6 +173,6 @@ public class Client {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return  res;
+        return res;
     }
 }
