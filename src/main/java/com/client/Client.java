@@ -1,6 +1,7 @@
 package com.client;
 
 import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,9 +47,9 @@ public class Client {
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             int option = sc.nextInt();
             if (option == 1) {
-                getRequst(con);
+                System.out.println(getRequst(con).toString());
             } else if (option == 2) {
-                putRequest(con, "{ \"id\" : 5, \"name\" :  \"test\" , \"points\" : 13333 }");
+                postRequest(con, "{ \"id\" : 5, \"name\" :  \"test\" , \"points\" : 13333 }");
             } else if (option == 4) {
                 System.out.println("Select an action to delete by ID");
                 int action = sc.nextInt();
@@ -59,11 +60,13 @@ public class Client {
         }
     }
 
-    private static void deleteRequest(String url, int action) {
+    private static JSONObject deleteRequest(String url, int action) {
         url += "/" + action;
+        JSONObject res = new JSONObject();
         try {
             URL ur = new URL(url);
-            System.out.println("Trying to delete" + url);
+            res = (JSONObject) getRequest(ur);
+            System.out.println("Trying to delete " + res.toString());
             HttpURLConnection con = (HttpURLConnection) ur.openConnection();
             con.setDoOutput(true);
             con.setRequestProperty("Content-Type", "application/json" );
@@ -72,9 +75,10 @@ public class Client {
         } catch (IOException e) {
             System.out.println("Error occurred in deleting request");
         }
+        return res;
     }
 
-    private static void putRequest(HttpURLConnection conn, String json) {
+    private static void postRequest(HttpURLConnection conn, String json) {
         try {
             conn.setConnectTimeout(5000);
             conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
@@ -90,9 +94,6 @@ public class Client {
             System.out.println(result);
             System.out.println("result after Reading JSON Response");
             JSONObject myResponse = new JSONObject(result);
-            System.out.println("jsonrpc- " + myResponse.getString("jsonrpc"));
-            System.out.println("id- " + myResponse.getInt("id"));
-            System.out.println("result- " + myResponse.getString("result"));
             in.close();
             conn.disconnect();
         } catch (IOException e) {
@@ -102,7 +103,8 @@ public class Client {
         }
     }
 
-    private static void getRequst(HttpURLConnection con) {
+    private static JSONArray getRequst(HttpURLConnection con) {
+        JSONArray myResult = null;
         try {
             con.setRequestMethod("GET");
             int responseCode = con.getResponseCode();
@@ -115,9 +117,34 @@ public class Client {
                 response.append(inputLine);
             }
             in.close();
-            System.out.println(response.toString());
+            myResult = new JSONArray(response.toString());
         } catch (IOException e) {
             System.out.print("Exception in GET request");
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+        return myResult;
+    }
+
+    public static JSONObject getRequest(URL url){
+        JSONObject res = new JSONObject();
+        try {
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            String inputLine;
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream()));
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            res = new JSONObject(response.toString());
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return  res;
     }
 }
