@@ -1,6 +1,8 @@
 package com.client;
 
+import com.server.entity.Action;
 import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,7 +30,7 @@ public class Client {
      */
     public static void main(String[] args) {
         try {
-            System.out.print(Client.call_me());
+            Client.call_me();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -46,24 +48,37 @@ public class Client {
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             int option = sc.nextInt();
             if (option == 1) {
-                getRequst(con);
+                System.out.println(getAllRequest(con).toString());
             } else if (option == 2) {
-                putRequest(con, "{ \"id\" : 5, \"name\" :  \"test\" , \"points\" : 13333 }");
+                System.out.println(postRequest(con,new Action(5,"Writing code",12)));
             } else if (option == 4) {
                 System.out.println("Select an action to delete by ID");
                 int action = sc.nextInt();
                 deleteRequest(sv,action);
             } else if (option == 5)  {
                 break;
+            } else if (option == 6) {
+                System.out.println("Select an action to get by ID");
+                int action = sc.nextInt();
+                URL newurl = new URL(sv+"/"+action);
+                System.out.println(getRequest(newurl));
             }
         }
     }
 
-    private static void deleteRequest(String url, int action) {
+    /**
+     * Deletes an action. Returns an exception if there is no action. Will be fixed with a custom JSON object later
+     * @param url the url of the repository where ALL actions are located
+     * @param action the action to be deleted
+     * @return the action that was deleted
+     */
+    public static JSONObject deleteRequest(String url, int action) {
         url += "/" + action;
+        JSONObject res = new JSONObject();
         try {
             URL ur = new URL(url);
-            System.out.println("Trying to delete" + url);
+            res = (JSONObject) getRequest(ur);
+            System.out.println("Trying to delete " + res.toString());
             HttpURLConnection con = (HttpURLConnection) ur.openConnection();
             con.setDoOutput(true);
             con.setRequestProperty("Content-Type", "application/json" );
@@ -72,9 +87,17 @@ public class Client {
         } catch (IOException e) {
             System.out.println("Error occurred in deleting request");
         }
+        return res;
     }
 
-    private static void putRequest(HttpURLConnection conn, String json) {
+    /**
+     * Puts a new action in an unused id slot.
+     * @param conn the connection
+     * @param js the action to be inserted
+     * @return the action at the index with the given id AFTER the insertion (testing purposes)
+     */
+    public static JSONObject postRequest(HttpURLConnection conn, Action js) {
+        JSONObject result = new JSONObject(js);
         try {
             conn.setConnectTimeout(5000);
             conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
@@ -82,27 +105,29 @@ public class Client {
             conn.setDoInput(true);
             conn.setRequestMethod("POST");
             OutputStream os = conn.getOutputStream();
-            os.write(json.getBytes("UTF-8"));
+            os.write(result.toString().getBytes("UTF-8"));
             os.close();
             // read the response
             InputStream in = new BufferedInputStream(conn.getInputStream());
-            String result = IOUtils.toString(in, "UTF-8");
-            System.out.println(result);
-            System.out.println("result after Reading JSON Response");
-            JSONObject myResponse = new JSONObject(result);
-            System.out.println("jsonrpc- " + myResponse.getString("jsonrpc"));
-            System.out.println("id- " + myResponse.getInt("id"));
-            System.out.println("result- " + myResponse.getString("result"));
-            in.close();
+            String res = IOUtils.toString(in, "UTF-8");
+            String ur = conn.getURL().toString()+"/"+js.getId();
+            URL url = new URL(ur);
+           // result = new JSONObject(getRequest(url));
+            result = getRequest(url);
             conn.disconnect();
         } catch (IOException e) {
             System.out.println(e);
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
+        return result;
     }
 
-    private static void getRequst(HttpURLConnection con) {
+    /**
+     * Gets all the actions.
+     * @param con the HTTP connection
+     * @return an array of JSON Objects with all the actions in the 'database'
+     */
+    public static JSONArray getAllRequest(HttpURLConnection con) {
+        JSONArray myResult = null;
         try {
             con.setRequestMethod("GET");
             int responseCode = con.getResponseCode();
@@ -110,14 +135,44 @@ public class Client {
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()));
             String inputLine;
-
+            StringBuffer response = new StringBuffer();
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
             in.close();
-            System.out.println(response.toString());
+            myResult = new JSONArray(response.toString());
         } catch (IOException e) {
             System.out.print("Exception in GET request");
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+        return myResult;
+    }
+
+    /**
+     * Gets a specific action.
+     * @param url the url of the action to be retrieved
+     * @return the action in JSON format.
+     */
+    public static JSONObject getRequest(URL url){
+        JSONObject res = new JSONObject();
+        try {
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            String inputLine;
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream()));
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            res = new JSONObject(response.toString());
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return res;
     }
 }
