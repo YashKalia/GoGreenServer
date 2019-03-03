@@ -1,8 +1,8 @@
 package server;
 
-import com.server.Controller.ActionController;
-import com.server.Entity.Action;
-import com.server.Service.ActionService;
+import com.server.controller.ActionController;
+import com.server.entity.Action;
+import com.server.service.ActionService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes={com.server.Controller.ActionController.class, com.server.Service.ActionService.class})
+@SpringBootTest(classes={com.server.controller.ActionController.class, com.server.service.ActionService.class})
 public class ActionControllerTest {
 
     MockMvc mockMvc;

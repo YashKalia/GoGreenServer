@@ -1,7 +1,7 @@
 package server;
 
-import com.server.Entity.Action;
-import com.server.Service.ActionService;
+import com.server.entity.Action;
+import com.server.service.ActionService;
 
 import java.util.Collection;
 import org.junit.Test;
@@ -11,10 +11,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes={com.server.Service.ActionService.class, com.server.Dao.ActionDao.class})
+@SpringBootTest(classes={com.server.service.ActionService.class, com.server.dao.ActionDao.class})
 public class ActionServiceTest {
 
     @Autowired

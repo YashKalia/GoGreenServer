@@ -12,7 +12,7 @@ buildNumber.properties
 # Exclude maven wrapper
 !/.mvn/wrapper/maven-wrapper.jar
 
-# Intellij
+# IntellijRevert "Merge branch 'client_server' into 'master'"
 .idea/
 *.iml
 *.iws
