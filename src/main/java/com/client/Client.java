@@ -48,9 +48,9 @@ public class Client {
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             int option = sc.nextInt();
             if (option == 1) {
-                System.out.println(getRequst(con).toString());
+                System.out.println(getAllRequest(con).toString());
             } else if (option == 2) {
-                System.out.println(postRequest(con,new Action(5,"writing code",12)));
+                System.out.println(postRequest(con,new Action(5,"Writing code",12)));
             } else if (option == 4) {
                 System.out.println("Select an action to delete by ID");
                 int action = sc.nextInt();
@@ -72,7 +72,7 @@ public class Client {
      * @param action the action to be deleted
      * @return the action that was deleted
      */
-    private static JSONObject deleteRequest(String url, int action) {
+    public static JSONObject deleteRequest(String url, int action) {
         url += "/" + action;
         JSONObject res = new JSONObject();
         try {
@@ -96,7 +96,7 @@ public class Client {
      * @param js the action to be inserted
      * @return the action at the index with the given id AFTER the insertion (testing purposes)
      */
-    private static JSONObject postRequest(HttpURLConnection conn, Action js) {
+    public static JSONObject postRequest(HttpURLConnection conn, Action js) {
         JSONObject result = new JSONObject(js);
         try {
             conn.setConnectTimeout(5000);
@@ -126,7 +126,7 @@ public class Client {
      * @param con the HTTP connection
      * @return an array of JSON Objects with all the actions in the 'database'
      */
-    private static JSONArray getRequst(HttpURLConnection con) {
+    public static JSONArray getAllRequest(HttpURLConnection con) {
         JSONArray myResult = null;
         try {
             con.setRequestMethod("GET");
