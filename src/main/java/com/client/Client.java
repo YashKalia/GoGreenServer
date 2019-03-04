@@ -6,7 +6,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
@@ -28,12 +33,8 @@ public class Client {
      * The main method.
      * @param args it's args.
      */
-    public static void main(String[] args) {
-        try {
-            Client.call_me();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws Exception {
+        Client.call_me();
     }
 
     /**
@@ -60,14 +61,15 @@ public class Client {
             } else if (option == 6) {
                 System.out.println("Select an action to get by ID");
                 int action = sc.nextInt();
-                URL newurl = new URL(sv+"/"+action);
+                URL newurl = new URL(sv + "/" + action);
                 System.out.println(getRequest(newurl));
             }
         }
     }
 
     /**
-     * Deletes an action. Returns an exception if there is no action. Will be fixed with a custom JSON object later
+     * Deletes an action. Returns an exception if there is no action.
+     * Will be fixed with a custom JSON object later.
      * @param url the url of the repository where ALL actions are located
      * @param action the action to be deleted
      * @return the action that was deleted
@@ -110,9 +112,9 @@ public class Client {
             // read the response
             InputStream in = new BufferedInputStream(conn.getInputStream());
             String res = IOUtils.toString(in, "UTF-8");
-            String ur = conn.getURL().toString()+"/"+js.getId();
+            String ur = conn.getURL().toString() + "/" + js.getId();
             URL url = new URL(ur);
-           // result = new JSONObject(getRequest(url));
+            // result = new JSONObject(getRequest(url));
             result = getRequest(url);
             conn.disconnect();
         } catch (IOException e) {
@@ -154,7 +156,7 @@ public class Client {
      * @param url the url of the action to be retrieved
      * @return the action in JSON format.
      */
-    public static JSONObject getRequest(URL url){
+    public static JSONObject getRequest(URL url) {
         JSONObject res = new JSONObject();
         try {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
