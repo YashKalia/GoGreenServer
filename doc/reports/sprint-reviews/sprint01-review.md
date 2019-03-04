@@ -10,7 +10,7 @@ A lot of us had problems setting up our environments, one of our members encount
 So far it appears we've resolved this issue.
 
 ### Problem 2: Lacking communication
-We felt like our communication was lacking
+We felt like our communication was lacking.
 
 We aimed to improve it this week.
 
