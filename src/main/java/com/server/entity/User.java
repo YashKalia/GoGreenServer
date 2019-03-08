@@ -1,36 +1,35 @@
 package com.server.entity;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
+@Entity
+@Table(name = "userx")
 public class User {
-
     @Id
-    @Column(name = "userID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private long user_id;
+    private String username;
+    private String password;
 
-    @Column(name = "username")
-    String username;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name="user_role", joinColumns = @JoinColumn(name="user_id"),inverseJoinColumns = @JoinColumn(name="role_id"))
+    private Set<Role> roles;
 
-    @Column(name = "password")
-    String password;
+    public User(){}
 
-    public User() {
-        super();
-    }
-
-    /**
-     * User constructor.
-     * @param username Receives a username String.
-     * @param password Receives a password String.
-     */
-    public User(String username, String password) {
-        super();
+    public User(long user_id, String username, String password) {
+        this.user_id = user_id;
         this.username = username;
         this.password = password;
+    }
+
+    public long getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(long user_id) {
+        this.user_id = user_id;
     }
 
     public String getUsername() {
@@ -49,12 +48,11 @@ public class User {
         this.password = password;
     }
 
-    public int getId() {
-        return id;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
-
 }
