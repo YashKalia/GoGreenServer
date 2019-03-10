@@ -3,13 +3,11 @@ package com.server.entity;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Date;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
-public class EntryTest {
+public class RequestUserFeatureTest {
 
     private User user1;
     private User user2;
@@ -17,9 +15,8 @@ public class EntryTest {
     private Feature feature1;
     private Feature feature2;
 
-    private Entry entry1;
-    private Entry entry2;
-    private Date date = new Date();
+    private RequestUserFeature entry1;
+    private RequestUserFeature entry2;
 
     @Before
     public void setup() {
@@ -39,28 +36,8 @@ public class EntryTest {
         feature2.setFeatureName("Riding a bike to work");
         feature2.setFeatureValue(20);
 
-        entry1 = new Entry(feature1, user1);
-        entry1.setId(1);
-        entry1.setDate(date);
-
-        entry2 = new Entry(feature1, user1);
-        entry2.setId(1);
-
-    }
-
-    @Test
-    public void testGetEntryId() {
-
-        assertEquals(1, entry1.getId());
-
-    }
-
-    @Test
-    public void testSetEntryId() {
-
-        entry1.setId(15);
-
-        assertEquals(15, entry1.getId());
+        entry1 = new RequestUserFeature(feature1, user1);
+        entry2 = new RequestUserFeature(feature1, user1);
 
     }
 
@@ -97,42 +74,9 @@ public class EntryTest {
     }
 
     @Test
-    public void testGetAction() {
-
-        assertEquals(feature1, entry1.getAction());
-
-    }
-
-    @Test
-    public void testSetAction() {
-
-        entry1.setAction(feature2);
-
-        assertEquals(feature2, entry1.getAction());
-
-    }
-
-    @Test
-    public void testGetDate() {
-
-        assertEquals(date, entry1.getDate());
-
-    }
-
-    @Test
-    public void testSetDate() {
-
-        date = new Date();
-        entry1.setDate(date);
-
-        assertEquals(date, entry1.getDate());
-
-    }
-
-    @Test
     public void testEqualsSameMemLoc() {
 
-        Entry entry3 = entry1;
+        RequestUserFeature entry3 = entry1;
 
         assertTrue(entry1.equals(entry3));
 
@@ -142,15 +86,6 @@ public class EntryTest {
     public void testEqualsTrue() {
 
         assertTrue(entry1.equals(entry2));
-
-    }
-
-    @Test
-    public void testEqualsWrongId() {
-
-        entry2.setId(2);
-
-        assertFalse(entry1.equals(entry2));
 
     }
 
