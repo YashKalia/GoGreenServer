@@ -1,5 +1,6 @@
 package com.server.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -8,7 +9,8 @@ import javax.persistence.Id;
 public class Role {
     @Id
     @GeneratedValue
-    private long role_id;
+    @Column(name = "role_id")
+    private long id;
     private String role;
 
     public Role(){}
@@ -17,12 +19,12 @@ public class Role {
         this.role = role;
     }
 
-    public long getRole_id() {
-        return role_id;
+    public long getId() {
+        return id;
     }
 
-    public void setRole_id(long role_id) {
-        this.role_id = role_id;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getRole() {

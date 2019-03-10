@@ -1,35 +1,48 @@
 package com.server.entity;
 
-import javax.persistence.*;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "userx")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long user_id;
+    @Column(name = "user_id")
+    private long id;
     private String username;
     private String password;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name="user_role", joinColumns = @JoinColumn(name="user_id"),inverseJoinColumns = @JoinColumn(name="role_id"))
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    public User(){}
+    public User() {}
 
-    public User(long user_id, String username, String password) {
-        this.user_id = user_id;
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    public long getUser_id() {
-        return user_id;
+    public long getId() {
+        return id;
     }
 
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getUsername() {
