@@ -47,4 +47,25 @@ public class Feature {
     public void setFeatureValue(int featureValue) {
         this.featureValue = featureValue;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Feature)) {
+            return false;
+        }
+        Feature other = (Feature) obj;
+        if (id != other.id) {
+            return false;
+        }
+        if (!featureName.equals(other.featureName)) {
+            return false;
+        }
+        if (featureValue != other.featureValue) {
+            return false;
+        }
+        return true;
+    }
 }

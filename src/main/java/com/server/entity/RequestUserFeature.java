@@ -26,4 +26,23 @@ public class RequestUserFeature {
     public void setFeature(Feature feature) {
         this.feature = feature;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof RequestUserFeature)) {
+            return false;
+        }
+        RequestUserFeature other = (RequestUserFeature) obj;
+        if (!feature.equals(other.feature)) {
+            return false;
+        }
+        if (!user.equals(other.user)) {
+            return false;
+        }
+        return true;
+    }
+
 }
