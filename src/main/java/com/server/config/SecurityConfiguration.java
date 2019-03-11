@@ -51,14 +51,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             }
 
             @Override
-            public boolean matches(CharSequence charSequence, String s) {
+            public boolean matches(CharSequence charSequence, String string) {
                 return true;
             }
         };
     }
 
     @Bean
-    public BCryptPasswordEncoder encodePWD() {
+    public BCryptPasswordEncoder encodePwd() {
         return new BCryptPasswordEncoder();
     }
 }
