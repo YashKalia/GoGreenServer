@@ -25,6 +25,20 @@ public class UserController {
         return userRepository.findAll();
     }
 
+    @PostMapping(value = "/getone")
+    public User getOneUser(@RequestBody User user) {
+        return userRepository.findByUsername(user.getUsername());
+    }
+
+    @PostMapping(value = "/authenticate")
+    public boolean Verify(@RequestBody User user) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        User inDb = userRepository.findByUsername(user.getUsername());
+        String pwd = user.getPassword();
+        return encoder.matches(pwd,inDb.getPassword());
+
+    }
+
     /**
      * Adds a new user to the DB if the username isn't already taken and if the password != null.
      * @param user The user to be added (only username and password required)
