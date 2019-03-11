@@ -74,4 +74,25 @@ public class Entry {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Entry)) {
+            return false;
+        }
+        Entry other = (Entry) obj;
+        if (id != other.id) {
+            return false;
+        }
+        if (!feature.equals(other.feature)) {
+            return false;
+        }
+        if (!user.equals(other.user)) {
+            return false;
+        }
+        return true;
+    }
 }

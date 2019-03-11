@@ -34,4 +34,23 @@ public class Role {
     public void setRole(String role) {
         this.role = role;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Role)) {
+            return false;
+        }
+        Role other = (Role) obj;
+        if (id != other.id) {
+            return false;
+        }
+        if (!role.equals(other.role)) {
+            return false;
+        }
+        return true;
+    }
+
 }
