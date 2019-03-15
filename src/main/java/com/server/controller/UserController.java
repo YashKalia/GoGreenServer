@@ -34,9 +34,9 @@ public class UserController {
     public boolean Verify(@RequestBody User user) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         User inDb = userRepository.findByUsername(user.getUsername());
-        String pwd = user.getPassword();
-        return encoder.matches(pwd,inDb.getPassword());
 
+        return (userRepository.existsByUsername(user.getUsername()) &&
+                encoder.matches(user.getPassword(),inDb.getPassword()));
     }
 
     /**

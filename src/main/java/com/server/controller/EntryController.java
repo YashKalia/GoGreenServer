@@ -63,6 +63,18 @@ public class EntryController {
         return entryRepository.findByFeatureId(id);
     }
 
+    @PostMapping(value = "/getvegetarianmeals")
+    public int getAllVegetarianMeals(@RequestBody User user) {
+        List<Entry> entries = entryRepository.findByFeatureId(1);
+        int i=0;
+        long id = userRepository.findByUsername(user.getUsername()).getId();
+        for(Entry e: entries) {
+            if(e.getUser().getId()==id)
+                i++;
+        }
+        return i;
+    }
+
     @GetMapping(value = "/get")
     public List<Entry> getAllEntries() {
         return entryRepository.findAll();
