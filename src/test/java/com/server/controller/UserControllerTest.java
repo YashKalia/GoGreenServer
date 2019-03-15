@@ -9,143 +9,132 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes={UserController.class})
 public class UserControllerTest {
 
-    private MockMvc mvc;
-
     @Autowired
-    @MockBean
     UserController userController;
 
     @MockBean
     UserRepository userRepository;
 
-    private List<User> users;
+    List<User> users = new ArrayList<>();
     private User user1;
     private User user2;
     private User user3;
-
-    String user1AsJSON = "{\n" +
-            "\t\"username\": \"user1\",\n" +
-            "\t\"password\": \"password\",\n" +
-            "\t\"roles\": [{\n" +
-            "\t\t\"role\": \"USER\"\n" +
-            "\t}]\n" +
-            "}";
-
-    String user2AsJSON = "{\n" +
-            "\t\"username\": \"user2\",\n" +
-            "\t\"password\": \"password\",\n" +
-            "\t\"roles\": [{\n" +
-            "\t\t\"role\": \"USER\"\n" +
-            "\t}]\n" +
-            "}";
-
-    String user3AsJSON = "{\n" +
-            "\t\"username\": \"user3\",\n" +
-            "\t\"password\": \"password\",\n" +
-            "\t\"roles\": [{\n" +
-            "\t\t\"role\": \"USER\"\n" +
-            "\t}]\n" +
-            "}";
+    private User user4;
 
     @Before
     public void setup() {
 
-        mvc = standaloneSetup(this.userController).build();
-
         user1 = new User("user1", "password");
+        user1.setId(1);
         user2 = new User("user2", "password");
+        user2.setId(2);
         user3 = new User("user3", "password");
+        user3.setId(3);
+        user4 = new User("user4", null);
+        user4.setId(4);
 
-        users = userRepository.findAll();
+        users.add(user1);
+        users.add(user2);
+        users.add(user3);
+
+
+    }
+
+    @Test
+    public void testGetAllUsers() {
+
+        when(userRepository.findAll()).thenReturn(users);
+
+        assertEquals(users, userController.getAllUsers());
+
+    }
+
+    @Test
+    public void testGetOneUser() {
+
+        when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
+
+        assertEquals(user1, userController.getOneUser(user1));
+
+    }
+
+    @Test
+    public void testAddUserSuccess() {
+
+        when(userRepository.findAll()).thenReturn(users);
 
         userController.addUser(user1);
         userController.addUser(user2);
 
-    }
-
-    @Test
-    public void testGetAllUsers() throws Exception {
-
-        given(userController.getAllUsers())
-                .willReturn(users);
-
-        mvc.perform(MockMvcRequestBuilders.get("/users/getall")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        assertEquals(users, userController.addUser(user3));
 
     }
 
     @Test
-    public void testAddUserSuccess() throws Exception {
+    public void testAddUserFailure() {
 
-        given(userController.addUser(user3))
-                .willReturn(users);
+        when(userRepository.findByUsername("user1")).thenReturn(user1);
 
-
-        mvc.perform(MockMvcRequestBuilders.post("/users/register")
-                .content(user3AsJSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        assertNull(userController.addUser(user1));
 
     }
 
     @Test
-    public void testAddUserFailure() throws Exception {
+    public void testDeleteUserSuccess() {
 
-        given(userController.addUser(user1))
-                .willReturn(null);
+        users.remove(0);
 
+        when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
 
-        mvc.perform(MockMvcRequestBuilders.post("/users/register")
-                .content(user1AsJSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        when(userRepository.findAll()).thenReturn(users);
+
+        assertEquals(users, userController.deleteUser(user1));
 
     }
 
     @Test
-    public void testDeleteUserSuccess() throws Exception {
+    public void testDeleteUserFailure() {
 
-        given(userController.deleteUser(user2))
-                .willReturn(users);
+        when(userController.deleteUser(user4)).thenReturn(null);
 
-
-        mvc.perform(MockMvcRequestBuilders.delete("/users/delete")
-                .content(user2AsJSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        assertNull(userController.deleteUser(user4));
 
     }
 
     @Test
-    public void testDeleteUserFailure() throws Exception {
+    public void testVerify() {
 
-        given(userController.deleteUser(user1))
-                .willReturn(null);
+        BCryptPasswordEncoder encoder = mock(BCryptPasswordEncoder.class);
 
-        mvc.perform(MockMvcRequestBuilders.delete("/users/delete")
-                .content(user1AsJSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        User user5 = new User("user1", "password");
+        user5.setId(1);
+
+        when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
+
+        when(userRepository.existsByUsername(user1.getUsername())).thenReturn(true);
+
+        when(userRepository.existsByUsername(user1.getUsername()) &&
+                encoder.matches(user1.getPassword(), user5.getPassword())).thenReturn(true);
+
+        assertEquals(false, userController.Verify(user1));
 
     }
+
+
+
 }
