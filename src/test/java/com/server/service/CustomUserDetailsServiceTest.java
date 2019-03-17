@@ -6,26 +6,24 @@ import com.server.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = {com.server.service.CustomUserDetailsService.class, com.server.service.CustomUserDetails.class})
+@RunWith(MockitoJUnitRunner.class)
 public class CustomUserDetailsServiceTest {
 
     private User user1;
     private User user2;
 
-    @Autowired
+    @InjectMocks
     private CustomUserDetailsService customUserDetailsService;
 
-    @MockBean
+    @Mock
     UserRepository userRepository;
 
 

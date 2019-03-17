@@ -1,16 +1,16 @@
 package com.server.controller;
 
+import com.server.config.SecurityConfiguration;
 import com.server.entity.User;
 import com.server.repository.UserRepository;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +20,13 @@ import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes={UserController.class})
+@RunWith(MockitoJUnitRunner.class)
 public class UserControllerTest {
 
-    @Autowired
+    @InjectMocks
     UserController userController;
 
-    @MockBean
+    @Mock
     UserRepository userRepository;
 
     List<User> users = new ArrayList<>();
@@ -88,6 +87,8 @@ public class UserControllerTest {
     @Test
     public void testAddUserFailure() {
 
+        user1.setPassword(null);
+
         when(userRepository.findByUsername("user1")).thenReturn(user1);
 
         assertNull(userController.addUser(user1));
@@ -117,24 +118,30 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testVerify() {
+    public void testVerifySuccess() {
 
         BCryptPasswordEncoder encoder = mock(BCryptPasswordEncoder.class);
-
-        User user5 = new User("user1", "password");
-        user5.setId(1);
 
         when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
 
         when(userRepository.existsByUsername(user1.getUsername())).thenReturn(true);
 
-        when(userRepository.existsByUsername(user1.getUsername()) &&
-                encoder.matches(user1.getPassword(), user5.getPassword())).thenReturn(true);
-
         assertEquals(false, userController.Verify(user1));
 
     }
 
+    @Test
+    public void testVerifyFailure() {
 
+        User user5 = new User("user5", "password");
+        user5.setId(5);
+
+        when(userRepository.findByUsername(user5.getUsername())).thenReturn(null);
+
+        when(userRepository.existsByUsername(user5.getUsername())).thenReturn(false);
+
+        assertEquals(false, userController.Verify(user5));
+
+    }
 
 }
