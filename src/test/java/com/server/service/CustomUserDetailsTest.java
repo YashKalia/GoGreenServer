@@ -6,11 +6,10 @@ import com.server.entity.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.InjectMocks;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -20,15 +19,14 @@ import java.util.stream.Collectors;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes={com.server.service.CustomUserDetails.class})
+@RunWith(MockitoJUnitRunner.class)
 public class CustomUserDetailsTest {
 
     private User user1;
     private User user2;
     private Set<Role> roles1 = new HashSet<>();
 
-    @Autowired
+    @InjectMocks
     private CustomUserDetails customUserDetails;
 
     @Before

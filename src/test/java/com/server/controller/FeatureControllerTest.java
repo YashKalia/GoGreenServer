@@ -1,128 +1,94 @@
 package com.server.controller;
 
 import com.server.entity.Feature;
-import com.server.entity.User;
 import com.server.repository.FeatureRepository;
-import com.server.repository.UserRepository;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes={FeatureController.class})
+@RunWith(MockitoJUnitRunner.class)
 public class FeatureControllerTest {
 
-    private MockMvc mvc;
-
-    @Autowired
-    @MockBean
+    @InjectMocks
     FeatureController featureController;
 
-    @MockBean
+    @Mock
     FeatureRepository featureRepository;
 
-    private List<Feature> features;
-    private Feature feature1;
-    private Feature feature2;
-
-    String feature1AsJSON = "{\n" +
-            "\t\"featureName\": \"Eating a vegetarian meal\",\n" +
-            "\t\"featureValue\": \"10\"\n" +
-            "}";
-
-    String feature2AsJSON = "{\n" +
-            "\t\"featureName\": \"Riding a bike to work\",\n" +
-            "\t\"featureValue\": \"20\"\n" +
-            "}";
+    private List<Feature> features = new ArrayList<>();
+    private Feature feature1 = new Feature();
+    private Feature feature2 = new Feature();
+    private Feature feature3 = new Feature();
 
     @Before
     public void setup() {
 
-        mvc = standaloneSetup(this.featureController).build();
-
-        feature1 = new Feature();
         feature1.setId(1);
         feature1.setFeatureName("Eating a vegetarian meal");
         feature1.setFeatureValue(10);
 
-        feature2 = new Feature();
         feature2.setId(2);
         feature2.setFeatureName("Riding a bike to work");
         feature2.setFeatureValue(20);
 
-        featureController.addFeature(feature1);
+        feature3.setId(3);
+        feature3.setFeatureName("Installing a solar panel");
+        feature3.setFeatureValue(2000);
 
-        features = featureRepository.findAll();
-
-    }
-
-    @Test
-    public void testGetAllFeatures() throws Exception {
-
-        given(featureController.getAllFeatures())
-                .willReturn(features);
-
-        mvc.perform(MockMvcRequestBuilders.get("/features/getall")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        features.add(feature1);
+        features.add(feature2);
 
     }
 
     @Test
-    public void testAddFeatureSuccess() throws Exception {
+    public void testGetAllFeatures() {
 
-        given(featureController.addFeature(feature2))
-                .willReturn(features);
+        when(featureRepository.findAll())
+                .thenReturn(features);
 
-
-        mvc.perform(MockMvcRequestBuilders.post("/features/add")
-                .content(feature2AsJSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        assertEquals(features, featureController.getAllFeatures());
 
     }
 
     @Test
-    public void testDeleteFeatureSuccess() throws Exception {
+    public void testAddFeatureSuccess() {
 
-        featureController.addFeature(feature2);
+        when(featureRepository.findAll())
+                .thenReturn(features);
 
-        given(featureController.deleteFeatureById((long) 2))
-                .willReturn(features);
-
-
-        mvc.perform(MockMvcRequestBuilders.delete("/features/delete/2")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        assertEquals(features, featureController.addFeature(feature1));
 
     }
 
     @Test
-    public void testDeleteFeatureFailure() throws Exception {
+    public void testDeleteFeatureSuccess() {
 
-        given(featureController.deleteFeatureById(null))
-                .willReturn(features);
+        features.remove(0);
 
-        mvc.perform(MockMvcRequestBuilders.delete("/users/delete/")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(404));
+        when(featureRepository.findById((long) 1))
+                .thenReturn(java.util.Optional.ofNullable(feature1));
+
+        assertEquals(new ArrayList<>(), featureController.deleteFeatureById((long) 1));
+
+    }
+
+    @Test
+    public void testDeleteFeatureFailure() {
+
+        when(featureRepository.findById((long) 3))
+                .thenReturn(null);
+
+        assertEquals(new ArrayList<>(), featureController.deleteFeatureById((long) 3));
 
     }
 }
