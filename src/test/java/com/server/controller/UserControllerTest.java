@@ -120,13 +120,14 @@ public class UserControllerTest {
     @Test
     public void testVerifySuccess() {
 
-        BCryptPasswordEncoder encoder = mock(BCryptPasswordEncoder.class);
+        User user1crypt = new User("user1", "$2a$10$SVhBKRv9eQWXiSwnQybnEOBMzfvfE9Tpy321KlnFyWSQ4rol8vSb2");
+        user1crypt.setId(1);
 
-        when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
+        when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1crypt);
 
         when(userRepository.existsByUsername(user1.getUsername())).thenReturn(true);
 
-        assertEquals(false, userController.Verify(user1));
+        assertEquals(true, userController.Verify(user1));
 
     }
 
