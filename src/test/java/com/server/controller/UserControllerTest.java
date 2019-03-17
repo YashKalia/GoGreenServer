@@ -85,9 +85,22 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testAddUserFailure() {
+    public void testAddUserFailureNoPassword() {
+
+        userController.addUser(user2);
 
         user1.setPassword(null);
+
+        when(userRepository.findByUsername("user1")).thenReturn(user1);
+
+        assertNull(userController.addUser(user1));
+
+    }
+
+    @Test
+    public void testAddUserFailureUserAlreadyExists() {
+
+        userController.addUser(user1);
 
         when(userRepository.findByUsername("user1")).thenReturn(user1);
 
@@ -132,7 +145,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testVerifyFailure() {
+    public void testVerifyFailureUserDoesNotExist() {
 
         User user5 = new User("user5", "password");
         user5.setId(5);
@@ -142,6 +155,22 @@ public class UserControllerTest {
         when(userRepository.existsByUsername(user5.getUsername())).thenReturn(false);
 
         assertEquals(false, userController.Verify(user5));
+
+    }
+
+    @Test
+    public void testVerifyFailurePasswordDoesNotMatch() {
+
+        User user1crypt = new User("user1", "$2a$10$SVhBKRv9eQWXiSwnQybnEOBMzfvfE9Tpy321KlnFyWSQ4rol8vSb2");
+        user1crypt.setId(1);
+
+        user1.setPassword("hello");
+
+        when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1crypt);
+
+        when(userRepository.existsByUsername(user1.getUsername())).thenReturn(true);
+
+        assertEquals(false, userController.Verify(user1));
 
     }
 
