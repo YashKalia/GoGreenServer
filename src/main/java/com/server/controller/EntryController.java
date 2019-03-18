@@ -37,6 +37,7 @@ public class EntryController {
      * (only a username and the name of the feature are)
      * then creates a new entity with those parameters and adds it to the database.
      * The list of all entries is returned for testing and displaying purposes.
+     *
      * @param re the custom entity
      * @return the list of all features
      */
@@ -46,7 +47,7 @@ public class EntryController {
         User user = re.getUser();
         User us = userRepository.findByUsername(user.getUsername());
         Feature fe = featureRepository.findByFeatureName(feature.getFeatureName());
-        Entry en = new Entry(fe,us);
+        Entry en = new Entry(fe, us);
         entryRepository.save(en);
         return entryRepository.findAll();
     }
@@ -63,16 +64,22 @@ public class EntryController {
         return entryRepository.findByFeatureId(id);
     }
 
+    /**
+     * Checks the number of vegetarian meals a certain user has had.
+     * @param user The parameter sent through a request, the user whose entries should be retrieved
+     * @return the integer as the number of entries that contain a meal and the given user
+     */
     @PostMapping(value = "/getvegetarianmeals")
     public int getAllVegetarianMeals(@RequestBody User user) {
         List<Entry> entries = entryRepository.findByFeatureId(1);
-        int i=0;
+        int nrOfVegetarianMeals = 0;
         long id = userRepository.findByUsername(user.getUsername()).getId();
-        for(Entry e: entries) {
-            if(e.getUser().getId()==id)
-                i++;
+        for (Entry e : entries) {
+            if (e.getUser().getId() == id) {
+                nrOfVegetarianMeals++;
+            }
         }
-        return i;
+        return nrOfVegetarianMeals;
     }
 
     @GetMapping(value = "/get")

@@ -140,7 +140,7 @@ public class UserControllerTest {
 
         when(userRepository.existsByUsername(user1.getUsername())).thenReturn(true);
 
-        assertEquals(true, userController.Verify(user1));
+        assertEquals(true, userController.verify(user1));
 
     }
 
@@ -154,7 +154,7 @@ public class UserControllerTest {
 
         when(userRepository.existsByUsername(user5.getUsername())).thenReturn(false);
 
-        assertEquals(false, userController.Verify(user5));
+        assertEquals(false, userController.verify(user5));
 
     }
 
@@ -170,7 +170,7 @@ public class UserControllerTest {
 
         when(userRepository.existsByUsername(user1.getUsername())).thenReturn(true);
 
-        assertEquals(false, userController.Verify(user1));
+        assertEquals(false, userController.verify(user1));
 
     }
 
