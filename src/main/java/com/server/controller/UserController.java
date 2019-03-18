@@ -30,17 +30,27 @@ public class UserController {
         return userRepository.findByUsername(user.getUsername());
     }
 
+    /**
+     * The authentication method.
+     * Checks first if a user is in the database.
+     * If it is, then it checks the password against the hashed version in the database.
+     * If they match, return true.
+     * Otherwise, return false.
+     * @param user the user to authenticate. Must contain both username and password.
+     * @return a boolean. True if the conditions are met, false otherwise.
+     */
     @PostMapping(value = "/authenticate")
-    public boolean Verify(@RequestBody User user) {
+    public boolean verify(@RequestBody User user) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         User inDb = userRepository.findByUsername(user.getUsername());
 
-        return (userRepository.existsByUsername(user.getUsername()) &&
-                encoder.matches(user.getPassword(),inDb.getPassword()));
+        return userRepository.existsByUsername(user.getUsername())
+                && encoder.matches(user.getPassword(), inDb.getPassword());
     }
 
     /**
      * Adds a new user to the DB if the username isn't already taken and if the password != null.
+     *
      * @param user The user to be added (only username and password required)
      * @return the list of all users
      */
@@ -60,6 +70,7 @@ public class UserController {
     /**
      * Deletes an user.
      * !!! WIP - cannot delete once you add entries to the user...
+     *
      * @param user The user to be deleted - only username is required.
      * @return the list of all users after deletion.
      */
