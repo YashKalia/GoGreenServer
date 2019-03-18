@@ -55,15 +55,15 @@ public class UserController {
      * @return the list of all users
      */
     @PostMapping(value = "/register")
-    public List<User> addUser(@RequestBody User user) {
+    public boolean addUser(@RequestBody User user) {
         if (userRepository.findByUsername(user.getUsername()) == null
                 && (!user.getPassword().equals(null))) {
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             user.setPassword(encoder.encode(user.getPassword()));
             userRepository.save(user);
-            return userRepository.findAll();
+            return true;
         } else {
-            return null;
+            return false;
         }
     }
 
@@ -83,5 +83,4 @@ public class UserController {
             return null;
         }
     }
-
 }
