@@ -40,16 +40,29 @@ public class EntryControllerTest {
 
     private Feature feature1 = new Feature();
     private Feature feature2 = new Feature();
+    private Feature feature3 = new Feature();
+    private Feature feature4 = new Feature();
+    private Feature feature5 = new Feature();
+    private Feature feature6 = new Feature();
 
     private RequestUserFeature req1;
 
     private Entry entry1;
     private Entry entry2;
     private Entry entry3;
+    private Entry entry4;
+    private Entry entry5;
+    private Entry entry6;
+    private Entry entry7;
 
     List<Entry> allEntries = new ArrayList<>();
     List<Entry> entriesUser = new ArrayList<>();
-    List<Entry> entriesFeature = new ArrayList<>();
+    List<Entry> entriesFeature1 = new ArrayList<>();
+    List<Entry> entriesFeature2 = new ArrayList<>();
+    List<Entry> entriesFeature3 = new ArrayList<>();
+    List<Entry> entriesFeature4 = new ArrayList<>();
+    List<Entry> entriesFeature5 = new ArrayList<>();
+    List<Entry> entriesFeature6 = new ArrayList<>();
 
     @Before
     public void setup() {
@@ -60,18 +73,38 @@ public class EntryControllerTest {
         user2.setId(2);
 
         feature1.setId(1);
-        feature1.setFeatureName("Eating a vegetarian meal");
+        feature1.setFeatureName("Eating a vegan meal");
         feature1.setFeatureValue(10);
 
         feature2.setId(2);
-        feature2.setFeatureName("Riding a bike to work");
-        feature2.setFeatureValue(20);
+        feature2.setFeatureName("Buying local produce");
+        feature2.setFeatureValue(10);
+
+        feature3.setId(3);
+        feature3.setFeatureName("Using bike instead of car");
+        feature3.setFeatureValue(20);
+
+        feature4.setId(4);
+        feature4.setFeatureName("Using public transport instead of car");
+        feature4.setFeatureValue(15);
+
+        feature5.setId(5);
+        feature5.setFeatureName("Lowering the temperature of your home");
+        feature5.setFeatureValue(10);
+
+        feature6.setId(6);
+        feature6.setFeatureName("Installing solar panels");
+        feature6.setFeatureValue(100);
 
         req1 = new RequestUserFeature(feature1, user1);
 
         entry1 = new Entry(feature1, user1);
         entry2 = new Entry(feature1, user2);
         entry3 = new Entry(feature2, user1);
+        entry4 = new Entry(feature3, user2);
+        entry5 = new Entry(feature4, user1);
+        entry6 = new Entry(feature5, user2);
+        entry7 = new Entry(feature6, user1);
 
         allEntries.add(entry1);
         allEntries.add(entry2);
@@ -80,8 +113,13 @@ public class EntryControllerTest {
         entriesUser.add(entry1);
         entriesUser.add(entry3);
 
-        entriesFeature.add(entry1);
-        entriesFeature.add(entry2);
+        entriesFeature1.add(entry1);
+        entriesFeature1.add(entry2);
+        entriesFeature2.add(entry3);
+        entriesFeature3.add(entry4);
+        entriesFeature4.add(entry5);
+        entriesFeature5.add(entry6);
+        entriesFeature6.add(entry7);
 
     }
 
@@ -119,20 +157,86 @@ public class EntryControllerTest {
 
         when(featureRepository.findByFeatureName(feature1.getFeatureName())).thenReturn(feature1);
 
-        when(entryRepository.findByFeatureId((long) 1)).thenReturn(entriesFeature);
+        when(entryRepository.findByFeatureId((long) 1)).thenReturn(entriesFeature1);
 
-        assertEquals(entriesFeature, entryController.getEntriesByFeature(feature1));
+        assertEquals(entriesFeature1, entryController.getEntriesByFeature(feature1));
 
     }
 
     @Test
     public void testGetAllVegetarianMeals() {
 
-        when(entryRepository.findByFeatureId(1)).thenReturn(entriesFeature);
+        when(entryRepository.findByFeatureId(1)).thenReturn(entriesFeature1);
 
         when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
 
         assertEquals(1, entryController.getAllVegetarianMeals(user1));
+
+    }
+
+    @Test
+    public void testGetAllLocalProduce() {
+
+        when(entryRepository.findByFeatureId(2)).thenReturn(entriesFeature2);
+
+        when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
+
+        assertEquals(1, entryController.getAllLocalProduce(user1));
+
+    }
+
+    @Test
+    public void testGetAllBikeRides() {
+
+        when(entryRepository.findByFeatureId(3)).thenReturn(entriesFeature3);
+
+        when(userRepository.findByUsername(user2.getUsername())).thenReturn(user2);
+
+        assertEquals(1, entryController.getAllBikeRides(user2));
+
+    }
+
+    @Test
+    public void testGetAllPublicTransport() {
+
+        when(entryRepository.findByFeatureId(4)).thenReturn(entriesFeature4);
+
+        when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
+
+        assertEquals(1, entryController.getAllPublicTransport(user1));
+
+    }
+
+    @Test
+    public void testGetAllLoweringTemperature() {
+
+        when(entryRepository.findByFeatureId(5)).thenReturn(entriesFeature5);
+
+        when(userRepository.findByUsername(user2.getUsername())).thenReturn(user2);
+
+        assertEquals(1, entryController.getAllLoweringTemperature(user2));
+
+    }
+
+    @Test
+    public void testGetAllSolarPanels() {
+
+        when(entryRepository.findByFeatureId(6)).thenReturn(entriesFeature6);
+
+        when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
+
+        assertEquals(1, entryController.getAllSolarPanels(user1));
+
+    }
+
+    @Test
+    public void testGetEntriesByUserAndFeature() {
+
+        when(entryRepository.findByFeatureId(1)).thenReturn(entriesFeature1);
+
+        when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
+
+        assertEquals(1, entryController.getEntriesByUserAndFeature(user1, 1));
 
     }
 
