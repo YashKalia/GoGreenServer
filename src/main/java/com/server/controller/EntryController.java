@@ -105,6 +105,26 @@ public class EntryController {
     }
 
     /**
+     * Retrieves how many times a user has used public transport instead of a car.
+     * @param user The user whose entries should be retrieved
+     * @return int Total number of times the specified user has used public transport instead of a car
+     */
+    @PostMapping(value = "/getloweringtemperature")
+    public int getAllLoweringTemperature(@RequestBody User user) {
+        return getEntriesByUserAndFeature(user, 5);
+    }
+
+    /**
+     * Retrieves how many times a user has installed a solar panel.
+     * @param user The user whose entries should be retrieved
+     * @return int Total number of times the specified user has installed a solar panel
+     */
+    @PostMapping(value = "/getloweringtemperature")
+    public int getAllSolarPanels(@RequestBody User user) {
+        return getEntriesByUserAndFeature(user, 6);
+    }
+
+    /**
      * Retrieves all entries from a user that contains a certain feature.
      * @param user, featureId The user whose entries should be retrieved, the feature ID
      * @return int Total number of times the specified user has added an entry with the specified feature
@@ -125,15 +145,5 @@ public class EntryController {
     public List<Entry> getAllEntries() {
         return entryRepository.findAll();
     }
-
-    // Francine's code above, Calin's below
-
-    /*
-    please work, yes?
-    *
-    *
-    *
-    *
-     */
 
 }
