@@ -20,6 +20,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "user_id")
     private long id;
+
     private String username;
     private String password;
 
