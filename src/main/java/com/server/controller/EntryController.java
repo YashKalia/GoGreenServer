@@ -95,6 +95,16 @@ public class EntryController {
     }
 
     /**
+     * Retrieves how many times a user has used public transport instead of a car.
+     * @param user The user whose entries should be retrieved
+     * @return int Total number of times the specified user has used public transport instead of a car
+     */
+    @PostMapping(value = "/getpublictransport")
+    public int getAllPublicTransport(@RequestBody User user) {
+        return getEntriesByUserAndFeature(user, 4);
+    }
+
+    /**
      * Retrieves all entries from a user that contains a certain feature.
      * @param user, featureId The user whose entries should be retrieved, the feature ID
      * @return int Total number of times the specified user has added an entry with the specified feature
