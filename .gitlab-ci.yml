@@ -1,3 +1,8 @@
-image: 3.6.0-jdk-8
+image: java:latest
+stages:
+    - build
+    - execute
+    
 build:
+      stage: build
       script: "mvn install -B"
