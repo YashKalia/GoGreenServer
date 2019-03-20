@@ -35,6 +35,7 @@ public class FriendsController {
      * 3. The set friends pairs are scanned, and if the user has already added that friend,
      * a new error is thrown.
      * 4. Otherwise, the pair is added to the database.
+     *
      * @param friends The pairing of the user who sends the request and the user they want to add
      * @return a boolean to indicate whether or not the friend has been added successfully
      */
@@ -65,6 +66,7 @@ public class FriendsController {
     /**
      * This method finds all the friends request you have ever sent.
      * It's a set which will make life easier with following methods.
+     *
      * @param username the username whose friends to get.
      * @return a set of all usernames of people the user has added
      */
@@ -84,12 +86,13 @@ public class FriendsController {
      * Works as follows:
      * 1. Gets the user from the database to check if it exists
      * 2. finds a all friends the user has added regardless of if they added them back or not
+     *
      * @param username the username of the people who's friends request
      *                 should be retrieved.
      * @return the list of all people who added that user as a friend.
      */
     @GetMapping(value = "/getpeoplewhobefriendedme/{username}")
-    protected Set<String> getPeopleWhoBefriendedMe(@PathVariable String username) {
+    public Set<String> getPeopleWhoBefriendedMe(@PathVariable String username) {
         User user = userRepository.findByUsername(username);
         Set<String> result = new HashSet<>();
         Set<Friends> allFriends = friendsRepository.findByFriendId(user.getId());
@@ -104,14 +107,16 @@ public class FriendsController {
      * It uses set intersection between the following sets:
      * - all the people who the user has added
      * - all the people who have added the user
+     *
      * @param username the user whose friends will be retreived
      * @return a set of all the usernames of people who are both added by and have added the user
      */
     @GetMapping(value = "/getmutualfriends/{username}")
     public Set<String> getMutualFriends(@PathVariable String username) {
-        Set<String> intersection = new HashSet<String>(getPeopleWhoBefriendedMe(username));
-        intersection.retainAll(getMyFriends(username));
-        return intersection;
+        User user = userRepository.findByUsername(username);
+        Set<String> result = new HashSet<>(getPeopleWhoBefriendedMe(user.getUsername()));
+        result.retainAll(getMyFriends(user.getUsername()));
+        return result;
     }
 
     /**
@@ -119,13 +124,15 @@ public class FriendsController {
      * THe method uses set difference between the following two sets, in this order:
      * - the set of all people who have added the user
      * - the set of all people who the user has added.
+     *
      * @param username the username whose requests should be gotten.
      * @return a set of usernames of users who have added the user but haven't been added back.
      */
     @GetMapping(value = "/getpendingfriendrequests/{username}")
     public Set<String> getPendingFriendRequests(@PathVariable String username) {
-        Set<String> difference = new HashSet<>(getPeopleWhoBefriendedMe(username));
-        difference.removeAll(getMyFriends(username));
+        User user = userRepository.findByUsername(username);
+        Set<String> difference = getPeopleWhoBefriendedMe(user.getUsername());
+        difference.removeAll(getMyFriends(user.getUsername()));
         return difference;
     }
 
