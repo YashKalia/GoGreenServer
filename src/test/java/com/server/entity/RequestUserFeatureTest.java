@@ -114,4 +114,11 @@ public class RequestUserFeatureTest {
 
     }
 
+    @Test
+    public void testDefaultConstructor() {
+        entry1 = new RequestUserFeature();
+        assertEquals(null,entry1.getUser());
+        assertEquals(null,entry1.getFeature());
+    }
+
 }

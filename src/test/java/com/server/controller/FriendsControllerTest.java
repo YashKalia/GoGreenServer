@@ -36,12 +36,10 @@ public class FriendsControllerTest {
     private User user4;
     private Friends u1u1;
     private Friends u1u2;
-    private Friends u2u1;
     private Friends u1u3;
     private Friends u3u2;
     private Friends u3u4;
     private Friends u2u4;
-    private Friends u4u1;
     private Friends u2u3;
 
     @Before
@@ -57,12 +55,10 @@ public class FriendsControllerTest {
 
         u1u1 = new Friends(user1, user1);
         u1u2 = new Friends(user1, user2);
-        u2u1 = new Friends(user2, user1);
         u1u3 = new Friends(user1, user3);
         u3u2 = new Friends(user3, user2);
         u3u4 = new Friends(user3, user4);
         u2u4 = new Friends(user2, user4);
-        u4u1 = new Friends(user4, user1);
         u2u3 = new Friends(user2, user3);
     }
 
@@ -89,7 +85,6 @@ public class FriendsControllerTest {
         when(userRepository.findByUsername(u1u2.getUser().getUsername())).thenReturn(user1);
         when(userRepository.findByUsername(u1u2.getFriend().getUsername())).thenReturn(user2);
         when(friendsRepository.findByUserId((user1.getId()))).thenReturn(friends);
-        friendsController.addFriend(u1u2);
         friendsController.addFriend(u1u2);
     }
 
