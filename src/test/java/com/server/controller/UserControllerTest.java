@@ -75,7 +75,7 @@ public class UserControllerTest {
     @Test
     public void testAddUserSuccess() {
 
-        when(userRepository.findAll()).thenReturn(users);
+//        when(userRepository.findAll()).thenReturn(users);
 
         userController.addUser(user1);
         userController.addUser(user2);
