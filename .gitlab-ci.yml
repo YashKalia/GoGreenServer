@@ -13,10 +13,3 @@ build:
     reports:
       junit:
         - target/surefire-reports/TEST-*.xml
-        - target/failsafe-reports/TEST-*.xml
-
-checkstyle:
-  stage: checkstyle
-  script:
-    - "mvn site"
-  artifacts:
