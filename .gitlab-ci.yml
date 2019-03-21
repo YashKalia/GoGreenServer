@@ -8,8 +8,9 @@ build:
   stage: build
   script: 
     - "mvn install -B"
-    - "cat target/site/jacoco/index.html"
-
+    - "mvn test"
+    - "mvn jacoco:report"
+    - "echo \"$(cat target/site/jacoco/testcoverage.txt)% covered\""
 checkstyle:
   stage: checkstyle
   script:
