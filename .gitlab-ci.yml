@@ -1,14 +1,12 @@
 image: maven:3.3.9-jdk-8
 
 stages:
-  - build
-  - checkstyle
+  - test
   
-build:
-  stage: build
-  script: 
-    - "mvn install -B"
-    - "mvn verify"
+java:
+  stage: test
+  script:
+  - mvn verify
   artifacts:
     reports:
       junit:
