@@ -1,3 +1,17 @@
-image: 3.6.0-jdk-8
+image: maven:3.3.9-jdk-8
+
+stages:
+  - build
+  - test
+
 build:
-      script: "mvn install -B"
+  stage: build
+  script: "mvn install -B"
+
+test:
+  stage: test
+  script:
+    - "mvn clean verify"
+  artifacts:
+    paths:
+      - target/site/jacoco/
