@@ -75,12 +75,12 @@ public class UserControllerTest {
     @Test
     public void testAddUserSuccess() {
 
-        when(userRepository.findAll()).thenReturn(users);
+//        when(userRepository.findAll()).thenReturn(users);
 
         userController.addUser(user1);
         userController.addUser(user2);
 
-        assertEquals(users, userController.addUser(user3));
+        assertEquals(true, userController.addUser(user3));
 
     }
 
@@ -93,7 +93,7 @@ public class UserControllerTest {
 
         when(userRepository.findByUsername("user1")).thenReturn(user1);
 
-        assertNull(userController.addUser(user1));
+        assertEquals(false,userController.addUser(user1));
 
     }
 
@@ -104,7 +104,7 @@ public class UserControllerTest {
 
         when(userRepository.findByUsername("user1")).thenReturn(user1);
 
-        assertNull(userController.addUser(user1));
+        assertEquals(false,userController.addUser(user1));
 
     }
 
