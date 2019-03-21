@@ -3,19 +3,12 @@ image: maven:3.3.9-jdk-8
 stages:
   - build
   - test
-  - checkstyle
-
+  
 build:
   stage: build
-  script: "mvn install -B"
-
-test:
-  stage: test
-  script:
-    - "mvn clean verify"
-  artifacts:
-    paths:
-      - target/site/jacoco/
+  script: 
+    - "mvn install -B"
+    - "cat target/site/jacoco/index.html"
 
 checkstyle:
   stage: checkstyle
