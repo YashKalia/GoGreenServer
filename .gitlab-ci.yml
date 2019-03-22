@@ -22,5 +22,11 @@ java:
 checkstyle:
   stage: checkstyle
   script:
-    - "mvn site"
+    - mvn site
+    - mkdir public
+    - mv target/site/checkstyle.html public
+    - mv target/site/images public
+    - mv target/site/css public
   artifacts:
+    paths:
+      - public
