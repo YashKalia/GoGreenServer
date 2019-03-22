@@ -71,15 +71,74 @@ public class EntryController {
      */
     @PostMapping(value = "/getvegetarianmeals")
     public int getAllVegetarianMeals(@RequestBody User user) {
-        List<Entry> entries = entryRepository.findByFeatureId(1);
-        int nrOfVegetarianMeals = 0;
-        long id = userRepository.findByUsername(user.getUsername()).getId();
-        for (Entry e : entries) {
-            if (e.getUser().getId() == id) {
-                nrOfVegetarianMeals++;
+        return getEntriesByUserAndFeature(user, 1);
+    }
+
+    /**
+     * Retrieves how many times a user has bought local produce.
+     * @param user The user whose entries should be retrieved
+     * @return int Total number of times the specified user has used a bike instead of a car
+     */
+    @PostMapping(value = "/getlocalproduce")
+    public int getAllLocalProduce(@RequestBody User user) {
+        return getEntriesByUserAndFeature(user, 2);
+    }
+
+    /**
+     * Retrieves how many times a user has used a bike instead of a car.
+     * @param user The user whose entries should be retrieved
+     * @return int Total number of times the specified user has used a bike instead of a car
+     */
+    @PostMapping(value = "/getbikerides")
+    public int getAllBikeRides(@RequestBody User user) {
+        return getEntriesByUserAndFeature(user, 3);
+    }
+
+    /**
+     * Retrieves how many times a user has used public transport instead of a car.
+     * @param user The user whose entries should be retrieved
+     * @return int Total number of times the specified user has used public transport instead of a car
+     */
+    @PostMapping(value = "/getpublictransport")
+    public int getAllPublicTransport(@RequestBody User user) {
+        return getEntriesByUserAndFeature(user, 4);
+    }
+
+    /**
+     * Retrieves how many times a user has used public transport instead of a car.
+     * @param user The user whose entries should be retrieved
+     * @return int Total number of times the specified user has used public transport instead of a car
+     */
+    @PostMapping(value = "/getloweringtemperature")
+    public int getAllLoweringTemperature(@RequestBody User user) {
+        return getEntriesByUserAndFeature(user, 5);
+    }
+
+    /**
+     * Retrieves how many times a user has installed a solar panel.
+     * @param user The user whose entries should be retrieved
+     * @return int Total number of times the specified user has installed a solar panel
+     */
+    @PostMapping(value = "/getloweringtemperature")
+    public int getAllSolarPanels(@RequestBody User user) {
+        return getEntriesByUserAndFeature(user, 6);
+    }
+
+    /**
+     * Retrieves all entries from a user that contains a certain feature.
+     * @param user, featureId The user whose entries should be retrieved, the feature ID
+     * @return int Total number of times the specified user has added an entry with the specified feature
+     */
+    public int getEntriesByUserAndFeature(User user, int featureId) {
+        long userId = userRepository.findByUsername(user.getUsername()).getId();
+        List<Entry> entries = entryRepository.findByFeatureId(featureId);
+        int total = 0;
+        for (Entry entry : entries) {
+            if (entry.getUser().getId() == userId) {
+                total++;
             }
         }
-        return nrOfVegetarianMeals;
+        return total;
     }
 
     @GetMapping(value = "/get")

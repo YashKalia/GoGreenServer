@@ -96,4 +96,10 @@ public class RoleTest {
 
     }
 
+    @Test
+    public void testDefaultConstructor() {
+        role1 = new Role();
+        assertEquals(null,role1.getRole());
+    }
+
 }
