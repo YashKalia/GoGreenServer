@@ -18,14 +18,14 @@ public class Entry {
     private long id;
 
     @OneToOne()
-    @JoinColumn(name = "featureID")
+    @JoinColumn(name = "feature_id")
     private Feature feature;
 
     @Column(name = "date")
     private Date date = new Date();
 
     @OneToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Entry() {}

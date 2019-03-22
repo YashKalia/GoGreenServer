@@ -18,12 +18,14 @@ public class FeatureTest {
         feature1 = new Feature();
         feature1.setId(1);
         feature1.setFeatureName("Eating a vegetarian meal");
-        feature1.setFeatureValue(10);
+        feature1.setPoints(10);
+        feature1.setCo2(1.2);
 
         feature2 = new Feature();
         feature2.setId(1);
         feature2.setFeatureName("Eating a vegetarian meal");
-        feature2.setFeatureValue(10);
+        feature2.setPoints(10);
+        feature2.setCo2(1.2);
 
     }
 
@@ -60,18 +62,34 @@ public class FeatureTest {
     }
 
     @Test
-    public void testGetFeatureValue() {
+    public void testGetFeaturePoints() {
 
-        assertEquals(10, feature1.getFeatureValue());
+        assertEquals(10, feature1.getPoints());
 
     }
 
     @Test
-    public void testSetFeatureValue() {
+    public void testSetFeaturePoints() {
 
-        feature1.setFeatureValue(15);
+        feature1.setPoints(15);
 
-        assertEquals(15, feature1.getFeatureValue());
+        assertEquals(15, feature1.getPoints());
+
+    }
+
+    @Test
+    public void testGetFeatureCo2() {
+
+        assertTrue(1.2 == feature1.getCo2());
+
+    }
+
+    @Test
+    public void testSetFeatureCo2() {
+
+        feature1.setCo2(1.5);
+
+        assertTrue(1.5 == feature1.getCo2());
 
     }
 
@@ -110,9 +128,18 @@ public class FeatureTest {
     }
 
     @Test
-    public void testEqualsWrongValue() {
+    public void testEqualsWrongPoints() {
 
-        feature2.setFeatureValue(20);
+        feature2.setPoints(20);
+
+        assertFalse(feature1.equals(feature2));
+
+    }
+
+    @Test
+    public void testEqualsWrongCo2() {
+
+        feature2.setCo2(1.5);
 
         assertFalse(feature1.equals(feature2));
 

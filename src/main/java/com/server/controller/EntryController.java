@@ -97,7 +97,7 @@ public class EntryController {
     /**
      * Retrieves how many times a user has used public transport instead of a car.
      * @param user The user whose entries should be retrieved
-     * @return int Total number of times the specified user has used public transport instead of a car
+     * @return int Total number of times the user has used public transport instead of a car
      */
     @PostMapping(value = "/getpublictransport")
     public int getAllPublicTransport(@RequestBody User user) {
@@ -105,9 +105,9 @@ public class EntryController {
     }
 
     /**
-     * Retrieves how many times a user has used public transport instead of a car.
+     * Retrieves how many times a user has lowered the temperature of their home.
      * @param user The user whose entries should be retrieved
-     * @return int Total number of times the specified user has used public transport instead of a car
+     * @return int Total number of times user has lowered the house temperature
      */
     @PostMapping(value = "/getloweringtemperature")
     public int getAllLoweringTemperature(@RequestBody User user) {
@@ -119,15 +119,15 @@ public class EntryController {
      * @param user The user whose entries should be retrieved
      * @return int Total number of times the specified user has installed a solar panel
      */
-    @PostMapping(value = "/getloweringtemperature")
+    @PostMapping(value = "/getsolarpanels")
     public int getAllSolarPanels(@RequestBody User user) {
         return getEntriesByUserAndFeature(user, 6);
     }
 
     /**
      * Retrieves all entries from a user that contains a certain feature.
-     * @param user, featureId The user whose entries should be retrieved, the feature ID
-     * @return int Total number of times the specified user has added an entry with the specified feature
+     * @param user featureId The user whose entries should be retrieved, the feature ID
+     * @return int Total number of times the user has added an entry with the specified feature
      */
     public int getEntriesByUserAndFeature(User user, int featureId) {
         long userId = userRepository.findByUsername(user.getUsername()).getId();
@@ -139,6 +139,24 @@ public class EntryController {
             }
         }
         return total;
+    }
+
+    /**
+     * Retrieves how much CO2 the user has saved in total.
+     * @param user The user whose CO2 emissions should be calculated
+     * @return int Total amount (in grams) of CO2 emissions that the user has saved
+     */
+    @PostMapping(value = "/gettotalco2")
+    public double getTotalCo2(@RequestBody User user) {
+
+        long userId = userRepository.findByUsername(user.getUsername()).getId();
+        List<Entry> entries = entryRepository.findByUserId(userId);
+        double total = 0;
+        for (Entry entry : entries) {
+            total += entry.getFeature().getCo2();
+        }
+        return total;
+
     }
 
     @GetMapping(value = "/get")

@@ -13,14 +13,17 @@ public class Feature {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "featureID")
+    @Column(name = "feature_id")
     private long id;
 
     @Column(name = "feature_name")
     private String featureName;
 
-    @Column(name = "feature_value")
-    private int featureValue;
+    @Column(name = "points")
+    private int points;
+
+    @Column(name = "co2")
+    private double co2;
 
     public Feature() {}
 
@@ -40,12 +43,20 @@ public class Feature {
         this.featureName = featureName;
     }
 
-    public int getFeatureValue() {
-        return featureValue;
+    public int getPoints() {
+        return points;
     }
 
-    public void setFeatureValue(int featureValue) {
-        this.featureValue = featureValue;
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public double getCo2() {
+        return co2;
+    }
+
+    public void setCo2(double co2) {
+        this.co2 = co2;
     }
 
     @Override
@@ -63,7 +74,10 @@ public class Feature {
         if (!featureName.equals(other.featureName)) {
             return false;
         }
-        if (featureValue != other.featureValue) {
+        if (points != other.points) {
+            return false;
+        }
+        if (co2 != other.co2) {
             return false;
         }
         return true;

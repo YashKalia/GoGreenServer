@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -73,28 +74,34 @@ public class EntryControllerTest {
         user2.setId(2);
 
         feature1.setId(1);
-        feature1.setFeatureName("Eating a vegan meal");
-        feature1.setFeatureValue(10);
+        feature1.setFeatureName("Eating a vegetarian meal");
+        feature1.setPoints(10);
+        feature1.setCo2(1.2);
 
         feature2.setId(2);
         feature2.setFeatureName("Buying local produce");
-        feature2.setFeatureValue(10);
+        feature2.setPoints(10);
+        feature2.setCo2(4.3);
 
         feature3.setId(3);
         feature3.setFeatureName("Using bike instead of car");
-        feature3.setFeatureValue(20);
+        feature3.setPoints(20);
+        feature3.setCo2(5.1);
 
         feature4.setId(4);
         feature4.setFeatureName("Using public transport instead of car");
-        feature4.setFeatureValue(15);
+        feature4.setPoints(15);
+        feature4.setCo2(3.1);
 
         feature5.setId(5);
         feature5.setFeatureName("Lowering the temperature of your home");
-        feature5.setFeatureValue(10);
+        feature5.setPoints(10);
+        feature5.setCo2(4.6);
 
         feature6.setId(6);
         feature6.setFeatureName("Installing solar panels");
-        feature6.setFeatureValue(100);
+        feature6.setPoints(100);
+        feature6.setCo2(101.3);
 
         req1 = new RequestUserFeature(feature1, user1);
 
@@ -237,6 +244,17 @@ public class EntryControllerTest {
         when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
 
         assertEquals(1, entryController.getEntriesByUserAndFeature(user1, 1));
+
+    }
+
+    @Test
+    public void testGetTotalCo2() {
+
+        when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
+
+        when(entryRepository.findByUserId(1)).thenReturn(entriesUser);
+
+        assertTrue(5.5 == entryController.getTotalCo2(user1));
 
     }
 

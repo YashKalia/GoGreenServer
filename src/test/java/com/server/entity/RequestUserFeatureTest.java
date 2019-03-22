@@ -12,8 +12,8 @@ public class RequestUserFeatureTest {
     private User user1;
     private User user2;
 
-    private Feature feature1;
-    private Feature feature2;
+    private Feature feature1 = new Feature();
+    private Feature feature2 = new Feature();
 
     private RequestUserFeature entry1;
     private RequestUserFeature entry2;
@@ -26,15 +26,15 @@ public class RequestUserFeatureTest {
         user2 = new User("user2", "password");
         user2.setId((long) 2);
 
-        feature1 = new Feature();
         feature1.setId(1);
         feature1.setFeatureName("Eating a vegetarian meal");
-        feature1.setFeatureValue(10);
+        feature1.setPoints(10);
+        feature1.setCo2(1.2);
 
-        feature2 = new Feature();
         feature2.setId(2);
         feature2.setFeatureName("Riding a bike to work");
-        feature2.setFeatureValue(20);
+        feature2.setPoints(20);
+        feature2.setCo2(5.1);
 
         entry1 = new RequestUserFeature(feature1, user1);
         entry2 = new RequestUserFeature(feature1, user1);
