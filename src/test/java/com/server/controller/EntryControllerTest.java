@@ -1,9 +1,6 @@
 package com.server.controller;
 
-import com.server.entity.Entry;
-import com.server.entity.Feature;
-import com.server.entity.RequestUserFeature;
-import com.server.entity.User;
+import com.server.entity.*;
 import com.server.repository.EntryRepository;
 import com.server.repository.FeatureRepository;
 import com.server.repository.UserRepository;
@@ -36,6 +33,9 @@ public class EntryControllerTest {
     @Mock
     FeatureRepository featureRepository;
 
+    @Mock
+    BadgesEarnedController badgesEarnedController;
+
     private User user1;
     private User user2;
 
@@ -65,8 +65,20 @@ public class EntryControllerTest {
     List<Entry> entriesFeature5 = new ArrayList<>();
     List<Entry> entriesFeature6 = new ArrayList<>();
 
+    private Badge badge1 = new Badge();
+    private Badge badge2;
+
+    private BadgesEarned badgesEarned1 = new BadgesEarned();
+    private BadgesEarned badgesEarned2;
+    private BadgesEarned badgesEarned3;
+
+    List<BadgesEarned> allBadges = new ArrayList<>();
+    List<BadgesEarned> userBadges = new ArrayList<>();
+
     @Before
     public void setup() {
+
+        badgesEarnedController = new BadgesEarnedController();
 
         user1 = new User("user1", "password");
         user1.setId(1);
@@ -103,7 +115,7 @@ public class EntryControllerTest {
         feature6.setPoints(100);
         feature6.setCo2(101.3);
 
-        req1 = new RequestUserFeature(feature1, user1);
+        req1 = new RequestUserFeature(feature1, user1, 1);
 
         entry1 = new Entry(feature1, user1);
         entry2 = new Entry(feature1, user2);
@@ -128,6 +140,30 @@ public class EntryControllerTest {
         entriesFeature5.add(entry6);
         entriesFeature6.add(entry7);
 
+        badge1.setId(11);
+        badge1.setBadgeName("First Vegetarian Meal Eaten");
+        badge1.setPointsNeeded(10);
+
+        badge2 = new Badge("First Local Produce Bought", 10);
+        badge2.setId(21);
+
+        badgesEarned1.setId(1);
+        badgesEarned1.setBadge(badge1);
+        badgesEarned1.setUser(user1);
+
+        badgesEarned2 = new BadgesEarned(badge2, user2);
+        badgesEarned2.setId(2);
+
+        badgesEarned3 = new BadgesEarned(badge2, user1);
+        badgesEarned3.setId(3);
+
+        allBadges.add(badgesEarned1);
+        allBadges.add(badgesEarned2);
+        allBadges.add(badgesEarned3);
+
+        userBadges.add(badgesEarned1);
+        userBadges.add(badgesEarned3);
+
     }
 
     @Test
@@ -141,6 +177,10 @@ public class EntryControllerTest {
 
     @Test
     public void testAddEntry() {
+
+        when(entryRepository.findByUserId(user1.getId())).thenReturn(entriesUser);
+
+       // when(badgesEarnedController.addBadge(req1)).thenReturn(allBadges);
 
         when(entryRepository.findAll()).thenReturn(allEntries);
 
@@ -255,6 +295,93 @@ public class EntryControllerTest {
         when(entryRepository.findByUserId(1)).thenReturn(entriesUser);
 
         assertTrue(5.5 == entryController.getTotalCo2(user1));
+
+    }
+
+    @Test
+    public void testCheckBadgesReturn1() {
+
+        when(entryRepository.findByUserId(user1.getId())).thenReturn(new ArrayList<Entry>());
+
+        assertTrue(1 == entryController.checkBadges(user1, feature1));
+
+    }
+
+    @Test
+    public void testCheckBadgesReturn2() {
+
+        List<Entry> ent = new ArrayList<>();
+        Entry e = new Entry(feature1, user1);
+
+        for (int i = 1; i < 5; i++) {
+
+            e.setId(i);
+            ent.add(e);
+
+        }
+
+        when(entryRepository.findByUserId(user1.getId())).thenReturn(ent);
+
+        assertTrue(2 == entryController.checkBadges(user1, feature1));
+
+    }
+
+    @Test
+    public void testCheckBadgesReturn3() {
+
+        List<Entry> ent = new ArrayList<>();
+        Entry e = new Entry(feature1, user1);
+
+        for (int i = 1; i < 20; i++) {
+
+            e.setId(i);
+            ent.add(e);
+
+        }
+
+        when(entryRepository.findByUserId(user1.getId())).thenReturn(ent);
+
+        assertTrue(3 == entryController.checkBadges(user1, feature1));
+
+    }
+
+    @Test
+    public void testCheckBadgesReturn4() {
+
+        List<Entry> ent = new ArrayList<>();
+        Entry e = new Entry(feature1, user1);
+
+        for (int i = 1; i < 50; i++) {
+
+            e.setId(i);
+            ent.add(e);
+
+        }
+
+        when(entryRepository.findByUserId(user1.getId())).thenReturn(ent);
+
+        assertTrue(4 == entryController.checkBadges(user1, feature1));
+
+    }
+
+    @Test
+    public void testCheckBadgesReturn0() {
+
+        List<Entry> ent = new ArrayList<>();
+        Entry e = new Entry(feature1, user1);
+        Entry e2 = new Entry(feature2, user1);
+        ent.add(e2);
+
+        for (int i = 1; i < 3; i++) {
+
+            e.setId(i);
+            ent.add(e);
+
+        }
+
+        when(entryRepository.findByUserId(user1.getId())).thenReturn(ent);
+
+        assertTrue(0 == entryController.checkBadges(user1, feature1));
 
     }
 

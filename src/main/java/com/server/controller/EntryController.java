@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,6 +29,9 @@ public class EntryController {
 
     @Autowired
     FeatureRepository featureRepository;
+
+    @Autowired
+    BadgesEarnedController badgesEarnedController = new BadgesEarnedController();
 
     /**
      * RequestUserFeature is a custom class made of 1 user and 1 feature.
@@ -48,6 +52,7 @@ public class EntryController {
         User us = userRepository.findByUsername(user.getUsername());
         Feature fe = featureRepository.findByFeatureName(feature.getFeatureName());
         Entry en = new Entry(fe, us);
+        checkBadges(us, fe);
         entryRepository.save(en);
         return entryRepository.findAll();
     }
@@ -162,6 +167,53 @@ public class EntryController {
     @GetMapping(value = "/get")
     public List<Entry> getAllEntries() {
         return entryRepository.findAll();
+    }
+
+    public int checkBadges(User user, Feature feature) {
+
+        List<Entry> allEntries = entryRepository.findByUserId(user.getId());
+        List<Entry> featureEntries = new ArrayList<>();
+
+        for (Entry entry : allEntries) {
+            if (entry.getFeature().getId() == feature.getId()) {
+                featureEntries.add(entry);
+            }
+        }
+
+        if (featureEntries.size() == 0) {
+
+            badgesEarnedController.addBadge(new RequestUserFeature(feature, user, 1));
+
+            return 1;
+
+        }
+
+        else if (featureEntries.size() == 4) {
+
+            badgesEarnedController.addBadge(new RequestUserFeature(feature, user, 2));
+
+            return 2;
+
+        }
+
+        else if (featureEntries.size() == 19) {
+
+            badgesEarnedController.addBadge(new RequestUserFeature(feature, user, 3));
+
+            return 3;
+
+        }
+
+        else if (featureEntries.size() == 49) {
+
+            badgesEarnedController.addBadge(new RequestUserFeature(feature, user, 4));
+
+            return 4;
+
+        }
+
+        return 0;
+
     }
 
 }

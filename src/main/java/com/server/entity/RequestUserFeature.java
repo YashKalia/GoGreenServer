@@ -3,12 +3,19 @@ package com.server.entity;
 public class RequestUserFeature {
     private User user;
     private Feature feature;
+    private int badgeCode;
 
     public RequestUserFeature() {}
 
     public RequestUserFeature(Feature feature, User user) {
         this.user = user;
         this.feature = feature;
+    }
+
+    public RequestUserFeature(Feature feature, User user, int badgeCode) {
+        this.user = user;
+        this.feature = feature;
+        this.badgeCode = badgeCode;
     }
 
     public User getUser() {
@@ -25,6 +32,14 @@ public class RequestUserFeature {
 
     public void setFeature(Feature feature) {
         this.feature = feature;
+    }
+
+    public int getBadgeCode() {
+        return badgeCode;
+    }
+
+    public void setBadgeCode(int badgeCode) {
+        this.badgeCode = badgeCode;
     }
 
     @Override

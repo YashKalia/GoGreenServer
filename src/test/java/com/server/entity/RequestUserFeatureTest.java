@@ -36,7 +36,7 @@ public class RequestUserFeatureTest {
         feature2.setPoints(20);
         feature2.setCo2(5.1);
 
-        entry1 = new RequestUserFeature(feature1, user1);
+        entry1 = new RequestUserFeature(feature1, user1, 1);
         entry2 = new RequestUserFeature(feature1, user1);
 
     }
@@ -70,6 +70,22 @@ public class RequestUserFeatureTest {
         entry1.setUser(user2);
 
         assertEquals(user2, entry1.getUser());
+
+    }
+
+    @Test
+    public void testGetBadgeCode() {
+
+        assertTrue(1 == entry1.getBadgeCode());
+
+    }
+
+    @Test
+    public void testSetBadgeCode() {
+
+        entry1.setBadgeCode(2);
+
+        assertTrue(2 == entry1.getBadgeCode());
 
     }
 
