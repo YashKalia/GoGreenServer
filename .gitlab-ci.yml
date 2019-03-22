@@ -1,13 +1,26 @@
 image: maven:3.3.9-jdk-8
 
 stages:
+  - build
   - test
-  
+  - checkstyle
+
+build:
+  stage: build
+  script:
+    - mvn install -B
+
 java:
   stage: test
   script:
-  - mvn verify
+    - mvn test
   artifacts:
     reports:
       junit:
         - target/surefire-reports/TEST-*.xml
+
+checkstyle:
+  stage: checkstyle
+  script:
+    - "mvn site"
+  artifacts:
