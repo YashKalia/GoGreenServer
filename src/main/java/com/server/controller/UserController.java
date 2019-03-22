@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/users")
-public class  UserController {
+public class UserController {
 
     @Autowired
     UserRepository userRepository;
@@ -36,6 +36,7 @@ public class  UserController {
      * If it is, then it checks the password against the hashed version in the database.
      * If they match, return true.
      * Otherwise, return false.
+     *
      * @param user the user to authenticate. Must contain both username and password.
      * @return a boolean. True if the conditions are met, false otherwise.
      */
@@ -55,16 +56,17 @@ public class  UserController {
      * @return the list of all users
      */
     @PostMapping(value = "/register")
-    public boolean addUser(@RequestBody User user) {
-        if (userRepository.findByUsername(user.getUsername()) == null
-                && (!user.getPassword().equals(null))) {
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            user.setPassword(encoder.encode(user.getPassword()));
-            userRepository.save(user);
-            return true;
-        } else {
-            return false;
+    public boolean addUser(@RequestBody User user) throws IllegalArgumentException {
+        if (userRepository.findByUsername(user.getUsername()) != null) {
+            throw new IllegalArgumentException("Username taken");
         }
+        if (user.getPassword().length() < 6) {
+            throw new IllegalArgumentException("Password must be greater than 6 characters");
+        }
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        user.setPassword(encoder.encode(user.getPassword()));
+        userRepository.save(user);
+        return true;
     }
 
     /**

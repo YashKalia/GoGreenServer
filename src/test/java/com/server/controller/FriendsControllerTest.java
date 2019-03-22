@@ -64,9 +64,11 @@ public class FriendsControllerTest {
 
     @Test
     public void testAdd() {
+        Set<Friends> fr = new HashSet<>();
+        fr.add(u1u3);
        when(userRepository.findByUsername(u1u2.getUser().getUsername())).thenReturn(user1);
        when(userRepository.findByUsername(u1u2.getFriend().getUsername())).thenReturn(user2);
-
+       when(friendsRepository.findByUserId(user1.getId())).thenReturn(fr);
         assertEquals(true,friendsController.addFriend(u1u2));
     }
 
