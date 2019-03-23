@@ -72,10 +72,11 @@ public class UserControllerTest {
 
     }
 
+
     @Test
     public void testAddUserSuccess() {
 
-//        when(userRepository.findAll()).thenReturn(users);
+//  when(userRepository.findAll()).thenReturn(users);
 
         userController.addUser(user1);
         userController.addUser(user2);
@@ -84,7 +85,12 @@ public class UserControllerTest {
 
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
+    public void testBadPassword() {
+        user1.setPassword("pw");
+        userController.addUser(user1);
+    }
+    @Test(expected = IllegalArgumentException.class)
     public void testAddUserFailureNoPassword() {
 
         userController.addUser(user2);
@@ -97,7 +103,7 @@ public class UserControllerTest {
 
     }
 
-    @Test
+    @Test( expected = IllegalArgumentException.class)
     public void testAddUserFailureUserAlreadyExists() {
 
         userController.addUser(user1);
