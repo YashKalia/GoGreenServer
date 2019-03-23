@@ -12,6 +12,13 @@ public class RequestUserFeature {
         this.feature = feature;
     }
 
+    /**
+     * Alternativa constructor made for BadgesEarnedController.
+     *
+     * @param feature The feature relevant for the badge request
+     * @param user The user relevant for the badge request
+     * @param badgeCode The badgeCode relevant for the badge request
+     */
     public RequestUserFeature(Feature feature, User user, int badgeCode) {
         this.user = user;
         this.feature = feature;

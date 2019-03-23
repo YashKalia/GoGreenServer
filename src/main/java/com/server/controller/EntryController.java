@@ -169,51 +169,40 @@ public class EntryController {
         return entryRepository.findAll();
     }
 
+    /**
+     * This method automates addng badges for users in the database whenever a new entry is added.
+     *
+     * @param user The user who might earn a badge
+     * @param feature The feature for which the badge might be earned
+     * @return int Code for which badge type was earned:
+     *     1 == Initial badge
+     *     2 == Bronze badge
+     *     3 == Silver badge
+     *     4 == Gold badge
+     *     0 == No badge
+     */
     public int checkBadges(User user, Feature feature) {
-
         List<Entry> allEntries = entryRepository.findByUserId(user.getId());
         List<Entry> featureEntries = new ArrayList<>();
-
         for (Entry entry : allEntries) {
             if (entry.getFeature().getId() == feature.getId()) {
                 featureEntries.add(entry);
             }
         }
-
         if (featureEntries.size() == 0) {
-
             badgesEarnedController.addBadge(new RequestUserFeature(feature, user, 1));
-
             return 1;
-
-        }
-
-        else if (featureEntries.size() == 4) {
-
+        } else if (featureEntries.size() == 4) {
             badgesEarnedController.addBadge(new RequestUserFeature(feature, user, 2));
-
             return 2;
-
-        }
-
-        else if (featureEntries.size() == 19) {
-
+        } else if (featureEntries.size() == 19) {
             badgesEarnedController.addBadge(new RequestUserFeature(feature, user, 3));
-
             return 3;
-
-        }
-
-        else if (featureEntries.size() == 49) {
-
+        } else if (featureEntries.size() == 49) {
             badgesEarnedController.addBadge(new RequestUserFeature(feature, user, 4));
-
             return 4;
-
         }
-
         return 0;
-
     }
 
 }

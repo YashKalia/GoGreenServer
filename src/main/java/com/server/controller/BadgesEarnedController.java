@@ -1,9 +1,22 @@
 package com.server.controller;
 
-import com.server.entity.*;
-import com.server.repository.*;
+import com.server.entity.Badge;
+import com.server.entity.BadgesEarned;
+import com.server.entity.Feature;
+import com.server.entity.RequestUserFeature;
+import com.server.entity.User;
+import com.server.repository.BadgeRepository;
+import com.server.repository.BadgesEarnedRepository;
+import com.server.repository.FeatureRepository;
+import com.server.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -37,7 +50,7 @@ public class BadgesEarnedController {
         Feature feature = requestUserFeature.getFeature();
         Feature featureF = featureRepository.findByFeatureName(feature.getFeatureName());
         int badgeCode = requestUserFeature.getBadgeCode();
-        long id = featureF.getId()*10 + badgeCode;
+        long id = featureF.getId() * 10 + badgeCode;
         Badge badge = badgeRepository.findById(id);
 
         BadgesEarned badgesEarned = new BadgesEarned(badge, userF);

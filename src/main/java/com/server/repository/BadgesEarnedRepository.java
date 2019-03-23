@@ -9,7 +9,8 @@ import java.util.List;
 
 @Repository
 @EnableJpaRepositories
-public interface BadgesEarnedRepository extends JpaRepository<BadgesEarned,Long>{
+public interface BadgesEarnedRepository extends JpaRepository<BadgesEarned,Long> {
     List<BadgesEarned> findByBadgeId(long id);
+
     List<BadgesEarned> findByUserId(long id);
 }

@@ -1,9 +1,7 @@
 package com.server.controller;
 
 import com.server.entity.*;
-import com.server.repository.EntryRepository;
-import com.server.repository.FeatureRepository;
-import com.server.repository.UserRepository;
+import com.server.repository.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +33,12 @@ public class EntryControllerTest {
 
     @Mock
     BadgesEarnedController badgesEarnedController;
+
+    @Mock
+    BadgesEarnedRepository badgesEarnedRepository;
+
+    @Mock
+    BadgeRepository badgeRepository;
 
     private User user1;
     private User user2;
@@ -180,7 +184,9 @@ public class EntryControllerTest {
 
         when(entryRepository.findByUserId(user1.getId())).thenReturn(entriesUser);
 
-       // when(badgesEarnedController.addBadge(req1)).thenReturn(allBadges);
+        when(featureRepository.findByFeatureName(feature1.getFeatureName())).thenReturn(feature1);
+
+        when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
 
         when(entryRepository.findAll()).thenReturn(allEntries);
 
