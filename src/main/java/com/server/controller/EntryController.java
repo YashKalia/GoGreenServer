@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,6 +29,9 @@ public class EntryController {
 
     @Autowired
     FeatureRepository featureRepository;
+
+    @Autowired
+    BadgesEarnedController badgesEarnedController = new BadgesEarnedController();
 
     /**
      * RequestUserFeature is a custom class made of 1 user and 1 feature.
@@ -48,6 +52,7 @@ public class EntryController {
         User us = userRepository.findByUsername(user.getUsername());
         Feature fe = featureRepository.findByFeatureName(feature.getFeatureName());
         Entry en = new Entry(fe, us);
+        checkBadges(us, fe);
         entryRepository.save(en);
         return entryRepository.findAll();
     }
@@ -97,7 +102,7 @@ public class EntryController {
     /**
      * Retrieves how many times a user has used public transport instead of a car.
      * @param user The user whose entries should be retrieved
-     * @return int Total number of times the specified user has used public transport instead of a car
+     * @return int Total number of times the user has used public transport instead of a car
      */
     @PostMapping(value = "/getpublictransport")
     public int getAllPublicTransport(@RequestBody User user) {
@@ -105,9 +110,9 @@ public class EntryController {
     }
 
     /**
-     * Retrieves how many times a user has used public transport instead of a car.
+     * Retrieves how many times a user has lowered the temperature of their home.
      * @param user The user whose entries should be retrieved
-     * @return int Total number of times the specified user has used public transport instead of a car
+     * @return int Total number of times user has lowered the house temperature
      */
     @PostMapping(value = "/getloweringtemperature")
     public int getAllLoweringTemperature(@RequestBody User user) {
@@ -119,15 +124,15 @@ public class EntryController {
      * @param user The user whose entries should be retrieved
      * @return int Total number of times the specified user has installed a solar panel
      */
-    @PostMapping(value = "/getloweringtemperature")
+    @PostMapping(value = "/getsolarpanels")
     public int getAllSolarPanels(@RequestBody User user) {
         return getEntriesByUserAndFeature(user, 6);
     }
 
     /**
      * Retrieves all entries from a user that contains a certain feature.
-     * @param user, featureId The user whose entries should be retrieved, the feature ID
-     * @return int Total number of times the specified user has added an entry with the specified feature
+     * @param user featureId The user whose entries should be retrieved, the feature ID
+     * @return int Total number of times the user has added an entry with the specified feature
      */
     public int getEntriesByUserAndFeature(User user, int featureId) {
         long userId = userRepository.findByUsername(user.getUsername()).getId();
@@ -141,9 +146,63 @@ public class EntryController {
         return total;
     }
 
+    /**
+     * Retrieves how much CO2 the user has saved in total.
+     * @param user The user whose CO2 emissions should be calculated
+     * @return int Total amount (in grams) of CO2 emissions that the user has saved
+     */
+    @PostMapping(value = "/gettotalco2")
+    public double getTotalCo2(@RequestBody User user) {
+
+        long userId = userRepository.findByUsername(user.getUsername()).getId();
+        List<Entry> entries = entryRepository.findByUserId(userId);
+        double total = 0;
+        for (Entry entry : entries) {
+            total += entry.getFeature().getCo2();
+        }
+        return total;
+
+    }
+
     @GetMapping(value = "/get")
     public List<Entry> getAllEntries() {
         return entryRepository.findAll();
+    }
+
+    /**
+     * This method automates addng badges for users in the database whenever a new entry is added.
+     *
+     * @param user The user who might earn a badge
+     * @param feature The feature for which the badge might be earned
+     * @return int Code for which badge type was earned:
+     *     1 == Initial badge
+     *     2 == Bronze badge
+     *     3 == Silver badge
+     *     4 == Gold badge
+     *     0 == No badge
+     */
+    public int checkBadges(User user, Feature feature) {
+        List<Entry> allEntries = entryRepository.findByUserId(user.getId());
+        List<Entry> featureEntries = new ArrayList<>();
+        for (Entry entry : allEntries) {
+            if (entry.getFeature().getId() == feature.getId()) {
+                featureEntries.add(entry);
+            }
+        }
+        if (featureEntries.size() == 0) {
+            badgesEarnedController.addBadge(new RequestUserFeature(feature, user, 1));
+            return 1;
+        } else if (featureEntries.size() == 4) {
+            badgesEarnedController.addBadge(new RequestUserFeature(feature, user, 2));
+            return 2;
+        } else if (featureEntries.size() == 19) {
+            badgesEarnedController.addBadge(new RequestUserFeature(feature, user, 3));
+            return 3;
+        } else if (featureEntries.size() == 49) {
+            badgesEarnedController.addBadge(new RequestUserFeature(feature, user, 4));
+            return 4;
+        }
+        return 0;
     }
 
 }
