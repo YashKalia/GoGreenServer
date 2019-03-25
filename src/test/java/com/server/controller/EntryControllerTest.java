@@ -179,8 +179,33 @@ public class EntryControllerTest {
 
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddEntryNoUsername() {
+
+        when(userRepository.existsByUsername(req1.getUser().getUsername())).thenReturn(false);
+
+        assertEquals(true, entryController.addEntry(req1));
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddEntryWrongFeatureName() {
+
+        when(userRepository.existsByUsername(req1.getUser().getUsername())).thenReturn(true);
+
+        when(featureRepository.existsByFeatureName(req1.getFeature().getFeatureName())).thenReturn(false);
+
+        assertEquals(false,entryController.addEntry(req1));
+    }
+
     @Test
-    public void testAddEntry() {
+    public void testAddingEntryCorrectly() {
+
+        List<Badge> badges = new ArrayList();
+
+        when(userRepository.existsByUsername(req1.getUser().getUsername())).thenReturn(true);
+
+        when(featureRepository.existsByFeatureName(req1.getFeature().getFeatureName())).thenReturn(true);
 
         when(entryRepository.findByUserId(user1.getId())).thenReturn(entriesUser);
 
@@ -188,9 +213,7 @@ public class EntryControllerTest {
 
         when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
 
-        when(entryRepository.findAll()).thenReturn(allEntries);
-
-        assertEquals(allEntries, entryController.addEntry(req1));
+        assertTrue(entryController.addEntry(req1));
 
     }
 
