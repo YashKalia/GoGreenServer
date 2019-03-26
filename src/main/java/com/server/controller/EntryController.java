@@ -8,11 +8,15 @@ import com.server.repository.EntryRepository;
 import com.server.repository.FeatureRepository;
 import com.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,85 +72,85 @@ public class EntryController {
         return true;
     }
 
-    @PostMapping(value = "/getbyuser")
-    public List<Entry> getEntriesByUsername(@RequestBody User user) {
-        long id = userRepository.findByUsername(user.getUsername()).getId();
+    @GetMapping(value = "/getbyuser/{username}")
+    public List<Entry> getEntriesByUsername(@PathVariable String username) {
+        long id = userRepository.findByUsername(username).getId();
         return entryRepository.findByUserId(id);
     }
 
-    @PostMapping(value = "/getbyfeature")
-    public List<Entry> getEntriesByFeature(@RequestBody Feature feature) {
-        long id = featureRepository.findByFeatureName(feature.getFeatureName()).getId();
+    @GetMapping(value = "/getbyfeature/{feature}")
+    public List<Entry> getEntriesByFeature(@PathVariable String feature) {
+        long id = featureRepository.findByFeatureName(feature).getId();
         return entryRepository.findByFeatureId(id);
     }
 
     /**
      * Checks the number of vegetarian meals a certain user has had.
-     * @param user The parameter sent through a request, the user whose entries should be retrieved
+     * @param username Parameter sent through a request, user whose entries should be retrieved
      * @return the integer as the number of entries that contain a meal and the given user
      */
-    @PostMapping(value = "/getvegetarianmeals")
-    public int getAllVegetarianMeals(@RequestBody User user) {
-        return getEntriesByUserAndFeature(user, 1);
+    @GetMapping(value = "/getvegetarianmeals/{username}")
+    public int getAllVegetarianMeals(@PathVariable String username) {
+        return getEntriesByUserAndFeature(username, 1);
     }
 
     /**
      * Retrieves how many times a user has bought local produce.
-     * @param user The user whose entries should be retrieved
+     * @param username The user whose entries should be retrieved
      * @return int Total number of times the specified user has used a bike instead of a car
      */
-    @PostMapping(value = "/getlocalproduce")
-    public int getAllLocalProduce(@RequestBody User user) {
-        return getEntriesByUserAndFeature(user, 2);
+    @GetMapping(value = "/getlocalproduce/{username}")
+    public int getAllLocalProduce(@PathVariable String username) {
+        return getEntriesByUserAndFeature(username, 2);
     }
 
     /**
      * Retrieves how many times a user has used a bike instead of a car.
-     * @param user The user whose entries should be retrieved
+     * @param username The user whose entries should be retrieved
      * @return int Total number of times the specified user has used a bike instead of a car
      */
-    @PostMapping(value = "/getbikerides")
-    public int getAllBikeRides(@RequestBody User user) {
-        return getEntriesByUserAndFeature(user, 3);
+    @GetMapping(value = "/getbikerides/{username}")
+    public int getAllBikeRides(@PathVariable String username) {
+        return getEntriesByUserAndFeature(username, 3);
     }
 
     /**
      * Retrieves how many times a user has used public transport instead of a car.
-     * @param user The user whose entries should be retrieved
+     * @param username The user whose entries should be retrieved
      * @return int Total number of times the user has used public transport instead of a car
      */
-    @PostMapping(value = "/getpublictransport")
-    public int getAllPublicTransport(@RequestBody User user) {
-        return getEntriesByUserAndFeature(user, 4);
+    @GetMapping(value = "/getpublictransport/{username}")
+    public int getAllPublicTransport(@PathVariable String username) {
+        return getEntriesByUserAndFeature(username, 4);
     }
 
     /**
      * Retrieves how many times a user has lowered the temperature of their home.
-     * @param user The user whose entries should be retrieved
+     * @param username The user whose entries should be retrieved
      * @return int Total number of times user has lowered the house temperature
      */
-    @PostMapping(value = "/getloweringtemperature")
-    public int getAllLoweringTemperature(@RequestBody User user) {
-        return getEntriesByUserAndFeature(user, 5);
+    @GetMapping(value = "/getloweringtemperature/{username}")
+    public int getAllLoweringTemperature(@PathVariable String username) {
+        return getEntriesByUserAndFeature(username, 5);
     }
 
     /**
      * Retrieves how many times a user has installed a solar panel.
-     * @param user The user whose entries should be retrieved
+     * @param username The user whose entries should be retrieved
      * @return int Total number of times the specified user has installed a solar panel
      */
-    @PostMapping(value = "/getsolarpanels")
-    public int getAllSolarPanels(@RequestBody User user) {
-        return getEntriesByUserAndFeature(user, 6);
+    @GetMapping(value = "/getsolarpanels/{username}")
+    public int getAllSolarPanels(@PathVariable String username) {
+        return getEntriesByUserAndFeature(username, 6);
     }
 
     /**
      * Retrieves all entries from a user that contains a certain feature.
-     * @param user featureId The user whose entries should be retrieved, the feature ID
+     * @param username featureId The user whose entries should be retrieved, the feature ID
      * @return int Total number of times the user has added an entry with the specified feature
      */
-    public int getEntriesByUserAndFeature(User user, int featureId) {
-        long userId = userRepository.findByUsername(user.getUsername()).getId();
+    protected int getEntriesByUserAndFeature(String username, int featureId) {
+        long userId = userRepository.findByUsername(username).getId();
         List<Entry> entries = entryRepository.findByFeatureId(featureId);
         int total = 0;
         for (Entry entry : entries) {
@@ -159,20 +163,60 @@ public class EntryController {
 
     /**
      * Retrieves how much CO2 the user has saved in total.
-     * @param user The user whose CO2 emissions should be calculated
+     * @param username The user whose CO2 emissions should be calculated
      * @return int Total amount (in grams) of CO2 emissions that the user has saved
      */
-    @PostMapping(value = "/gettotalco2")
-    public double getTotalCo2(@RequestBody User user) {
-
-        long userId = userRepository.findByUsername(user.getUsername()).getId();
+    @GetMapping(value = "/gettotalco2/{username}")
+    public double getTotalCo2(@PathVariable String username) {
+        long userId = userRepository.findByUsername(username).getId();
         List<Entry> entries = entryRepository.findByUserId(userId);
         double total = 0;
         for (Entry entry : entries) {
             total += entry.getFeature().getCo2();
         }
         return total;
+    }
 
+    /**
+     * Retrieves how much CO2 the user has saved in a certain week.
+     * @param username The user whose CO2 emissions should be calculated
+     * @param week The number of the week (1-52) in the Gregorian calendar
+     * @return int Total amount (in grams) of CO2 emissions that the user has saved
+     */
+    @GetMapping(value = "/getweekco2/{username}/{week}")
+    public double getWeekCo2(@PathVariable("username") String username,
+                             @PathVariable("week") String week) {
+        long userId = userRepository.findByUsername(username).getId();
+        List<Entry> entries = entryRepository.findByUserId(userId);
+        double total = 0;
+        for (Entry entry : entries) {
+            String entryWeek = new SimpleDateFormat("w").format(entry.getDate());
+            if (entryWeek.equals(week)) {
+                total += entry.getFeature().getCo2();
+            }
+        }
+        return total;
+    }
+
+    /**
+     * Retrieves how much CO2 the user has saved in a certain month.
+     * @param username The user whose CO2 emissions should be calculated
+     * @param month The number of the month (01-12) in the Gregorian calendar
+     * @return int Total amount (in grams) of CO2 emissions that the user has saved
+     */
+    @GetMapping(value = "/getmonthco2/{username}/{month}")
+    public double getMonthCo2(@PathVariable("username") String username,
+                              @PathVariable("month") String month) {
+        long userId = userRepository.findByUsername(username).getId();
+        List<Entry> entries = entryRepository.findByUserId(userId);
+        double total = 0;
+        for (Entry entry : entries) {
+            String entryMonth = new SimpleDateFormat("MM").format(entry.getDate());
+            if (entryMonth.equals(month)) {
+                total += entry.getFeature().getCo2();
+            }
+        }
+        return total;
     }
 
     protected List<Entry> getAllEntries() {
@@ -180,7 +224,7 @@ public class EntryController {
     }
 
     /**
-     * This method automates addng badges for users in the database whenever a new entry is added.
+     * This method automates adding badges for users in the database whenever a new entry is added.
      *
      * @param user The user who might earn a badge
      * @param feature The feature for which the badge might be earned
@@ -191,7 +235,7 @@ public class EntryController {
      *     4 == Gold badge
      *     0 == No badge
      */
-    public int checkBadges(User user, Feature feature) {
+    protected int checkBadges(User user, Feature feature) {
         List<Entry> allEntries = entryRepository.findByUserId(user.getId());
         List<Entry> featureEntries = new ArrayList<>();
         for (Entry entry : allEntries) {
