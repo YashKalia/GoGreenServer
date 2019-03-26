@@ -70,7 +70,6 @@ public class FriendsController {
      * @param username the username whose friends to get.
      * @return a set of all usernames of people the user has added
      */
-    @GetMapping(value = "/getmyfriends/{username}")
     protected Set<String> getMyFriends(@PathVariable String username) {
         User user = userRepository.findByUsername(username);
         Set<String> result = new HashSet<>();
@@ -89,10 +88,9 @@ public class FriendsController {
      *
      * @param username the username of the people who's friends request
      *                 should be retrieved.
-     * @return the list of all people who added that user as a friend.
+     * @return the set of all people who added that user as a friend.
      */
-    @GetMapping(value = "/getpeoplewhobefriendedme/{username}")
-    public Set<String> getPeopleWhoBefriendedMe(@PathVariable String username) {
+    protected Set<String> getPeopleWhoBefriendedMe(@PathVariable String username) {
         User user = userRepository.findByUsername(username);
         Set<String> result = new HashSet<>();
         Set<Friends> allFriends = friendsRepository.findByFriendId(user.getId());

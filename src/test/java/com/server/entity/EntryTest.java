@@ -49,6 +49,13 @@ public class EntryTest {
     }
 
     @Test
+    public void testDefaultConstructor() {
+        entry1 = new Entry();
+        assertEquals(null, entry1.getFeature());
+        assertEquals(null,entry1.getUser());
+    }
+
+    @Test
     public void testGetEntryId() {
 
         assertEquals(1, entry1.getId());

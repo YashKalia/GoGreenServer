@@ -4,8 +4,6 @@ import com.server.entity.User;
 import com.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,13 +18,13 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping(value = "/getall")
-    public List<User> getAllUsers() {
+    protected List<User> getAllUsers() {
+
         return userRepository.findAll();
     }
 
-    @PostMapping(value = "/getone")
-    public User getOneUser(@RequestBody User user) {
+    protected User getOneUser(@RequestBody User user) {
+
         return userRepository.findByUsername(user.getUsername());
     }
 
@@ -76,8 +74,7 @@ public class UserController {
      * @param user The user to be deleted - only username is required.
      * @return the list of all users after deletion.
      */
-    @DeleteMapping(value = "/delete")
-    public List<User> deleteUser(@RequestBody User user) {
+    protected List<User> deleteUser(@RequestBody User user) {
         if (userRepository.findByUsername(user.getUsername()) != null) {
             userRepository.deleteById(userRepository.findByUsername(user.getUsername()).getId());
             return userRepository.findAll();

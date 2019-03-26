@@ -8,7 +8,6 @@ import com.server.repository.EntryRepository;
 import com.server.repository.FeatureRepository;
 import com.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,15 +45,27 @@ public class EntryController {
      * @return the list of all features
      */
     @PostMapping(value = "/add")
-    public List<Entry> addEntry(@RequestBody RequestUserFeature re) {
+    public boolean addEntry(@RequestBody RequestUserFeature re) throws IllegalArgumentException {
         Feature feature = re.getFeature();
         User user = re.getUser();
-        User us = userRepository.findByUsername(user.getUsername());
-        Feature fe = featureRepository.findByFeatureName(feature.getFeatureName());
+        User us;
+        Feature fe;
+        if (userRepository.existsByUsername(user.getUsername())) {
+            us = userRepository.findByUsername(user.getUsername());
+        } else {
+            throw new IllegalArgumentException("User" + user.getUsername() + "does not exist!");
+        }
+
+        if (featureRepository.existsByFeatureName(feature.getFeatureName())) {
+            fe = featureRepository.findByFeatureName(feature.getFeatureName());
+        } else {
+            throw new IllegalArgumentException(feature.getFeatureName()
+                    + "is not a valid feature!");
+        }
         Entry en = new Entry(fe, us);
         checkBadges(us, fe);
         entryRepository.save(en);
-        return entryRepository.findAll();
+        return true;
     }
 
     @PostMapping(value = "/getbyuser")
@@ -164,8 +175,7 @@ public class EntryController {
 
     }
 
-    @GetMapping(value = "/get")
-    public List<Entry> getAllEntries() {
+    protected List<Entry> getAllEntries() {
         return entryRepository.findAll();
     }
 
