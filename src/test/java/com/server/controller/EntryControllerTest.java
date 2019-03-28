@@ -9,7 +9,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -122,8 +125,10 @@ public class EntryControllerTest {
         req1 = new RequestUserFeature(feature1, user1, 1);
 
         entry1 = new Entry(feature1, user1);
+        entry1.setDate(new Date());
         entry2 = new Entry(feature1, user2);
         entry3 = new Entry(feature2, user1);
+        entry3.setDate(new Date());
         entry4 = new Entry(feature3, user2);
         entry5 = new Entry(feature4, user1);
         entry6 = new Entry(feature5, user2);
@@ -224,7 +229,7 @@ public class EntryControllerTest {
 
         when(entryRepository.findByUserId((long) 1)).thenReturn(entriesUser);
 
-        assertEquals(entriesUser, entryController.getEntriesByUsername(user1));
+        assertEquals(entriesUser, entryController.getEntriesByUsername(user1.getUsername()));
 
     }
 
@@ -235,7 +240,7 @@ public class EntryControllerTest {
 
         when(entryRepository.findByFeatureId((long) 1)).thenReturn(entriesFeature1);
 
-        assertEquals(entriesFeature1, entryController.getEntriesByFeature(feature1));
+        assertEquals(entriesFeature1, entryController.getEntriesByFeature(feature1.getFeatureName()));
 
     }
 
@@ -246,7 +251,7 @@ public class EntryControllerTest {
 
         when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
 
-        assertEquals(1, entryController.getAllVegetarianMeals(user1));
+        assertEquals(1, entryController.getAllVegetarianMeals(user1.getUsername()));
 
     }
 
@@ -257,7 +262,7 @@ public class EntryControllerTest {
 
         when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
 
-        assertEquals(1, entryController.getAllLocalProduce(user1));
+        assertEquals(1, entryController.getAllLocalProduce(user1.getUsername()));
 
     }
 
@@ -268,7 +273,7 @@ public class EntryControllerTest {
 
         when(userRepository.findByUsername(user2.getUsername())).thenReturn(user2);
 
-        assertEquals(1, entryController.getAllBikeRides(user2));
+        assertEquals(1, entryController.getAllBikeRides(user2.getUsername()));
 
     }
 
@@ -279,7 +284,7 @@ public class EntryControllerTest {
 
         when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
 
-        assertEquals(1, entryController.getAllPublicTransport(user1));
+        assertEquals(1, entryController.getAllPublicTransport(user1.getUsername()));
 
     }
 
@@ -290,7 +295,7 @@ public class EntryControllerTest {
 
         when(userRepository.findByUsername(user2.getUsername())).thenReturn(user2);
 
-        assertEquals(1, entryController.getAllLoweringTemperature(user2));
+        assertEquals(1, entryController.getAllLoweringTemperature(user2.getUsername()));
 
     }
 
@@ -301,7 +306,7 @@ public class EntryControllerTest {
 
         when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
 
-        assertEquals(1, entryController.getAllSolarPanels(user1));
+        assertEquals(1, entryController.getAllSolarPanels(user1.getUsername()));
 
     }
 
@@ -312,7 +317,7 @@ public class EntryControllerTest {
 
         when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
 
-        assertEquals(1, entryController.getEntriesByUserAndFeature(user1, 1));
+        assertEquals(1, entryController.getEntriesByUserAndFeature(user1.getUsername(), 1));
 
     }
 
@@ -323,12 +328,70 @@ public class EntryControllerTest {
 
         when(entryRepository.findByUserId(1)).thenReturn(entriesUser);
 
-        assertTrue(5.5 == entryController.getTotalCo2(user1));
+        assertTrue(5.5 == entryController.getTotalCo2(user1.getUsername()));
 
     }
 
     @Test
-    public void testCheckBadgesReturn1() {
+    public void testGetWeekCo2AllMatch() {
+
+        when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
+
+        when(entryRepository.findByUserId(1)).thenReturn(entriesUser);
+
+        String w = new SimpleDateFormat("w").format(new java.util.Date());
+
+        assertTrue(5.5 == entryController.getWeekCo2(user1.getUsername(), w));
+
+    }
+
+    @Test
+    public void testGetWeekCo2NoMatch() throws ParseException {
+
+        when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
+
+        entriesUser.get(0).setDate(new SimpleDateFormat("yyyy-MM-dd").parse("2019-01-01"));
+        entriesUser.get(1).setDate(new SimpleDateFormat("yyyy-MM-dd").parse("2019-01-02"));
+
+        when(entryRepository.findByUserId(1)).thenReturn(entriesUser);
+
+        String w = new SimpleDateFormat("w").format(new java.util.Date());
+
+        assertTrue(0 == entryController.getWeekCo2(user1.getUsername(), w));
+
+    }
+
+    @Test
+    public void testGetMonthCo2AllMatch() {
+
+        when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
+
+        when(entryRepository.findByUserId(1)).thenReturn(entriesUser);
+
+        String m = new SimpleDateFormat("MM").format(new java.util.Date());
+
+        assertTrue(5.5 == entryController.getMonthCo2(user1.getUsername(), m));
+
+    }
+
+    @Test
+    public void testGetMonthCo2NoMatch() throws ParseException {
+
+        when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
+
+        entriesUser.get(0).setDate(new SimpleDateFormat("yyyy-MM-dd").parse("2019-01-01"));
+        entriesUser.get(1).setDate(new SimpleDateFormat("yyyy-MM-dd").parse("2019-01-02"));
+
+        when(entryRepository.findByUserId(1)).thenReturn(entriesUser);
+
+        String m = new SimpleDateFormat("MM").format(new java.util.Date());
+
+        assertTrue(0 == entryController.getMonthCo2(user1.getUsername(), m));
+
+    }
+
+    @Test
+    public void testCheckBadgesAddInitialBadge() {
 
         when(entryRepository.findByUserId(user1.getId())).thenReturn(new ArrayList<Entry>());
 
@@ -337,7 +400,7 @@ public class EntryControllerTest {
     }
 
     @Test
-    public void testCheckBadgesReturn2() {
+    public void testCheckBadgesAddBronzeBadge() {
 
         List<Entry> ent = new ArrayList<>();
         Entry e = new Entry(feature1, user1);
@@ -356,7 +419,7 @@ public class EntryControllerTest {
     }
 
     @Test
-    public void testCheckBadgesReturn3() {
+    public void testCheckBadgesAddSilverBadge() {
 
         List<Entry> ent = new ArrayList<>();
         Entry e = new Entry(feature1, user1);
@@ -375,7 +438,7 @@ public class EntryControllerTest {
     }
 
     @Test
-    public void testCheckBadgesReturn4() {
+    public void testCheckBadgesAddGoldBadge() {
 
         List<Entry> ent = new ArrayList<>();
         Entry e = new Entry(feature1, user1);
@@ -394,7 +457,7 @@ public class EntryControllerTest {
     }
 
     @Test
-    public void testCheckBadgesReturn0() {
+    public void testCheckBadgesNoBadgeAdded() {
 
         List<Entry> ent = new ArrayList<>();
         Entry e = new Entry(feature1, user1);

@@ -13,7 +13,6 @@ import com.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,8 +41,7 @@ public class BadgesEarnedController {
      * @param requestUserFeature the custom entity containing a username, feature, and badgeCode.
      * @return the list of all badges
      */
-    @PostMapping(value = "/add")
-    public List<BadgesEarned> addBadge(@RequestBody RequestUserFeature requestUserFeature) {
+    protected List<BadgesEarned> addBadge(@RequestBody RequestUserFeature requestUserFeature) {
 
         User user = requestUserFeature.getUser();
         User userF = userRepository.findByUsername(user.getUsername());
