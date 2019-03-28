@@ -72,14 +72,14 @@ public class EntryController {
         return true;
     }
 
-    @GetMapping(value = "/getbyuser/{username}")
-    public List<Entry> getEntriesByUsername(@PathVariable String username) {
+    //@GetMapping(value = "/getbyuser/{username}")
+    protected List<Entry> getEntriesByUsername(@PathVariable String username) {
         long id = userRepository.findByUsername(username).getId();
         return entryRepository.findByUserId(id);
     }
 
-    @GetMapping(value = "/getbyfeature/{feature}")
-    public List<Entry> getEntriesByFeature(@PathVariable String feature) {
+    //@GetMapping(value = "/getbyfeature/{feature}")
+    protected List<Entry> getEntriesByFeature(@PathVariable String feature) {
         long id = featureRepository.findByFeatureName(feature).getId();
         return entryRepository.findByFeatureId(id);
     }
