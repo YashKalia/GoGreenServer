@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/badgesearned")
@@ -62,12 +65,17 @@ public class BadgesEarnedController {
      * This method finds all the badges you have ever earned.
      *
      * @param username the username whose badges to get
-     * @return a list of all badges you have ever earned
+     * @return a set with name of all badges you have ever earned
      */
     @GetMapping(value = "/getmybadges/{username}")
-    protected List<BadgesEarned> getMyBadges(@PathVariable String username) {
+    protected Set<String> getMyBadges(@PathVariable String username) {
         User user = userRepository.findByUsername(username);
-        return badgesEarnedRepository.findByUserId(user.getId());
+        List<BadgesEarned> badges = badgesEarnedRepository.findByUserId(user.getId());
+        Set<String> result = new HashSet<>();
+        for (BadgesEarned b : badges) {
+            result.add(b.getBadge().getBadgeName());
+        }
+        return result;
     }
 
 }

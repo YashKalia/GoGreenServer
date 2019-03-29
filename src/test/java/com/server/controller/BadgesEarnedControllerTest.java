@@ -10,7 +10,9 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -49,6 +51,7 @@ public class BadgesEarnedControllerTest {
 
     List<BadgesEarned> allBadges = new ArrayList<>();
     List<BadgesEarned> userBadges = new ArrayList<>();
+    Set<String> userBadges2 = new HashSet<>();
 
     @Before
     public void setup() {
@@ -89,6 +92,8 @@ public class BadgesEarnedControllerTest {
 
         userBadges.add(badgesEarned1);
 
+        userBadges2.add(badgesEarned1.getBadge().getBadgeName());
+
     }
 
     @Test
@@ -113,7 +118,7 @@ public class BadgesEarnedControllerTest {
 
         when(badgesEarnedRepository.findByUserId(user1.getId())).thenReturn(userBadges);
 
-        assertEquals(userBadges, badgesEarnedController.getMyBadges("user1"));
+        assertEquals(userBadges2, badgesEarnedController.getMyBadges("user1"));
 
     }
 
