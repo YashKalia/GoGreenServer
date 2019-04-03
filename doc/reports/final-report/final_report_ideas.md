@@ -1,14 +1,12 @@
-Here's the structure that our final report needs to follow. I've gathered the info from the slides. I'm also starting the discussion with one bullet point per section. I'll contribute more later on but everyone also needs to make their contribution for each general section (Product, Pricess, Reflection, and Value Sensitive Design), plus everyone needs to write their own 200 words on the Individual feedback.
-
 ### Product
 #### What design decisions have you made? (technological choices, architectural choices)
 
-Add bullet points to any of the following:
-
 1. What are some of the major decisions that you have taken as a team?
 2. Which technological choices did you make and why? (e.g., Swing versus JavaFX, yes/no abstract base class, …)
-    * Use Mockito for tests because an embedded databse for tests proved too difficult to implement in the timeframe we had
+    * Use Mockito for tests because an embedded database for tests proved too difficult to implement in the timeframe we had
     * Use JavaFX over Swing because Swing event handling isn't supported and also with the use of SceneBuilder, I could create a much better looking GUI than Swing.
+    * For the cliet side we deicded to use RestTemplate objects  for communicating to the server(instead of HTTPURLConnection objects) 
+     and for testing as well as it was a concept that covered a lot of what we needed in terms of code. 
     
 
 ### Process
@@ -19,10 +17,13 @@ Add bullet points to any of the following:
 1. Did you manage to stick to the planning (why (not))
 2. How did the collaboration in team go?
     * I would say I communicated fine overall with the other team members but the week before Demo 3, there was a miscommunication from my part which caused my contributions to Demo 3 very limited.
+    * The collaboartion  among the team members was satisfactory.
 3. How did you communicate?
+    * Though I preferred to use mobile messenging for the most part I found it handy to attach comments directly to the commits.
 4. How did version control help (if at all)
     * Git was very helpful in allowing us to work in separate branches simultaneously so that different parts of the app were being developed at the same time.
 5. What did you learn?
+6.  *Working in a team is the most important lesson to take away from the project and it really served as a look into how work is divided and distributed in big projects as well.
 
 ### Reflection
 #### What can be improved? (reflection on process, product and course)
@@ -33,8 +34,11 @@ Add bullet points to any of the following:
 quality, features, …)
     * Integration Tests: make sure everything works from one end to the other
 2. How can the process/collaboration be improved?
+3.  *
 3. How can the course be improved?
     * I would suggest to give a more detailed topic to work on the project instead of a very vague topic that has many different ways of execution.
+    * I would have preferred to have a small guide on brightspace that can help you work around new and hard to understand topics like Mockito for testing as 
+    * finding relevant information regarding that was very tedious and it was a topic that should have been broached during the lectures.
 
 ### Individual feedback
 
@@ -60,7 +64,7 @@ Add bullet points to any of the following:
 
 1. How would you define your main concept: “design for…”
 2. How would you define in general terms the stakeholders/values you want to design for
-    * *Transparency*: Design for transparency, so that evety user is aware of which data we are collecting and how we are using it.
+    * *Transparency*: Design for transparency, so that every user is aware of which data we are collecting and how we are using it.
 3. Which sources would you consult in order to gain theoretical insights into the stakeholders or values you want to design for: academic literature, artworks, experts in domain different than yours…; give some general indication not necessarily titles of books or names of experts: e.g. “social scientists who have study the phenomenon X, documentaries on discrimination of the group Y, legal/philosophical literature on the right to Z, political studies on the meaning of democracy etc.)
     * *Transparency*: Employ lawyers to get us up to code with GDPR regulations, and also psychologists who can give input on how to approach this subject with users
 4. Your concept involves the realization of at least two values OR one or more values for at least two different stakeholders (see above). 
