@@ -7,7 +7,7 @@
     * Use JavaFX over Swing because Swing event handling isn't supported and also with the use of SceneBuilder, I could create a much better looking GUI than Swing.
     * For the cliet side we deicded to use RestTemplate objects  for communicating to the server(instead of HTTPURLConnection objects) 
      and for testing as well as it was a concept that covered a lot of what we needed in terms of code. 
-    * Use the API provided by CoolClimate Network for calculating a CO2 emissions and in cases where the API does not provide the neccessary data do our own research.
+    * Use the API provided by CoolClimate Network for calculating CO2 emissions and in cases where the API does not provide the neccessary data do our own research.
     
 
 ### Process
