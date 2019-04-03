@@ -1,14 +1,16 @@
 package com.server.repository;
 
-import com.server.entity.Feature;
+import com.server.entity.BadgesEarned;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @EnableJpaRepositories
-public interface FeatureRepository extends JpaRepository<Feature, Long> {
-    Feature findByFeatureName(String featureName);
+public interface BadgesEarnedRepository extends JpaRepository<BadgesEarned,Long> {
+    List<BadgesEarned> findByBadgeId(long id);
 
-    boolean existsByFeatureName(String featureName);
+    List<BadgesEarned> findByUserId(long id);
 }

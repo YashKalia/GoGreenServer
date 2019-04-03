@@ -9,11 +9,15 @@ import com.server.repository.FeatureRepository;
 import com.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,6 +33,9 @@ public class EntryController {
     @Autowired
     FeatureRepository featureRepository;
 
+    @Autowired
+    BadgesEarnedController badgesEarnedController = new BadgesEarnedController();
+
     /**
      * RequestUserFeature is a custom class made of 1 user and 1 feature.
      * It is necessary because 1 user and 1 feature cannot both be sent under 1 request.
@@ -42,49 +49,214 @@ public class EntryController {
      * @return the list of all features
      */
     @PostMapping(value = "/add")
-    public List<Entry> addEntry(@RequestBody RequestUserFeature re) {
+    public boolean addEntry(@RequestBody RequestUserFeature re) throws IllegalArgumentException {
         Feature feature = re.getFeature();
         User user = re.getUser();
-        User us = userRepository.findByUsername(user.getUsername());
-        Feature fe = featureRepository.findByFeatureName(feature.getFeatureName());
+        User us;
+        Feature fe;
+        if (userRepository.existsByUsername(user.getUsername())) {
+            us = userRepository.findByUsername(user.getUsername());
+        } else {
+            throw new IllegalArgumentException("User" + user.getUsername() + "does not exist!");
+        }
+
+        if (featureRepository.existsByFeatureName(feature.getFeatureName())) {
+            fe = featureRepository.findByFeatureName(feature.getFeatureName());
+        } else {
+            throw new IllegalArgumentException(feature.getFeatureName()
+                    + "is not a valid feature!");
+        }
         Entry en = new Entry(fe, us);
+        checkBadges(us, fe);
         entryRepository.save(en);
-        return entryRepository.findAll();
+        return true;
     }
 
-    @PostMapping(value = "/getbyuser")
-    public List<Entry> getEntriesByUsername(@RequestBody User user) {
-        long id = userRepository.findByUsername(user.getUsername()).getId();
+    //@GetMapping(value = "/getbyuser/{username}")
+    protected List<Entry> getEntriesByUsername(@PathVariable String username) {
+        long id = userRepository.findByUsername(username).getId();
         return entryRepository.findByUserId(id);
     }
 
-    @PostMapping(value = "/getbyfeature")
-    public List<Entry> getEntriesByFeature(@RequestBody Feature feature) {
-        long id = featureRepository.findByFeatureName(feature.getFeatureName()).getId();
+    //@GetMapping(value = "/getbyfeature/{feature}")
+    protected List<Entry> getEntriesByFeature(@PathVariable String feature) {
+        long id = featureRepository.findByFeatureName(feature).getId();
         return entryRepository.findByFeatureId(id);
     }
 
     /**
      * Checks the number of vegetarian meals a certain user has had.
-     * @param user The parameter sent through a request, the user whose entries should be retrieved
+     * @param username Parameter sent through a request, user whose entries should be retrieved
      * @return the integer as the number of entries that contain a meal and the given user
      */
-    @PostMapping(value = "/getvegetarianmeals")
-    public int getAllVegetarianMeals(@RequestBody User user) {
-        List<Entry> entries = entryRepository.findByFeatureId(1);
-        int nrOfVegetarianMeals = 0;
-        long id = userRepository.findByUsername(user.getUsername()).getId();
-        for (Entry e : entries) {
-            if (e.getUser().getId() == id) {
-                nrOfVegetarianMeals++;
-            }
-        }
-        return nrOfVegetarianMeals;
+    @GetMapping(value = "/getvegetarianmeals/{username}")
+    public int getAllVegetarianMeals(@PathVariable String username) {
+        return getEntriesByUserAndFeature(username, 1);
     }
 
-    @GetMapping(value = "/get")
-    public List<Entry> getAllEntries() {
+    /**
+     * Retrieves how many times a user has bought local produce.
+     * @param username The user whose entries should be retrieved
+     * @return int Total number of times the specified user has used a bike instead of a car
+     */
+    @GetMapping(value = "/getlocalproduce/{username}")
+    public int getAllLocalProduce(@PathVariable String username) {
+        return getEntriesByUserAndFeature(username, 2);
+    }
+
+    /**
+     * Retrieves how many times a user has used a bike instead of a car.
+     * @param username The user whose entries should be retrieved
+     * @return int Total number of times the specified user has used a bike instead of a car
+     */
+    @GetMapping(value = "/getbikerides/{username}")
+    public int getAllBikeRides(@PathVariable String username) {
+        return getEntriesByUserAndFeature(username, 3);
+    }
+
+    /**
+     * Retrieves how many times a user has used public transport instead of a car.
+     * @param username The user whose entries should be retrieved
+     * @return int Total number of times the user has used public transport instead of a car
+     */
+    @GetMapping(value = "/getpublictransport/{username}")
+    public int getAllPublicTransport(@PathVariable String username) {
+        return getEntriesByUserAndFeature(username, 4);
+    }
+
+    /**
+     * Retrieves how many times a user has lowered the temperature of their home.
+     * @param username The user whose entries should be retrieved
+     * @return int Total number of times user has lowered the house temperature
+     */
+    @GetMapping(value = "/getloweringtemperature/{username}")
+    public int getAllLoweringTemperature(@PathVariable String username) {
+        return getEntriesByUserAndFeature(username, 5);
+    }
+
+    /**
+     * Retrieves how many times a user has installed a solar panel.
+     * @param username The user whose entries should be retrieved
+     * @return int Total number of times the specified user has installed a solar panel
+     */
+    @GetMapping(value = "/getsolarpanels/{username}")
+    public int getAllSolarPanels(@PathVariable String username) {
+        return getEntriesByUserAndFeature(username, 6);
+    }
+
+    /**
+     * Retrieves all entries from a user that contains a certain feature.
+     * @param username featureId The user whose entries should be retrieved, the feature ID
+     * @return int Total number of times the user has added an entry with the specified feature
+     */
+    protected int getEntriesByUserAndFeature(String username, int featureId) {
+        long userId = userRepository.findByUsername(username).getId();
+        List<Entry> entries = entryRepository.findByFeatureId(featureId);
+        int total = 0;
+        for (Entry entry : entries) {
+            if (entry.getUser().getId() == userId) {
+                total++;
+            }
+        }
+        return total;
+    }
+
+    /**
+     * Retrieves how much CO2 the user has saved in total.
+     * @param username The user whose CO2 emissions should be calculated
+     * @return int Total amount (in grams) of CO2 emissions that the user has saved
+     */
+    @GetMapping(value = "/gettotalco2/{username}")
+    public double getTotalCo2(@PathVariable String username) {
+        long userId = userRepository.findByUsername(username).getId();
+        List<Entry> entries = entryRepository.findByUserId(userId);
+        double total = 0;
+        for (Entry entry : entries) {
+            total += entry.getFeature().getCo2();
+        }
+        return total;
+    }
+
+    /**
+     * Retrieves how much CO2 the user has saved in a certain week.
+     * @param username The user whose CO2 emissions should be calculated
+     * @param week The number of the week (1-52) in the Gregorian calendar
+     * @return int Total amount (in grams) of CO2 emissions that the user has saved
+     */
+    @GetMapping(value = "/getweekco2/{username}/{week}")
+    public double getWeekCo2(@PathVariable("username") String username,
+                             @PathVariable("week") String week) {
+        long userId = userRepository.findByUsername(username).getId();
+        List<Entry> entries = entryRepository.findByUserId(userId);
+        double total = 0;
+        for (Entry entry : entries) {
+            String entryWeek = new SimpleDateFormat("w").format(entry.getDate());
+            if (entryWeek.equals(week)) {
+                total += entry.getFeature().getCo2();
+            }
+        }
+        return total;
+    }
+
+    /**
+     * Retrieves how much CO2 the user has saved in a certain month.
+     * @param username The user whose CO2 emissions should be calculated
+     * @param month The number of the month (01-12) in the Gregorian calendar
+     * @return int Total amount (in grams) of CO2 emissions that the user has saved
+     */
+    @GetMapping(value = "/getmonthco2/{username}/{month}")
+    public double getMonthCo2(@PathVariable("username") String username,
+                              @PathVariable("month") String month) {
+        long userId = userRepository.findByUsername(username).getId();
+        List<Entry> entries = entryRepository.findByUserId(userId);
+        double total = 0;
+        for (Entry entry : entries) {
+            String entryMonth = new SimpleDateFormat("MM").format(entry.getDate());
+            if (entryMonth.equals(month)) {
+                total += entry.getFeature().getCo2();
+            }
+        }
+        return total;
+    }
+
+    protected List<Entry> getAllEntries() {
         return entryRepository.findAll();
+    }
+
+    /**
+     * This method automates adding badges for users in the database whenever a new entry is added.
+     *
+     * @param user The user who might earn a badge
+     * @param feature The feature for which the badge might be earned
+     * @return int Code for which badge type was earned:
+     *     1 == Initial badge
+     *     2 == Bronze badge
+     *     3 == Silver badge
+     *     4 == Gold badge
+     *     0 == No badge
+     */
+    protected int checkBadges(User user, Feature feature) {
+        List<Entry> allEntries = entryRepository.findByUserId(user.getId());
+        List<Entry> featureEntries = new ArrayList<>();
+        for (Entry entry : allEntries) {
+            if (entry.getFeature().getId() == feature.getId()) {
+                featureEntries.add(entry);
+            }
+        }
+        if (featureEntries.size() == 0) {
+            badgesEarnedController.addBadge(new RequestUserFeature(feature, user, 1));
+            return 1;
+        } else if (featureEntries.size() == 4) {
+            badgesEarnedController.addBadge(new RequestUserFeature(feature, user, 2));
+            return 2;
+        } else if (featureEntries.size() == 19) {
+            badgesEarnedController.addBadge(new RequestUserFeature(feature, user, 3));
+            return 3;
+        } else if (featureEntries.size() == 49) {
+            badgesEarnedController.addBadge(new RequestUserFeature(feature, user, 4));
+            return 4;
+        }
+        return 0;
     }
 
 }

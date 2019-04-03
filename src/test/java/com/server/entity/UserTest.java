@@ -149,4 +149,12 @@ public class UserTest {
 
     }
 
+    @Test
+    public void testDefaultConstructor() {
+        user1 = new User();
+        assertEquals(null,user1.getUsername());
+        assertEquals(null,user1.getPassword());
+        assertEquals(null,user1.getRoles());
+    }
+
 }

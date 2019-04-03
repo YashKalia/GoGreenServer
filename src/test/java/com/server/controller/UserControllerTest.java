@@ -72,19 +72,25 @@ public class UserControllerTest {
 
     }
 
+
     @Test
     public void testAddUserSuccess() {
 
-        when(userRepository.findAll()).thenReturn(users);
+//  when(userRepository.findAll()).thenReturn(users);
 
         userController.addUser(user1);
         userController.addUser(user2);
 
-        assertEquals(users, userController.addUser(user3));
+        assertEquals(true, userController.addUser(user3));
 
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
+    public void testBadPassword() {
+        user1.setPassword("pw");
+        userController.addUser(user1);
+    }
+    @Test(expected = IllegalArgumentException.class)
     public void testAddUserFailureNoPassword() {
 
         userController.addUser(user2);
@@ -93,18 +99,18 @@ public class UserControllerTest {
 
         when(userRepository.findByUsername("user1")).thenReturn(user1);
 
-        assertNull(userController.addUser(user1));
+        assertEquals(false,userController.addUser(user1));
 
     }
 
-    @Test
+    @Test( expected = IllegalArgumentException.class)
     public void testAddUserFailureUserAlreadyExists() {
 
         userController.addUser(user1);
 
         when(userRepository.findByUsername("user1")).thenReturn(user1);
 
-        assertNull(userController.addUser(user1));
+        assertEquals(false,userController.addUser(user1));
 
     }
 

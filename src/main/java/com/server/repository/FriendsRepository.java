@@ -1,14 +1,16 @@
 package com.server.repository;
 
-import com.server.entity.Feature;
+import com.server.entity.Friends;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
+import java.util.Set;
+
 @Repository
 @EnableJpaRepositories
-public interface FeatureRepository extends JpaRepository<Feature, Long> {
-    Feature findByFeatureName(String featureName);
+public interface FriendsRepository extends JpaRepository<Friends, Long> {
+    Set<Friends> findByUserId(long id);
 
-    boolean existsByFeatureName(String featureName);
+    Set<Friends> findByFriendId(long id);
 }

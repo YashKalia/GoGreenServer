@@ -35,15 +35,18 @@ public class FeatureControllerTest {
 
         feature1.setId(1);
         feature1.setFeatureName("Eating a vegetarian meal");
-        feature1.setFeatureValue(10);
+        feature1.setPoints(10);
+        feature1.setCo2(1.2);
 
         feature2.setId(2);
         feature2.setFeatureName("Riding a bike to work");
-        feature2.setFeatureValue(20);
+        feature2.setPoints(20);
+        feature2.setCo2(5.1);
 
         feature3.setId(3);
         feature3.setFeatureName("Installing a solar panel");
-        feature3.setFeatureValue(2000);
+        feature3.setPoints(100);
+        feature3.setCo2(101.3);
 
         features.add(feature1);
         features.add(feature2);

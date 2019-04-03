@@ -3,8 +3,6 @@ package com.server.controller;
 import com.server.entity.Feature;
 import com.server.repository.FeatureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,8 +23,9 @@ public class FeatureController {
         return featureRepository.findAll();
     }
 
-    @GetMapping(value = "/getall")
-    public List<Feature> getAllFeatures() {
+
+    protected List<Feature> getAllFeatures() {
+
         return featureRepository.findAll();
     }
 
@@ -35,7 +34,6 @@ public class FeatureController {
      * @param id the id of the feature to be removed
      * @return the list of all features after the feature was deleted (or not if doesn't exist)
      */
-    @DeleteMapping(value = "/delete/{id}")
     public List<Feature> deleteFeatureById(Long id) {
         if (featureRepository.findById(id) != null) {
             featureRepository.deleteById(id);

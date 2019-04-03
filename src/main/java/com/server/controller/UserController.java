@@ -4,8 +4,6 @@ import com.server.entity.User;
 import com.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,13 +18,13 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping(value = "/getall")
-    public List<User> getAllUsers() {
+    protected List<User> getAllUsers() {
+
         return userRepository.findAll();
     }
 
-    @PostMapping(value = "/getone")
-    public User getOneUser(@RequestBody User user) {
+    protected User getOneUser(@RequestBody User user) {
+
         return userRepository.findByUsername(user.getUsername());
     }
 
@@ -36,6 +34,7 @@ public class UserController {
      * If it is, then it checks the password against the hashed version in the database.
      * If they match, return true.
      * Otherwise, return false.
+     *
      * @param user the user to authenticate. Must contain both username and password.
      * @return a boolean. True if the conditions are met, false otherwise.
      */
@@ -55,16 +54,17 @@ public class UserController {
      * @return the list of all users
      */
     @PostMapping(value = "/register")
-    public List<User> addUser(@RequestBody User user) {
-        if (userRepository.findByUsername(user.getUsername()) == null
-                && (!user.getPassword().equals(null))) {
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            user.setPassword(encoder.encode(user.getPassword()));
-            userRepository.save(user);
-            return userRepository.findAll();
-        } else {
-            return null;
+    public boolean addUser(@RequestBody User user) throws IllegalArgumentException {
+        if (userRepository.findByUsername(user.getUsername()) != null) {
+            throw new IllegalArgumentException("Username taken");
         }
+        if (user.getPassword().length() < 6) {
+            throw new IllegalArgumentException("Password must be greater than 6 characters");
+        }
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        user.setPassword(encoder.encode(user.getPassword()));
+        userRepository.save(user);
+        return true;
     }
 
     /**
@@ -74,8 +74,7 @@ public class UserController {
      * @param user The user to be deleted - only username is required.
      * @return the list of all users after deletion.
      */
-    @DeleteMapping(value = "/delete")
-    public List<User> deleteUser(@RequestBody User user) {
+    protected List<User> deleteUser(@RequestBody User user) {
         if (userRepository.findByUsername(user.getUsername()) != null) {
             userRepository.deleteById(userRepository.findByUsername(user.getUsername()).getId());
             return userRepository.findAll();
@@ -83,5 +82,4 @@ public class UserController {
             return null;
         }
     }
-
 }

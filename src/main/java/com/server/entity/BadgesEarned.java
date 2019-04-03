@@ -1,7 +1,6 @@
 package com.server.entity;
 
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,38 +8,40 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
-public class Entry {
+@Table(name = "badgesearned")
+public class BadgesEarned {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "entry_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "badges_earned_id")
     private long id;
 
     @OneToOne()
-    @JoinColumn(name = "feature_id")
-    private Feature feature;
-
-    @Column(name = "date")
-    private Date date = new Date();
+    @JoinColumn(name = "badge_id")
+    private Badge badge;
 
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Entry() {}
+    @Column(name = "date")
+    private Date date = new Date();
 
-    public Entry(Feature action, User user) {
+    public BadgesEarned() {}
+
+    public BadgesEarned(Badge badge, User user) {
         this.user = user;
-        this.feature = action;
+        this.badge = badge;
     }
 
-    public Feature getFeature() {
-        return feature;
+    public Badge getBadge() {
+        return badge;
     }
 
-    public void setFeature(Feature feature) {
-        this.feature = feature;
+    public void setBadge(Badge badge) {
+        this.badge = badge;
     }
 
     public User getUser() {
@@ -59,14 +60,6 @@ public class Entry {
         this.id = id;
     }
 
-    public Feature getAction() {
-        return feature;
-    }
-
-    public void setAction(Feature action) {
-        this.feature = action;
-    }
-
     public Date getDate() {
         return date;
     }
@@ -80,14 +73,14 @@ public class Entry {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof Entry)) {
+        if (!(obj instanceof BadgesEarned)) {
             return false;
         }
-        Entry other = (Entry) obj;
+        BadgesEarned other = (BadgesEarned) obj;
         if (id != other.id) {
             return false;
         }
-        if (!feature.equals(other.feature)) {
+        if (!badge.equals(other.badge)) {
             return false;
         }
         if (!user.equals(other.user)) {
