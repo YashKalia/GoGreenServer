@@ -8,6 +8,7 @@ Add bullet points to any of the following:
 1. What are some of the major decisions that you have taken as a team?
 2. Which technological choices did you make and why? (e.g., Swing versus JavaFX, yes/no abstract base class, …)
     * Use Mockito for tests because an embedded databse for tests proved too difficult to implement in the timeframe we had
+    * Used JavaFX over Swing as Swing Event Handling isn't supported and also with the use of SceneBuilder, it is possible to make a more appealing GUI using JavaFX compared to Swing.
 
 ### Process
 #### How did the project go? (process-wise)
