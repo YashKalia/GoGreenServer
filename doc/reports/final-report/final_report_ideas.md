@@ -18,8 +18,7 @@ Add bullet points to any of the following:
 1. Did you manage to stick to the planning (why (not))
 2. How did the collaboration in team go?
 3. How did you communicate?
-    *I communicated decently well if I say so for myself up until the 3rd demo, there was a miscommunication from my part and the GUI I worked on for a week wasn't merged to the master.
-     Because of this, my contributions to the 3rd Demo was limited.
+    * I communicated decently well with the client-side team if I say so for myself up until the 3rd demo, there was a miscommunication from my part and the GUI I worked on for a week wasn't merged to the master.Because of this, my contributions to the 3rd Demo was limited.
 4. How did version control help (if at all)
     * Git was very helpful in allowing us to work in separate branches simultaneously so that different parts of the app were being developed at the same time.
 5. What did you learn?
