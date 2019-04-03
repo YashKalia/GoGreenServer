@@ -23,7 +23,7 @@ Add bullet points to any of the following:
 4. How did version control help (if at all)
     * Git was very helpful in allowing us to work in separate branches simultaneously so that different parts of the app were being developed at the same time.
 5. What did you learn?
-6.  *Working in a team is the most important lesson to take away from the project and it really served as a look into how work is divided and distributed in big projects as well.
+    *Working in a team is the most important lesson to take away from the project and it really served as a look into how work is divided and distributed in big projects as well.
 
 ### Reflection
 #### What can be improved? (reflection on process, product and course)
