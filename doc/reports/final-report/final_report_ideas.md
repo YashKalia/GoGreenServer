@@ -8,6 +8,7 @@ Add bullet points to any of the following:
 1. What are some of the major decisions that you have taken as a team?
 2. Which technological choices did you make and why? (e.g., Swing versus JavaFX, yes/no abstract base class, …)
     * Use Mockito for tests because an embedded databse for tests proved too difficult to implement in the timeframe we had
+    * Use JavaFX over Swing because Swing event handling isn't supported and also with the use of SceneBuilder, I could create a much better looking GUI than Swing.
     
 
 ### Process
@@ -17,6 +18,7 @@ Add bullet points to any of the following:
 
 1. Did you manage to stick to the planning (why (not))
 2. How did the collaboration in team go?
+    * I would say I communicated fine overall with the other team members but the week before Demo 3, there was a miscommunication from my part which caused my contributions to Demo 3 very limited.
 3. How did you communicate?
 4. How did version control help (if at all)
     * Git was very helpful in allowing us to work in separate branches simultaneously so that different parts of the app were being developed at the same time.
@@ -32,6 +34,7 @@ quality, features, …)
     * Integration Tests: make sure everything works from one end to the other
 2. How can the process/collaboration be improved?
 3. How can the course be improved?
+    * I would suggest to give a more detailed topic to work on the project instead of a very vague topic that has many different ways of execution.
 
 ### Individual feedback
 
