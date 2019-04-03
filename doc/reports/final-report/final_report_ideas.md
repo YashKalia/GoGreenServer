@@ -7,7 +7,6 @@
     * Use JavaFX over Swing because Swing event handling isn't supported and also with the use of SceneBuilder, I could create a much better looking GUI than Swing.
     * For the cliet side we deicded to use RestTemplate objects  for communicating to the server(instead of HTTPURLConnection objects) 
      and for testing as well as it was a concept that covered a lot of what we needed in terms of code. 
-    * Use the API provided by CoolClimate Network for calculating a CO2 emissions and in cases where the API does not provide the neccessary data do our own research.
     
 
 ### Process
@@ -16,19 +15,15 @@
 Add bullet points to any of the following:
 
 1. Did you manage to stick to the planning (why (not))
-    * A lot of times the bulk of the work was different than what we've expected it to be, so our plans had to change accordingly.
 2. How did the collaboration in team go?
     * I would say I communicated fine overall with the other team members but the week before Demo 3, there was a miscommunication from my part which caused my contributions to Demo 3 very limited.
     * The collaboartion  among the team members was satisfactory.
 3. How did you communicate?
     * Though I preferred to use mobile messenging for the most part I found it handy to attach comments directly to the commits.
-    * Through WhatsApp mostly, but our communication during the weekly meetings was the best.
 4. How did version control help (if at all)
     * Git was very helpful in allowing us to work in separate branches simultaneously so that different parts of the app were being developed at the same time.
-    * Version control was really useful when we accidentally pushed to master diractly, or when we accidentally merged a branch that was a bit behind.
 5. What did you learn?
-    * Working in a team is the most important lesson to take away from the project and it really served as a look into how work is divided and distributed in big projects as well.
-    * Research is much harder than expected.
+    *Working in a team is the most important lesson to take away from the project and it really served as a look into how work is divided and distributed in big projects as well.
 
 ### Reflection
 #### What can be improved? (reflection on process, product and course)
@@ -39,13 +34,11 @@ Add bullet points to any of the following:
 quality, features, …)
     * Integration Tests: make sure everything works from one end to the other
 2. How can the process/collaboration be improved?
-3.  * Instead of 4 hours once a week, maybe 2 hours twice a week would be better, while many teams met up outside the allocated time, making it mandatory and having a location would help, and 4 hours is a lot of time to spend on a meeting at once.
+3.  *
 3. How can the course be improved?
     * I would suggest to give a more detailed topic to work on the project instead of a very vague topic that has many different ways of execution.
     * I would have preferred to have a small guide on brightspace that can help you work around new and hard to understand topics like Mockito for testing as 
     * finding relevant information regarding that was very tedious and it was a topic that should have been broached during the lectures.
-    * While the project provided lots of freedom in general I feel like the predecided fatures were a bit misguided.
-    * 
 
 ### Individual feedback
 
