@@ -8,25 +8,28 @@
     * For the cliet side we deicded to use RestTemplate objects  for communicating to the server(instead of HTTPURLConnection objects) 
      and for testing as well as it was a concept that covered a lot of what we needed in terms of code. 
     * Use the API provided by CoolClimate Network for calculating CO2 emissions and in cases where the API does not provide the neccessary data do our own research.
-   
-
+    * Use PostgreSQL over alternatives and NoSQL because it had the simplicity and compatibility with Spring that we were looking for.
+       
 Add bullet points to any of the following:
 
 
 1. Did you manage to stick to the planning (why (not))
     * A lot of times the bulk of the work was different than what we've expected it to be, so our plans had to change accordingly.
     * We had issues planning ahead of each demo, as the splitting of task was often faulty and assigned too much responsibility to certain members, therefore requiring others to offer assistance or take over the tasks entirely with very little time left before the demo.
+    * Despite these problems, we always managed to finish all of the work needed for the demo.
 2. How did the collaboration in team go?
     * I would say I communicated fine overall with the other team members but the week before Demo 3, there was a miscommunication from my part which caused my contributions to Demo 3 very limited.
     * The collaboartion  among the team members was satisfactory.
     * We encountered difficulties with communicating between members working on the same part of the project, however we managed to sort them out in time ahead of each deadline.
     * Team members have been both willing to help each other when help was required to meet a deadline and supportive of others' failures.
+    * Sometimes miscommunication occurs where 2 people do the same thing.
 3. How did you communicate?
     * Though I preferred to use mobile messenging for the most part I found it handy to attach comments directly to the commits.
     * Through WhatsApp mostly, but our communication during the weekly meetings was the best.
 4. How did version control help (if at all)
     * Git was very helpful in allowing us to work in separate branches simultaneously so that different parts of the app were being developed at the same time.
     * Version control was really useful when we accidentally pushed to master diractly, or when we accidentally merged a branch that was a bit behind.
+    * It was very useful, as it made it easy working on the latest version of the app.
 5. What did you learn?
     * The good practices involved in team-based projects and the challenges involved in integrating separate pieces of such a project
     * Working in a team is the most important lesson to take away from the project and it really served as a look into how work is divided and distributed in big projects as well.
@@ -41,9 +44,11 @@ Add bullet points to any of the following:
 quality, features, …)
     * Integration Tests: make sure everything works from one end to the other
     * More consistency could be provided by the use centralized classes on the server side. For instance, a controller abstract class could be created and used as a template from which instances derive. However, this would be a cumbersome task, as controllers differ significantly from one another and we decided it would only be worth it if the project would require a greater scale.
+	* The GUI could definitely be improved to look and function better to appeal to its users, however this wasn't very important as the app wasn't going to be released for public use.
 2. How can the process/collaboration be improved?
     * Collaboration could be improved by agreeing on common coding sessions during a sprint period, in which all member meet to make sure that everyone has a clear picture on the state of the project and where more attention is required accordingly. 
     * Instead of 4 hours once a week, maybe 2 hours twice a week would be better, while many teams met up outside the allocated time, making it mandatory and having a location would help, and 4 hours is a lot of time to spend on a meeting at once.
+    * Allocating work to members by tasks over function (or both) so a developer works on small particular tasks that nobody else is doing, and if he wants to do more he makes an issue for it.
 3. How can the course be improved?
     * I would suggest to give a more detailed topic to work on the project instead of a very vague topic that has many different ways of execution.
     * I would have preferred to have a small guide on brightspace that can help you work around new and hard to understand topics like Mockito for testing as 
