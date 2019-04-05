@@ -5,6 +5,7 @@ import com.server.entity.User;
 import com.server.repository.FriendsRepository;
 import com.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,6 +44,9 @@ public class FriendsController {
     public boolean addFriend(@RequestBody Friends friends) {
         System.out.println(friends);
         User user = userRepository.findByUsername(friends.getUser().getUsername());
+        if (!userRepository.existsByUsername(friends.getFriend().getUsername())) {
+            throw new IllegalArgumentException("That person does not exist!");
+        }
         User friend = userRepository.findByUsername(friends.getFriend().getUsername());
 
         if (friends.getFriend().getUsername().equals(friends.getUser().getUsername())) {
@@ -139,6 +143,7 @@ public class FriendsController {
      * It again uses set difference between the following sets, in this order
      * - the set of users who the users has added
      * - the set of users who have added the user back
+     *
      * @param username the user whose sent friend request should be retrieved
      * @return a set of usernames who the user has sent a request and who haven't responded
      */

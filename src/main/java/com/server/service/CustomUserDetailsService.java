@@ -16,14 +16,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        CustomUserDetails userDetails = null;
-        if (user != null) {
-            userDetails = new CustomUserDetails();
-            userDetails.setUser(user);
-        } else {
-            throw new UsernameNotFoundException(username + " does not exist.");
+        User user = null;
+        if (userRepository.existsByUsername(username)) {
+            return new CustomUserDetails(userRepository.findByUsername(username));
         }
-        return userDetails;
+        return null;
     }
 }
