@@ -54,7 +54,7 @@ public class UserController {
      * @return the list of all users
      */
     @PostMapping(value = "/register")
-    public String addUser(@RequestBody User user) throws IllegalArgumentException {
+    public String addUser(@RequestBody User user) {
         if (userRepository.findByUsername(user.getUsername()) != null) {
             return "Username taken";
         }

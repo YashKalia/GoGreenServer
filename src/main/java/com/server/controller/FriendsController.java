@@ -44,7 +44,7 @@ public class FriendsController {
         System.out.println(friends);
         User user = userRepository.findByUsername(friends.getUser().getUsername());
         if (!userRepository.existsByUsername(friends.getFriend().getUsername())) {
-            return "That person does not exist!";
+            return friends.getFriend().getUsername() + " does not exist!";
         }
         User friend = userRepository.findByUsername(friends.getFriend().getUsername());
 
