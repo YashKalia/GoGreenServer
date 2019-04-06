@@ -99,7 +99,7 @@ public class FriendsControllerTest {
         when(userRepository.existsByUsername(u1u2.getFriend().getUsername())).thenReturn(false);
         when(userRepository.findByUsername(u1u2.getUser().getUsername())).thenReturn(user1);
 
-        assertEquals("That person does not exist!",friendsController.addFriend(u1u2));
+        assertEquals("user2 does not exist!",friendsController.addFriend(u1u2));
     }
 
     @Test
