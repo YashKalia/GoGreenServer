@@ -20,6 +20,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (userRepository.existsByUsername(username)) {
             return new CustomUserDetails(userRepository.findByUsername(username));
         }
-        return null;
+        throw new UsernameNotFoundException(username + " is not a valid user");
     }
 }

@@ -5,7 +5,6 @@ import com.server.entity.User;
 import com.server.repository.FriendsRepository;
 import com.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,30 +40,30 @@ public class FriendsController {
      * @return a boolean to indicate whether or not the friend has been added successfully
      */
     @PostMapping(value = "/add")
-    public boolean addFriend(@RequestBody Friends friends) {
+    public String addFriend(@RequestBody Friends friends) {
         System.out.println(friends);
         User user = userRepository.findByUsername(friends.getUser().getUsername());
         if (!userRepository.existsByUsername(friends.getFriend().getUsername())) {
-            throw new IllegalArgumentException("That person does not exist!");
+            return "That person does not exist!";
         }
         User friend = userRepository.findByUsername(friends.getFriend().getUsername());
 
         if (friends.getFriend().getUsername().equals(friends.getUser().getUsername())) {
-            throw new IllegalArgumentException("You can't be your own friend!");
+            return "You can't be your own friend";
         }
 
         Set<Friends> allFriends = friendsRepository.findByUserId(user.getId());
 
         for (Friends f : allFriends) {
             if (f.getFriend().getUsername().equals(friend.getUsername())) {
-                throw new IllegalArgumentException("You already added "
-                        + friend.getUsername() + " as a friend!");
+                return "You already added "
+                        + friend.getUsername() + " as a friend!";
             }
         }
         friends.setUser(user);
         friends.setFriend(friend);
         friendsRepository.save(friends);
-        return true;
+        return "Friend added successfully";
     }
 
     /**
@@ -147,7 +146,7 @@ public class FriendsController {
      * @param username the user whose sent friend request should be retrieved
      * @return a set of usernames who the user has sent a request and who haven't responded
      */
-    @GetMapping(value = "/getsentpendingfriendsrequests")
+    @GetMapping(value = "/getsentpendingfriendsrequests/{username}")
     public Set<String> getSentPendingFriendRequests(@PathVariable String username) {
         Set<String> difference = new HashSet<>(getMyFriends(username));
         difference.removeAll(getPeopleWhoBefriendedMe(username));

@@ -48,7 +48,7 @@ public class EntryController {
      * @return the list of all features
      */
     @PostMapping(value = "/add")
-    public boolean addEntry(@RequestBody RequestUserFeature re) throws IllegalArgumentException {
+    public String addEntry(@RequestBody RequestUserFeature re) {
         Feature feature = re.getFeature();
         User user = re.getUser();
         User us;
@@ -56,19 +56,19 @@ public class EntryController {
         if (userRepository.existsByUsername(user.getUsername())) {
             us = userRepository.findByUsername(user.getUsername());
         } else {
-            throw new IllegalArgumentException("User" + user.getUsername() + "does not exist!");
+            return "User " + user.getUsername() + " does not exist!";
         }
 
         if (featureRepository.existsByFeatureName(feature.getFeatureName())) {
             fe = featureRepository.findByFeatureName(feature.getFeatureName());
         } else {
-            throw new IllegalArgumentException(feature.getFeatureName()
-                    + "is not a valid feature!");
+            return feature.getFeatureName()
+                    + " is not a valid feature!";
         }
         Entry en = new Entry(fe, us);
         checkBadges(us, fe);
         entryRepository.save(en);
-        return true;
+        return "Entry added successfully";
     }
 
     //@GetMapping(value = "/getbyuser/{username}")
