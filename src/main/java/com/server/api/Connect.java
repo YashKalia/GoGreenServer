@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 public class Connect{
 
-    public static Float retrieveData(String mit) {
+    public static Float retrieveData(String str) {
         try {
             HttpResponse<String> response = Unirest
                     .get("https://apis.berkeley.edu/coolclimate/footprint-defaults")
@@ -28,6 +28,8 @@ public class Connect{
             ArrayList<String> mikell = new ArrayList<String>();
             mikell.add("result_food_meat");
             mikell.add("input_footprint_housing_gco2_per_kwh");
+            mikell.add("result_natgas_direct");
+            mikell.add("result_natgas_indirect");
             final HashMap<String, Float> a = new HashMap<>();
             saxParser.parse(new ByteArrayInputStream(response.getBody().getBytes()), new org.xml.sax.helpers.DefaultHandler(){
 
@@ -57,7 +59,7 @@ public class Connect{
                 }
             });
             System.out.println(a.toString());
-            return a.get(mit);
+            return a.get(str);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
