@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +48,7 @@ public class EntryController {
      * @return the list of all features
      */
     @PostMapping(value = "/add")
-    public boolean addEntry(@RequestBody RequestUserFeature re) throws IllegalArgumentException {
+    public String addEntry(@RequestBody RequestUserFeature re) {
         Feature feature = re.getFeature();
         User user = re.getUser();
         User us;
@@ -57,19 +56,19 @@ public class EntryController {
         if (userRepository.existsByUsername(user.getUsername())) {
             us = userRepository.findByUsername(user.getUsername());
         } else {
-            throw new IllegalArgumentException("User" + user.getUsername() + "does not exist!");
+            return "User " + user.getUsername() + " does not exist!";
         }
 
         if (featureRepository.existsByFeatureName(feature.getFeatureName())) {
             fe = featureRepository.findByFeatureName(feature.getFeatureName());
         } else {
-            throw new IllegalArgumentException(feature.getFeatureName()
-                    + "is not a valid feature!");
+            return feature.getFeatureName()
+                    + " is not a valid feature!";
         }
         Entry en = new Entry(fe, us);
         checkBadges(us, fe);
         entryRepository.save(en);
-        return true;
+        return "Entry added successfully";
     }
 
     //@GetMapping(value = "/getbyuser/{username}")
@@ -86,6 +85,7 @@ public class EntryController {
 
     /**
      * Checks the number of vegetarian meals a certain user has had.
+     *
      * @param username Parameter sent through a request, user whose entries should be retrieved
      * @return the integer as the number of entries that contain a meal and the given user
      */
@@ -96,6 +96,7 @@ public class EntryController {
 
     /**
      * Retrieves how many times a user has bought local produce.
+     *
      * @param username The user whose entries should be retrieved
      * @return int Total number of times the specified user has used a bike instead of a car
      */
@@ -106,6 +107,7 @@ public class EntryController {
 
     /**
      * Retrieves how many times a user has used a bike instead of a car.
+     *
      * @param username The user whose entries should be retrieved
      * @return int Total number of times the specified user has used a bike instead of a car
      */
@@ -116,6 +118,7 @@ public class EntryController {
 
     /**
      * Retrieves how many times a user has used public transport instead of a car.
+     *
      * @param username The user whose entries should be retrieved
      * @return int Total number of times the user has used public transport instead of a car
      */
@@ -126,6 +129,7 @@ public class EntryController {
 
     /**
      * Retrieves how many times a user has lowered the temperature of their home.
+     *
      * @param username The user whose entries should be retrieved
      * @return int Total number of times user has lowered the house temperature
      */
@@ -136,6 +140,7 @@ public class EntryController {
 
     /**
      * Retrieves how many times a user has installed a solar panel.
+     *
      * @param username The user whose entries should be retrieved
      * @return int Total number of times the specified user has installed a solar panel
      */
@@ -146,6 +151,7 @@ public class EntryController {
 
     /**
      * Retrieves all entries from a user that contains a certain feature.
+     *
      * @param username featureId The user whose entries should be retrieved, the feature ID
      * @return int Total number of times the user has added an entry with the specified feature
      */
@@ -163,6 +169,7 @@ public class EntryController {
 
     /**
      * Retrieves how much CO2 the user has saved in total.
+     *
      * @param username The user whose CO2 emissions should be calculated
      * @return int Total amount (in grams) of CO2 emissions that the user has saved
      */
@@ -179,8 +186,9 @@ public class EntryController {
 
     /**
      * Retrieves how much CO2 the user has saved in a certain week.
+     *
      * @param username The user whose CO2 emissions should be calculated
-     * @param week The number of the week (1-52) in the Gregorian calendar
+     * @param week     The number of the week (1-52) in the Gregorian calendar
      * @return int Total amount (in grams) of CO2 emissions that the user has saved
      */
     @GetMapping(value = "/getweekco2/{username}/{week}")
@@ -200,8 +208,9 @@ public class EntryController {
 
     /**
      * Retrieves how much CO2 the user has saved in a certain month.
+     *
      * @param username The user whose CO2 emissions should be calculated
-     * @param month The number of the month (01-12) in the Gregorian calendar
+     * @param month    The number of the month (01-12) in the Gregorian calendar
      * @return int Total amount (in grams) of CO2 emissions that the user has saved
      */
     @GetMapping(value = "/getmonthco2/{username}/{month}")
@@ -225,15 +234,14 @@ public class EntryController {
 
     /**
      * This method automates adding badges for users in the database whenever a new entry is added.
-     *
-     * @param user The user who might earn a badge
+     * 1 = initial badge
+     * 2 = bronze badge
+     * 3 = silver badte
+     * 4 = gold badge
+     * 0 = no badge
+     * @param user    The user who might earn a badge
      * @param feature The feature for which the badge might be earned
      * @return int Code for which badge type was earned:
-     *     1 == Initial badge
-     *     2 == Bronze badge
-     *     3 == Silver badge
-     *     4 == Gold badge
-     *     0 == No badge
      */
     protected int checkBadges(User user, Feature feature) {
         List<Entry> allEntries = entryRepository.findByUserId(user.getId());

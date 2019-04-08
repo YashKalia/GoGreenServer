@@ -81,36 +81,31 @@ public class UserControllerTest {
         userController.addUser(user1);
         userController.addUser(user2);
 
-        assertEquals(true, userController.addUser(user3));
+        assertEquals("Registration successful", userController.addUser(user3));
 
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testBadPassword() {
         user1.setPassword("pw");
         userController.addUser(user1);
+        assertEquals("Password must be greater than 6 characters",userController.addUser(user1));
     }
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testAddUserFailureNoPassword() {
-
-        userController.addUser(user2);
-
         user1.setPassword(null);
-
-        when(userRepository.findByUsername("user1")).thenReturn(user1);
-
-        assertEquals(false,userController.addUser(user1));
-
+        userController.addUser(user1);
+        assertEquals("Password must be greater than 6 characters",userController.addUser(user1));
     }
 
-    @Test( expected = IllegalArgumentException.class)
+    @Test
     public void testAddUserFailureUserAlreadyExists() {
 
         userController.addUser(user1);
 
         when(userRepository.findByUsername("user1")).thenReturn(user1);
 
-        assertEquals(false,userController.addUser(user1));
+        assertEquals("Username taken",userController.addUser(user1));
 
     }
 
