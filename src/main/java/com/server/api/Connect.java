@@ -29,7 +29,7 @@ public class Connect{
             mikell.add("result_food_meat");
             mikell.add("input_footprint_housing_gco2_per_kwh");
             mikell.add("result_natgas_direct");
-            mikell.add("result_natgas_indirect");
+            mikell.add("result_food_fruitsveg");
             final HashMap<String, Float> a = new HashMap<>();
             saxParser.parse(new ByteArrayInputStream(response.getBody().getBytes()), new org.xml.sax.helpers.DefaultHandler(){
 
@@ -54,7 +54,7 @@ public class Connect{
                 @Override
                 public void characters(char[] ch, int start, int length) throws SAXException {
                     super.characters(ch, start, length);
-                    if(within!=null)
+                    if(within != null)
                     a.put(within, Float.parseFloat(new String(ch, start, length)));
                 }
             });
