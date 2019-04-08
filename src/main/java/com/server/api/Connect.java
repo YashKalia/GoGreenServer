@@ -12,8 +12,12 @@ import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Connect{
-
+public class Connect {
+    /**
+     *
+     * @param str
+     * @return
+     */
     public static Float retrieveData(String str) {
         try {
             HttpResponse<String> response = Unirest
@@ -30,15 +34,17 @@ public class Connect{
             mikell.add("input_footprint_housing_gco2_per_kwh");
             mikell.add("result_natgas_direct");
             mikell.add("result_food_fruitsveg");
+            mikell.add("result_transport_total");
+            mikell.add("result_publictrans_direct");
             final HashMap<String, Float> a = new HashMap<>();
-            saxParser.parse(new ByteArrayInputStream(response.getBody().getBytes()), new org.xml.sax.helpers.DefaultHandler(){
+            saxParser.parse(new ByteArrayInputStream(response.getBody().getBytes()), new org.xml.sax.helpers.DefaultHandler() {
 
                 String within = null;
 
                 @Override
                 public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
                     super.startElement(uri, localName, qName, attributes);
-                    if(mikell.indexOf(qName) != -1){
+                    if (mikell.indexOf(qName) != -1) {
                         within = qName;
                     }
                 }
@@ -46,7 +52,7 @@ public class Connect{
                 @Override
                 public void endElement(String uri, String localName, String qName) throws SAXException {
                     super.endElement(uri, localName, qName);
-                    if(mikell.indexOf(qName) != -1){
+                    if (mikell.indexOf(qName) != -1) {
                         within = null;
                     }
                 }
@@ -54,15 +60,21 @@ public class Connect{
                 @Override
                 public void characters(char[] ch, int start, int length) throws SAXException {
                     super.characters(ch, start, length);
-                    if(within != null)
-                    a.put(within, Float.parseFloat(new String(ch, start, length)));
+                    if (within != null)
+                        a.put(within, Float.parseFloat(new String(ch, start, length)));
                 }
             });
-            System.out.println(a.toString());
+            //System.out.println(a.toString());
             return a.get(str);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+        } catch (com.mashape.unirest.http.exceptions.UnirestException a) {
+            System.out.println(a.getMessage());
+        } catch (javax.xml.parsers.ParserConfigurationException b) {
+            System.out.println(b.getCause().toString());
+        } catch (java.io.IOException c) {
+            System.out.println(c.getLocalizedMessage());
+        } catch (org.xml.sax.SAXException d) {
+            System.out.println(d.getException().toString());
         }
+        return null;
     }
 }
