@@ -32,6 +32,18 @@ public class User {
     public User() {
     }
 
+    /**
+     * Constructor used for the CustomUserDetails class for security.
+     *
+     * @param user the user with which you logged in
+     */
+    public User(User user) {
+        this.password = user.getPassword();
+        this.username = user.getUsername();
+        this.roles = user.getRoles();
+        this.id = user.getId();
+    }
+
     public User(String username, String password) {
         this.username = username;
         this.password = password;

@@ -41,6 +41,7 @@ public class CustomUserDetailsServiceTest {
     @Test
     public void testLoadUserByUsernameSuccess() {
 
+        when(userRepository.existsByUsername("user1")).thenReturn(true);
         when(userRepository.findByUsername("user1")).thenReturn(user1);
 
         assertEquals("user1", customUserDetailsService.loadUserByUsername("user1").getUsername());
@@ -50,7 +51,7 @@ public class CustomUserDetailsServiceTest {
     @Test(expected = UsernameNotFoundException.class)
     public void testLoadUserByUsernameFailure() {
 
-        when(userRepository.findByUsername("user2")).thenReturn(null);
+        when(userRepository.existsByUsername("user2")).thenReturn(false);
 
         customUserDetailsService.loadUserByUsername("user2");
 

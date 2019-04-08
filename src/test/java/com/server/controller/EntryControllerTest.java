@@ -184,23 +184,23 @@ public class EntryControllerTest {
 
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testAddEntryNoUsername() {
 
         when(userRepository.existsByUsername(req1.getUser().getUsername())).thenReturn(false);
 
-        assertEquals(true, entryController.addEntry(req1));
+        assertEquals("User " + req1.getUser().getUsername() + " does not exist!", entryController.addEntry(req1));
 
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testAddEntryWrongFeatureName() {
 
         when(userRepository.existsByUsername(req1.getUser().getUsername())).thenReturn(true);
 
         when(featureRepository.existsByFeatureName(req1.getFeature().getFeatureName())).thenReturn(false);
 
-        assertEquals(false,entryController.addEntry(req1));
+        assertEquals("Eating a vegetarian meal" + " is not a valid feature!",entryController.addEntry(req1));
     }
 
     @Test
@@ -218,7 +218,7 @@ public class EntryControllerTest {
 
         when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
 
-        assertTrue(entryController.addEntry(req1));
+        assertEquals("Entry added successfully",entryController.addEntry(req1));
 
     }
 

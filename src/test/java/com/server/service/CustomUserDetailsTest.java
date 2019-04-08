@@ -29,6 +29,9 @@ public class CustomUserDetailsTest {
     @InjectMocks
     private CustomUserDetails customUserDetails;
 
+    @InjectMocks
+    User user;
+
     @Before
     public void setup() {
 

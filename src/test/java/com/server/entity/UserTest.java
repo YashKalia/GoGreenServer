@@ -43,6 +43,12 @@ public class UserTest {
     }
 
     @Test
+    public void testConstructorWithUserObject() {
+        User user = new User(user1);
+        assertEquals(user1,user);
+    }
+
+    @Test
     public void testSetUserId() {
 
         user1.setId((long) 15);
