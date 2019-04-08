@@ -67,27 +67,39 @@ public class FriendsControllerTest {
         Set<Friends> fr = new HashSet<>();
         fr.add(u1u3);
        when(userRepository.findByUsername(u1u2.getUser().getUsername())).thenReturn(user1);
+        when(userRepository.existsByUsername(u1u2.getFriend().getUsername())).thenReturn(true);
        when(userRepository.findByUsername(u1u2.getFriend().getUsername())).thenReturn(user2);
        when(friendsRepository.findByUserId(user1.getId())).thenReturn(fr);
-        assertEquals(true,friendsController.addFriend(u1u2));
+        assertEquals("Friend added successfully",friendsController.addFriend(u1u2));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testAddingYourself() {
         when(userRepository.findByUsername(u1u1.getUser().getUsername())).thenReturn(user1);
         when(userRepository.findByUsername(u1u1.getFriend().getUsername())).thenReturn(user1);
+        when(userRepository.existsByUsername(u1u1.getFriend().getUsername())).thenReturn(true);
 
-        friendsController.addFriend(u1u1);
+        assertEquals("You can't be your own friend", friendsController.addFriend(u1u1));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testAddingTheSameUserTwice() {
+    @Test
+    public void testAddingTheSameUser() {
         Set<Friends> friends = new HashSet<>();
         friends.add(u1u2);
         when(userRepository.findByUsername(u1u2.getUser().getUsername())).thenReturn(user1);
         when(userRepository.findByUsername(u1u2.getFriend().getUsername())).thenReturn(user2);
+        when(userRepository.existsByUsername(u1u2.getFriend().getUsername())).thenReturn(true);
         when(friendsRepository.findByUserId((user1.getId()))).thenReturn(friends);
-        friendsController.addFriend(u1u2);
+
+        assertEquals("You already added user2 as a friend!", friendsController.addFriend(u1u2));
+    }
+
+    @Test
+    public void testAddingNonExistentUser() {
+        when(userRepository.existsByUsername(u1u2.getFriend().getUsername())).thenReturn(false);
+        when(userRepository.findByUsername(u1u2.getUser().getUsername())).thenReturn(user1);
+
+        assertEquals("user2 does not exist!",friendsController.addFriend(u1u2));
     }
 
     @Test

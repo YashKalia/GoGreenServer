@@ -54,17 +54,17 @@ public class UserController {
      * @return the list of all users
      */
     @PostMapping(value = "/register")
-    public boolean addUser(@RequestBody User user) throws IllegalArgumentException {
+    public String addUser(@RequestBody User user) {
         if (userRepository.findByUsername(user.getUsername()) != null) {
-            throw new IllegalArgumentException("Username taken");
+            return "Username taken";
         }
-        if (user.getPassword().length() < 6) {
-            throw new IllegalArgumentException("Password must be greater than 6 characters");
+        if (user.getPassword() == null || user.getPassword().length() < 6) {
+            return "Password must be greater than 6 characters";
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
-        return true;
+        return "Registration successful";
     }
 
     /**
