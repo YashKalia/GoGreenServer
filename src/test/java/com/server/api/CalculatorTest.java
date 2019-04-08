@@ -1,20 +1,28 @@
 package com.server.api;
 
-public class Calculator {
+import org.junit.Test;
 
-    public double vegetarianMeal() {
+import static org.junit.Assert.assertTrue;
+
+public class CalculatorTest {
+
+    Calculator calc = new Calculator();
+
+    @Test
+    public void testVegetarianMeal() {
         double result = 0;
         try {
-            Float co = Connect.retrieveData("result_food_meat");    //getting the data from the API
-            double d = co.doubleValue();    //converting float value to double
-            result = d * 1000 / 365;   //breaking it down to a meal a day and to kgs instead of tons
+            Float co = Connect.retrieveData("result_food_meat");
+            double d = co.doubleValue();
+            result = d * 1000 / 365;
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-        return result;
+        assertTrue(result == calc.vegetarianMeal());
     }
 
-    public double solarPanelInstall() {
+    @Test
+    public void testSolarPanelInstall() {
         double coEmission = 0;
 
         try {
@@ -23,13 +31,12 @@ public class Calculator {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-        return coEmission;
-        //on average a size 65 x 39 inch solar panel produces
-        // 0.4 kW on an average day the solar panel works for 5-6 hrs
+        assertTrue((coEmission) == calc.solarPanelInstall());
 
     }
 
-    public double localProduce() {
+    @Test
+    public void testLocalProduce() {
 
         double coEmission = 0;
         try {
@@ -37,24 +44,24 @@ public class Calculator {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-        return coEmission * 1000 / 365 * 0.11;
-        //transportation accounts for only 11% of food related CO2 emissions
+        assertTrue((coEmission * 1000 / 365 * 0.11) == calc.localProduce());
     }
 
-    public double temperatureLowered() {
+    @Test
+    public void testTemperatureLowered() {
 
         double coEmission = 0;
         try {
             coEmission = Connect.retrieveData("result_natgas_direct").doubleValue();
             coEmission = coEmission * 1000 / 365 * 0.03;
-            // lowering the temperature results in about 3% decrease in gas usage
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-        return coEmission;
+        assertTrue(coEmission == calc.temperatureLowered());
     }
 
-    public double publicInsteadCar() {
+    @Test
+    public void testPublicInsteadCar() {
 
         double coEmission = 0;
         try {
@@ -64,10 +71,11 @@ public class Calculator {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-        return coEmission;
+        assertTrue(coEmission == calc.publicInsteadCar());
     }
 
-    public double bikeInsteadCar() {
+    @Test
+    public void testBikeInsteadCar() {
 
         double coEmission = 0;
         try {
@@ -75,6 +83,7 @@ public class Calculator {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-        return coEmission;
+        assertTrue(coEmission == calc.bikeInsteadCar());
     }
+
 }
