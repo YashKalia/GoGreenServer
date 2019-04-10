@@ -52,6 +52,11 @@ public class EntryControllerTest {
     private Feature feature4 = new Feature();
     private Feature feature5 = new Feature();
     private Feature feature6 = new Feature();
+    private Feature feature8 = new Feature();
+    private Feature feature9 = new Feature();
+    private Feature feature10 = new Feature();
+    private Feature feature11 = new Feature();
+    
 
     private RequestUserFeature req1;
 
@@ -62,6 +67,11 @@ public class EntryControllerTest {
     private Entry entry5;
     private Entry entry6;
     private Entry entry7;
+    private Entry entry8;
+    private Entry entry9;
+    private Entry entry10;
+    private Entry entry11;
+    
 
     List<Entry> allEntries = new ArrayList<>();
     List<Entry> entriesUser = new ArrayList<>();
@@ -71,6 +81,11 @@ public class EntryControllerTest {
     List<Entry> entriesFeature4 = new ArrayList<>();
     List<Entry> entriesFeature5 = new ArrayList<>();
     List<Entry> entriesFeature6 = new ArrayList<>();
+    List<Entry> entriesFeature8 = new ArrayList<>();
+    List<Entry> entriesFeature9 = new ArrayList<>();
+    List<Entry> entriesFeature10 = new ArrayList<>();
+    List<Entry> entriesFeature11 = new ArrayList<>();
+    
 
     private Badge badge1 = new Badge();
     private Badge badge2;
@@ -121,6 +136,28 @@ public class EntryControllerTest {
         feature6.setFeatureName("Installing solar panels");
         feature6.setPoints(100);
         feature6.setCo2(101.3);
+        
+        feature8.setId(8);
+        feature8.setFeatureName("Cold water laundry");
+        feature8.setPoints(3);
+        feature8.setCo2(0.7);
+        
+        feature9.setId(9);
+        feature9.setFeatureName("Installed low flow showerhead");
+        feature9.setPoints(3);
+        feature9.setCo2(1);
+        
+        feature10.setId(10);
+        feature10.setFeatureName("Recycled waste");
+        feature10.setPoints(5);
+        feature10.setCo2(5);
+        
+        feature11.setId(11);
+        feature11.setFeatureName("Planted a tree");
+        feature11.setPoints(5);
+        feature11.setCo2(5);
+        
+        
 
         req1 = new RequestUserFeature(feature1, user1, 1);
 
@@ -133,6 +170,10 @@ public class EntryControllerTest {
         entry5 = new Entry(feature4, user1);
         entry6 = new Entry(feature5, user2);
         entry7 = new Entry(feature6, user1);
+        entry8 =new Entry(feature8,user1);
+        entry9=new Entry(feature9,user1);
+        entry10=new Entry(feature10,user1);
+        entry11=new Entry(feature11,user1);
 
         allEntries.add(entry1);
         allEntries.add(entry2);
@@ -148,6 +189,10 @@ public class EntryControllerTest {
         entriesFeature4.add(entry5);
         entriesFeature5.add(entry6);
         entriesFeature6.add(entry7);
+        entriesFeature8.add(entry8);
+        entriesFeature9.add(entry9);
+        entriesFeature10.add(entry10);
+        entriesFeature11.add(entry11);
 
         badge1.setId(11);
         badge1.setBadgeName("First Vegetarian Meal Eaten");
@@ -276,7 +321,44 @@ public class EntryControllerTest {
         assertEquals(1, entryController.getAllBikeRides(user2.getUsername()));
 
     }
-
+    
+    @Test
+    public void testgetcoldwashnumber() {
+    	when(entryRepository.findByFeatureId(8)).thenReturn(entriesFeature8);
+    	
+    	when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
+    	
+    	assertEquals(1,entryController.getcoldwashnumber(user1.getUsername()));
+    }
+    
+    @Test
+    public void testgetlowflow() {
+       when(entryRepository.findByFeatureId(9)).thenReturn(entriesFeature9);
+    	
+    	when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
+    	
+    	assertEquals(1,entryController.getlowflow(user1.getUsername())); 
+    }
+    
+    @Test
+    public void testgettreesplanted() {
+       when(entryRepository.findByFeatureId(10)).thenReturn(entriesFeature10);
+    	
+    	when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
+    	
+    	assertEquals(1,entryController.gettreesplanted(user1.getUsername())); 
+    }
+    
+    @Test
+    public void testgetrecycledtimes() {
+       when(entryRepository.findByFeatureId(11)).thenReturn(entriesFeature11);
+    	
+    	when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
+    	
+    	assertEquals(1,entryController.getrecycledtimes(user1.getUsername())); 
+    }
+    
+   
     @Test
     public void testGetAllPublicTransport() {
 

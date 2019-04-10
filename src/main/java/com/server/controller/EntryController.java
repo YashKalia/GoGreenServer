@@ -126,7 +126,7 @@ public class EntryController {
     public int getAllPublicTransport(@PathVariable String username) {
         return getEntriesByUserAndFeature(username, 4);
     }
-
+    
     /**
      * Retrieves how many times a user has lowered the temperature of their home.
      *
@@ -148,6 +148,50 @@ public class EntryController {
     public int getAllSolarPanels(@PathVariable String username) {
         return getEntriesByUserAndFeature(username, 6);
     }
+    
+    /**Returns the number of cold washes instead of hot washes the user has done.
+     * 
+     * @param username The user whose entries should be retrieved.
+     * @return the number of cold washes by that user.
+     */
+    @GetMapping(value ="/coldwash/{username}")
+    public int getcoldwashnumber(@PathVariable String username) {
+    	return getEntriesByUserAndFeature(username, 8);
+    }
+    
+    /**Returns the number of low flow showerheads installed.
+     * 
+     * @param username username The user whose entries should be retrieved.
+     * @return the number of low flow showers installed by the user.
+     */
+    @GetMapping(value = "/lowflow/{username}")
+    public int getlowflow(@PathVariable String username) {
+    	return getEntriesByUserAndFeature(username,9);
+    }
+    
+    /**Returns the number of trees planted by user.
+     * 
+     * @param username  username username The user whose entries should be retrieved.
+     * @return the number of trees planted by the user.
+     */
+    @GetMapping(value="/planttree/{username}")
+    public int gettreesplanted(@PathVariable String username) {
+    	return  getEntriesByUserAndFeature(username,10);
+    }
+    
+    /**Returns the number of times user has recycled his waste.
+     * 
+     * @param username username username The user whose entries should be retrieved.
+     * @return int containing number of times recycled.
+     */
+    @GetMapping(value="/recycle{username}")
+    public int getrecycledtimes(@PathVariable String username){
+    	return getEntriesByUserAndFeature(username,11);
+    }
+    
+    
+    
+    
 
     /**
      * Retrieves all entries from a user that contains a certain feature.
@@ -266,5 +310,7 @@ public class EntryController {
         }
         return 0;
     }
+    
+     
 
 }
