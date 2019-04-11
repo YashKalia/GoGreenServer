@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Entry {
@@ -19,6 +20,7 @@ public class Entry {
 
     @OneToOne()
     @JoinColumn(name = "feature_id")
+    @NotNull
     private Feature feature;
 
     @Column(name = "date")
@@ -26,6 +28,7 @@ public class Entry {
 
     @OneToOne
     @JoinColumn(name = "user_id")
+    @NotNull
     private User user;
 
     public Entry() {}

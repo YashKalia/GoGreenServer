@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "badgesearned")
@@ -20,10 +21,12 @@ public class BadgesEarned {
 
     @OneToOne()
     @JoinColumn(name = "badge_id")
+    @NotNull
     private Badge badge;
 
     @OneToOne
     @JoinColumn(name = "user_id")
+    @NotNull
     private User user;
 
     @Column(name = "date")
