@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "userx")
@@ -21,7 +22,10 @@ public class User {
     @Column(name = "user_id")
     private long id;
 
+    @NotNull
     private String username;
+
+    @NotNull
     private String password;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "badge")
@@ -16,9 +17,11 @@ public class Badge {
     private long id;
 
     @Column(name = "badge_name")
+    @NotNull
     private String badgeName;
 
     @Column(name = "points_needed")
+    @NotNull
     private int pointsNeeded;
 
     public Badge() {}

@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "featuresx")
@@ -17,12 +18,15 @@ public class Feature {
     private long id;
 
     @Column(name = "feature_name")
+    @NotNull
     private String featureName;
 
     @Column(name = "points")
+    @NotNull
     private int points;
 
     @Column(name = "co2")
+    @NotNull
     private double co2;
 
     public Feature() {}
