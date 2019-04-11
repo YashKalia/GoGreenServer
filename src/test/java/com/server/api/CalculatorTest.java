@@ -1,12 +1,20 @@
 package com.server.api;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
 
 public class CalculatorTest {
 
-    Calculator calc = new Calculator();
+    Calculator calc;
+
+    @Before
+    public void setup() {
+
+         calc = new Calculator();
+
+    }
 
     @Test
     public void testVegetarianMeal() {
