@@ -126,7 +126,7 @@ public class EntryController {
     public int getAllPublicTransport(@PathVariable String username) {
         return getEntriesByUserAndFeature(username, 4);
     }
-    
+
     /**
      * Retrieves how many times a user has lowered the temperature of their home.
      *
@@ -135,7 +135,7 @@ public class EntryController {
      */
     @GetMapping(value = "/getloweringtemperature/{username}")
     public int getAllLoweringTemperature(@PathVariable String username) {
-        return getEntriesByUserAndFeature(username,5);
+        return getEntriesByUserAndFeature(username, 5);
     }
 
     /**
@@ -146,49 +146,53 @@ public class EntryController {
      */
     @GetMapping(value = "/getsolarpanels/{username}")
     public int getAllSolarPanels(@PathVariable String username) {
-        return getEntriesByUserAndFeature(username,6);
+        return getEntriesByUserAndFeature(username, 6);
     }
-    
-    /**Returns the number of cold washes instead of hot washes the user has done.
-     * 
+
+    /**
+     * Returns the number of cold washes instead of hot washes the user has done.
+     *
      * @param username The user whose entries should be retrieved.
      * @return the number of cold washes by that user.
      */
     @GetMapping(value = "/coldwash/{username}")
     public int getcoldwashnumber(@PathVariable String username) {
-    	return getEntriesByUserAndFeature(username,7);
+        return getEntriesByUserAndFeature(username, 7);
     }
-    
-    /**Returns the number of low flow showerheads installed.
-     * 
+
+    /**
+     * Returns the number of low flow showerheads installed.
+     *
      * @param username username The user whose entries should be retrieved.
      * @return the number of low flow showers installed by the user.
      */
     @GetMapping(value = "/veganmeal/{username}")
     public int getveganmeal(@PathVariable String username) {
-    	return getEntriesByUserAndFeature(username,8);
+        return getEntriesByUserAndFeature(username, 8);
     }
-    
-    /**Returns the number of trees planted by user.
-     * 
-     * @param username  username username The user whose entries should be retrieved.
+
+    /**
+     * Returns the number of trees planted by user.
+     *
+     * @param username username username The user whose entries should be retrieved.
      * @return the number of trees planted by the user.
      */
-    @GetMapping(value="/planttree/{username}")
+    @GetMapping(value = "/planttree/{username}")
     public int gettreesplanted(@PathVariable String username) {
-    	return  getEntriesByUserAndFeature(username,9);
+        return getEntriesByUserAndFeature(username, 9);
     }
-    
-    /**Returns the number of times user has recycled his waste.
-     * 
+
+    /**
+     * Returns the number of times user has recycled his waste.
+     *
      * @param username username username The user whose entries should be retrieved.
      * @return int containing number of times recycled.
      */
-    @GetMapping(value="/recycle/{username}")
-    public int getrecycledtimes(@PathVariable String username){
-    	return getEntriesByUserAndFeature(username,10);
+    @GetMapping(value = "/recycle/{username}")
+    public int getrecycledtimes(@PathVariable String username) {
+        return getEntriesByUserAndFeature(username, 10);
     }
-    
+
     /**
      * Retrieves all entries from a user that contains a certain feature.
      *
@@ -279,6 +283,7 @@ public class EntryController {
      * 3 = silver badte
      * 4 = gold badge
      * 0 = no badge
+     *
      * @param user    The user who might earn a badge
      * @param feature The feature for which the badge might be earned
      * @return int Code for which badge type was earned:
@@ -306,7 +311,6 @@ public class EntryController {
         }
         return 0;
     }
-    
-     
+
 
 }
