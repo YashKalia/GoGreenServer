@@ -56,6 +56,8 @@ public class EntryControllerTest {
     private Feature feature8 = new Feature();
     private Feature feature9 = new Feature();
     private Feature feature10 = new Feature();
+    private Feature feature11=new Feature();
+    private Feature feature12=new Feature();
     
 
     private RequestUserFeature req1;
@@ -70,6 +72,8 @@ public class EntryControllerTest {
     private Entry entry8;
     private Entry entry9;
     private Entry entry10;
+    private Entry entry11;
+    private Entry entry12;
     
     List<Entry> allEntries = new ArrayList<>();
     List<Entry> entriesUser = new ArrayList<>();
@@ -83,6 +87,8 @@ public class EntryControllerTest {
     List<Entry> entriesFeature8 = new ArrayList<>();
     List<Entry> entriesFeature9 = new ArrayList<>();
     List<Entry> entriesFeature10 = new ArrayList<>();
+    List<Entry> entriesFeature11 = new ArrayList<>();
+    List<Entry> entriesFeature12 = new ArrayList<>();
     
 
     private Badge badge1 = new Badge();
@@ -155,8 +161,16 @@ public class EntryControllerTest {
         feature10.setPoints(5);
         feature10.setCo2(5);
         
+        feature11.setId(11);
+        feature11.setFeatureName("Buying second hand clothing");
+        feature11.setPoints(20);
+        feature11.setCo2(0.8);
         
-
+        feature12.setId(12);
+        feature12.setFeatureName("Hang drying your clothes");
+        feature12.setPoints(10);
+        feature12.setCo2(1);
+        
         req1 = new RequestUserFeature(feature1, user1, 1);
 
         entry1 = new Entry(feature1, user1);
@@ -171,6 +185,8 @@ public class EntryControllerTest {
         entry8 =new Entry(feature8,user1);
         entry9=new Entry(feature9,user1);
         entry10=new Entry(feature10,user1);
+        entry11=new Entry(feature11,user1);
+        entry12=new Entry(feature12,user1);
 
         allEntries.add(entry1);
         allEntries.add(entry2);
@@ -190,6 +206,9 @@ public class EntryControllerTest {
         entriesFeature8.add(entry8);
         entriesFeature9.add(entry9);
         entriesFeature10.add(entry10);
+        entriesFeature11.add(entry11);
+        entriesFeature12.add(entry12);
+        
 
         badge1.setId(11);
         badge1.setBadgeName("First Vegetarian Meal Eaten");
@@ -329,7 +348,7 @@ public class EntryControllerTest {
     }
     
     @Test
-    public void testgetlowflow() {
+    public void testgetveganmeal() {
        when(entryRepository.findByFeatureId(8)).thenReturn(entriesFeature8);
     	
     	when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
@@ -353,6 +372,24 @@ public class EntryControllerTest {
     	when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
     	
     	assertEquals(1,entryController.getrecycledtimes(user1.getUsername())); 
+    }
+    
+    @Test
+    public void testgetsecondhand() {
+    when(entryRepository.findByFeatureId(11)).thenReturn(entriesFeature11);
+    	
+    	when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
+    	
+    	assertEquals(1,entryController.getsecondhand(user1.getUsername()));  
+    }
+    
+    @Test
+    public void testgethangdrying() {
+      when(entryRepository.findByFeatureId(12)).thenReturn(entriesFeature12);
+    	
+    	when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
+    	
+    	assertEquals(1,entryController.gethangdrying(user1.getUsername()));  
     }
     
    

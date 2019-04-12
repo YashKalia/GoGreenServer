@@ -194,6 +194,29 @@ public class EntryController {
     }
 
     /**
+     * Returns the number of second hand clothes.
+     *
+     * @param username username of the user whose entries should be retrieved.
+     * @return the number of second hand clothes registered
+     */
+    @GetMapping(value = "/secondhand/{username}")
+    public int getsecondhand(@PathVariable String username) {
+        return getEntriesByUserAndFeature(username, 11);
+    }
+
+    /**
+     * Returns the number of times you hang dried clothes.
+     *
+     * @param username username of the user whose entries should be retrieved.
+     * @return integer value.
+     */
+    @GetMapping(value = "/hangdry/{username}")
+    public int gethangdrying(@PathVariable String username) {
+        return getEntriesByUserAndFeature(username, 12);
+    }
+
+
+    /**
      * Retrieves all entries from a user that contains a certain feature.
      *
      * @param username featureId The user whose entries should be retrieved, the feature ID
