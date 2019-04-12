@@ -147,8 +147,8 @@ public class EntryControllerTest {
         feature7.setCo2(0.7);
         
         feature8.setId(8);
-        feature8.setFeatureName("Installing slow-flow showerhead");
-        feature8.setPoints(3);
+        feature8.setFeatureName("Eating a vegan meal");
+        feature8.setPoints(15);
         feature8.setCo2(1);
         
         feature9.setId(9);
@@ -162,12 +162,12 @@ public class EntryControllerTest {
         feature10.setCo2(5);
         
         feature11.setId(11);
-        feature11.setFeatureName("Buying second hand clothing");
+        feature11.setFeatureName("Buying second-hand clothing");
         feature11.setPoints(20);
         feature11.setCo2(0.8);
         
         feature12.setId(12);
-        feature12.setFeatureName("Hang drying your clothes");
+        feature12.setFeatureName("Air drying your clothes");
         feature12.setPoints(10);
         feature12.setCo2(1);
         
