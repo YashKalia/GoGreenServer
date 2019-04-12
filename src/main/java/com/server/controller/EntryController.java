@@ -150,6 +150,73 @@ public class EntryController {
     }
 
     /**
+     * Returns the number of cold washes instead of hot washes the user has done.
+     *
+     * @param username The user whose entries should be retrieved.
+     * @return the number of cold washes by that user.
+     */
+    @GetMapping(value = "/coldwash/{username}")
+    public int getcoldwashnumber(@PathVariable String username) {
+        return getEntriesByUserAndFeature(username, 7);
+    }
+
+    /**
+     * Returns the number of low flow showerheads installed.
+     *
+     * @param username username The user whose entries should be retrieved.
+     * @return the number of low flow showers installed by the user.
+     */
+    @GetMapping(value = "/veganmeal/{username}")
+    public int getveganmeal(@PathVariable String username) {
+        return getEntriesByUserAndFeature(username, 8);
+    }
+
+    /**
+     * Returns the number of trees planted by user.
+     *
+     * @param username username username The user whose entries should be retrieved.
+     * @return the number of trees planted by the user.
+     */
+    @GetMapping(value = "/planttree/{username}")
+    public int gettreesplanted(@PathVariable String username) {
+        return getEntriesByUserAndFeature(username, 9);
+    }
+
+    /**
+     * Returns the number of times user has recycled his waste.
+     *
+     * @param username username username The user whose entries should be retrieved.
+     * @return int containing number of times recycled.
+     */
+    @GetMapping(value = "/recycle/{username}")
+    public int getrecycledtimes(@PathVariable String username) {
+        return getEntriesByUserAndFeature(username, 10);
+    }
+
+    /**
+     * Returns the number of second hand clothes.
+     *
+     * @param username username of the user whose entries should be retrieved.
+     * @return the number of second hand clothes registered
+     */
+    @GetMapping(value = "/secondhand/{username}")
+    public int getsecondhand(@PathVariable String username) {
+        return getEntriesByUserAndFeature(username, 11);
+    }
+
+    /**
+     * Returns the number of times you hang dried clothes.
+     *
+     * @param username username of the user whose entries should be retrieved.
+     * @return integer value.
+     */
+    @GetMapping(value = "/hangdry/{username}")
+    public int gethangdrying(@PathVariable String username) {
+        return getEntriesByUserAndFeature(username, 12);
+    }
+
+
+    /**
      * Retrieves all entries from a user that contains a certain feature.
      *
      * @param username featureId The user whose entries should be retrieved, the feature ID
@@ -239,6 +306,7 @@ public class EntryController {
      * 3 = silver badte
      * 4 = gold badge
      * 0 = no badge
+     *
      * @param user    The user who might earn a badge
      * @param feature The feature for which the badge might be earned
      * @return int Code for which badge type was earned:
@@ -266,5 +334,6 @@ public class EntryController {
         }
         return 0;
     }
+
 
 }
