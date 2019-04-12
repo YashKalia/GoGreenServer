@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Role {
@@ -11,6 +12,8 @@ public class Role {
     @GeneratedValue
     @Column(name = "role_id")
     private long id;
+
+    @NotNull
     private String role;
 
     public Role(){}
