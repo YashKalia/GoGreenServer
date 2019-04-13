@@ -1,10 +1,9 @@
 package com.server.api;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Before;
+import org.junit.Test;
 
 public class CalculatorTest {
 
@@ -22,7 +21,7 @@ public class CalculatorTest {
         double coEmission = 0;
         try {
             Float co = Connect.retrieveData("result_food_meat");    //getting the data from the API
-            double value= co.doubleValue();    //converting float value to double
+            double value = co.doubleValue();    //converting float value to double
             coEmission = value * 1000;
             coEmission = coEmission / 365;   //breaking it down to a meal a day and to kgs instead of tons
         } catch (NullPointerException e) {
