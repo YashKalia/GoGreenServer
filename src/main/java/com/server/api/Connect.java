@@ -36,6 +36,7 @@ public class Connect {
             mikell.add("result_food_fruitsveg");
             mikell.add("result_transport_total");
             mikell.add("result_publictrans_direct");
+            mikell.add("result_goods_clothing");
             final HashMap<String, Float> a = new HashMap<>();
             saxParser.parse(new ByteArrayInputStream(response.getBody().getBytes()), new org.xml.sax.helpers.DefaultHandler() {
 
