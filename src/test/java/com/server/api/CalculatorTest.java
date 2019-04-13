@@ -35,10 +35,15 @@ public class CalculatorTest {
         double coEmission = 0;
 
         try {
+            Thread.sleep(50);
             coEmission = Connect.retrieveData("input_footprint_housing_gco2_per_kwh").doubleValue();
-            coEmission = 0.4 * 5 * coEmission * 30;
+            coEmission = coEmission * 0.4;
+            coEmission = coEmission * 5;
+            coEmission = coEmission * 30;
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
+        } catch(InterruptedException e) {
+            System.out.println(e.getCause());
         }
         assertTrue(coEmission == calc.solarPanelInstall());
     }
