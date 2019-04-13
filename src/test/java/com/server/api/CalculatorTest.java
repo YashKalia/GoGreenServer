@@ -12,7 +12,7 @@ public class CalculatorTest {
     @Before
     public void setup() {
 
-         calc = new Calculator();
+        calc = new Calculator();
 
     }
 
@@ -23,7 +23,7 @@ public class CalculatorTest {
             Float co = Connect.retrieveData("result_food_meat");    //getting the data from the API
             double d = co.doubleValue();    //converting float value to double
             coEmission = d * 1000;
-            coEmission = coEmission/ 365;   //breaking it down to a meal a day and to kgs instead of tons
+            coEmission = coEmission / 365;   //breaking it down to a meal a day and to kgs instead of tons
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -42,7 +42,7 @@ public class CalculatorTest {
             coEmission = coEmission * 30;
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             System.out.println(e.getCause());
         }
         assertTrue(coEmission == calc.solarPanelInstall());
@@ -94,7 +94,7 @@ public class CalculatorTest {
         double coEmission = 0;
         try {
             coEmission = Connect.retrieveData("result_transport_direct").doubleValue();
-            coEmission = coEmission/365;
+            coEmission = coEmission / 365;
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -137,7 +137,7 @@ public class CalculatorTest {
             double yearly = Connect.retrieveData("result_goods_clothing").doubleValue();
             yearly = yearly * 1000;
             coEmission = yearly / 54;
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
         assertTrue(coEmission == calc.secondHandClothing());
@@ -155,17 +155,17 @@ public class CalculatorTest {
             dairy = dairy * 1000;
             dairy = dairy / 365;
             coEmission = meat + dairy;
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
-       assertTrue(coEmission == calc.veganMeal());
+        assertTrue(coEmission == calc.veganMeal());
     }
 
     @Test
-    public void plantATree(){
+    public void plantATree() {
         double yearly = 20.3; // according to https://www.grow-trees.com/offset.php
         double coEmission;
-        coEmission = yearly/12;
+        coEmission = yearly / 12;
         assertTrue(coEmission == calc.plantATree());
 
     }
