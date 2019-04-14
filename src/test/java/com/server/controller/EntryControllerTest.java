@@ -1,5 +1,6 @@
 package com.server.controller;
 
+import com.server.api.Calculator;
 import com.server.entity.*;
 import com.server.repository.*;
 import org.junit.Before;
@@ -42,6 +43,9 @@ public class EntryControllerTest {
 
     @Mock
     BadgeRepository badgeRepository;
+
+    @Mock
+    Calculator calc;
 
     private User user1;
     private User user2;
@@ -142,7 +146,7 @@ public class EntryControllerTest {
         feature6.setCo2(101.3);
         
         feature7.setId(7);
-        feature7.setFeatureName("Washing your clother with cold water");
+        feature7.setFeatureName("Washing your clothes with cold water");
         feature7.setPoints(3);
         feature7.setCo2(0.7);
         
@@ -167,7 +171,7 @@ public class EntryControllerTest {
         feature11.setCo2(0.8);
         
         feature12.setId(12);
-        feature12.setFeatureName("Air drying your clothes");
+        feature12.setFeatureName("Air-drying your clothes");
         feature12.setPoints(10);
         feature12.setCo2(1);
         
@@ -590,6 +594,162 @@ public class EntryControllerTest {
         when(entryRepository.findByUserId(user1.getId())).thenReturn(ent);
 
         assertTrue(0 == entryController.checkBadges(user1, feature1));
+
+    }
+
+    @Test
+    public void testGetCo2ApiProduce() {
+
+        Feature newFe = new Feature();
+        newFe.setId(2);
+        newFe.setFeatureName("Buying local produce");
+        newFe.setPoints(10);
+        entryController.getCo2Api(newFe);
+
+        assertTrue(feature2.getCo2() != newFe.getCo2());
+
+    }
+
+    @Test
+    public void testGetCo2ApiBike() {
+
+        Feature newFe = new Feature();
+        newFe.setId(3);
+        newFe.setFeatureName("Using bike instead of car");
+        newFe.setPoints(20);
+        entryController.getCo2Api(newFe);
+
+        assertTrue(feature3.getCo2() != newFe.getCo2());
+
+    }
+
+    @Test
+    public void testGetCo2ApiPublic() {
+
+        Feature newFe = new Feature();
+        newFe.setId(4);
+        newFe.setFeatureName("Using public transport instead of car");
+        newFe.setPoints(15);
+        entryController.getCo2Api(newFe);
+
+        assertTrue(feature4.getCo2() != newFe.getCo2());
+
+    }
+
+    @Test
+    public void testGetCo2ApiTemperature() {
+
+        Feature newFe = new Feature();
+        newFe.setId(5);
+        newFe.setFeatureName("Lowering the temperature of your home");
+        newFe.setPoints(10);
+        entryController.getCo2Api(newFe);
+
+        assertTrue(feature5.getCo2() != newFe.getCo2());
+
+    }
+
+    @Test
+    public void testGetCo2ApiSolar() {
+
+        Feature newFe = new Feature();
+        newFe.setId(6);
+        newFe.setFeatureName("Installing solar panels");
+        newFe.setPoints(100);
+        entryController.getCo2Api(newFe);
+
+        assertTrue(feature6.getCo2() != newFe.getCo2());
+
+    }
+
+    @Test
+    public void testGetCo2ApiColdWater() {
+
+        Feature newFe = new Feature();
+        newFe.setId(7);
+        newFe.setFeatureName("Washing your clothes with cold water");
+        newFe.setPoints(3);
+        entryController.getCo2Api(newFe);
+
+        assertTrue(feature7.getCo2() != newFe.getCo2());
+
+    }
+
+    @Test
+    public void testGetCo2ApiVegan() {
+
+        Feature newFe = new Feature();
+        newFe.setId(8);
+        newFe.setFeatureName("Eating a vegan meal");
+        newFe.setPoints(15);
+        entryController.getCo2Api(newFe);
+
+        assertTrue(feature8.getCo2() != newFe.getCo2());
+
+    }
+
+    @Test
+    public void testGetCo2ApiTree() {
+
+        Feature newFe = new Feature();
+        newFe.setId(9);
+        newFe.setFeatureName("Planting a tree");
+        newFe.setPoints(5);
+        entryController.getCo2Api(newFe);
+
+        assertTrue(feature9.getCo2() != newFe.getCo2());
+
+    }
+
+    @Test
+    public void testGetCo2ApiRecycling() {
+
+        Feature newFe = new Feature();
+        newFe.setId(10);
+        newFe.setFeatureName("Recycling waste");
+        newFe.setPoints(5);
+        entryController.getCo2Api(newFe);
+
+        assertTrue(feature10.getCo2() != newFe.getCo2());
+
+    }
+
+    @Test
+    public void testGetCo2ApiClothing() {
+
+        Feature newFe = new Feature();
+        newFe.setId(11);
+        newFe.setFeatureName("Buying second-hand clothing");
+        newFe.setPoints(20);
+        entryController.getCo2Api(newFe);
+
+        assertTrue(feature11.getCo2() != newFe.getCo2());
+
+    }
+
+    @Test
+    public void testGetCo2ApiAirDrying() {
+
+        Feature newFe = new Feature();
+        newFe.setId(12);
+        newFe.setFeatureName("Air-drying your clothes");
+        newFe.setPoints(10);
+        entryController.getCo2Api(newFe);
+
+        assertTrue(feature12.getCo2() != newFe.getCo2());
+
+    }
+
+    @Test
+    public void testGetCo2ApiNoMatch() {
+
+        Feature newFe = new Feature();
+        newFe.setId(13);
+        newFe.setFeatureName("Travel by train instead of plane");
+        newFe.setPoints(50);
+        entryController.getCo2Api(newFe);
+
+        assertTrue(feature12.getCo2() != newFe.getCo2());
 
     }
 

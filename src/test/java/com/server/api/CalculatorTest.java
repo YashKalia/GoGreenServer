@@ -31,7 +31,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void solarPanelInstall() {
+    public void testSolarPanelInstall() {
         double coEmission = 0;
 
         try {
@@ -74,7 +74,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void publicInsteadCar() {
+    public void testPublicInsteadCar() {
 
         double coEmission = 0;
         try {
@@ -102,7 +102,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void testHangDryClothes() {
+    public void testAirDryClothes() {
 
         double coEmission = 0;
         try {
@@ -111,11 +111,11 @@ public class CalculatorTest {
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
-        assertTrue(coEmission == calc.hangDryClothes());
+        assertTrue(coEmission == calc.airDryClothes());
     }
 
     @Test
-    public void washingCold() {
+    public void testWashingCold() {
 
         double coEmission = 0;
         try {
@@ -130,7 +130,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void secondHandClothing() {
+    public void testSecondHandClothing() {
 
         double coEmission = 0;
         try {
@@ -144,7 +144,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void veganMeal() {
+    public void testVeganMeal() {
 
         double coEmission = 0;
         try {
@@ -162,11 +162,20 @@ public class CalculatorTest {
     }
 
     @Test
-    public void plantATree() {
-        double yearly = 20.3; // according to https://www.grow-trees.com/offset.php
+    public void testPlantATree() {
+        double yearly = 20.3;
         double coEmission;
         coEmission = yearly / 12;
         assertTrue(coEmission == calc.plantATree());
+
+    }
+
+    @Test
+    public void testRecycleWaste() {
+        double yearly = 1090;
+        double coEmission;
+        coEmission = yearly / 12;
+        assertTrue(coEmission == calc.recycleWaste());
 
     }
 

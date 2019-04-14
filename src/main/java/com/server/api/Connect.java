@@ -42,35 +42,37 @@ public class Connect {
             mikell.add("result_goods_clothing");
             mikell.add("result_food_dairy");
             final HashMap<String, Float> a = new HashMap<>();
-            saxParser.parse(new ByteArrayInputStream(response.getBody().getBytes()), new org.xml.sax.helpers.DefaultHandler() {
+            saxParser.parse(new ByteArrayInputStream(response.getBody().getBytes()),
+                    new org.xml.sax.helpers.DefaultHandler() {
 
-                String within = null;
+                    String within = null;
 
-                @Override
-                public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
-                    super.startElement(uri, localName, name, attributes);
-                    if (mikell.indexOf(name) != -1) {
-                        within = name;
+                    @Override
+                    public void startElement(String uri, String localName, String name,
+                                             Attributes attributes) throws SAXException {
+                        super.startElement(uri, localName, name, attributes);
+                        if (mikell.indexOf(name) != -1) {
+                            within = name;
+                        }
                     }
-                }
 
-                @Override
-                public void endElement(String uri, String localName, String name) throws SAXException {
-                    super.endElement(uri, localName, name);
-                    if (mikell.indexOf(name) != -1) {
-                        within = null;
+                    @Override
+                    public void endElement(String uri, String localName, String name)
+                            throws SAXException {
+                        super.endElement(uri, localName, name);
+                        if (mikell.indexOf(name) != -1) {
+                            within = null;
+                        }
                     }
-                }
 
-                @Override
-                public void characters(char[] ch, int start, int length) throws SAXException {
-                    super.characters(ch, start, length);
-                    if (within != null) {
-                        a.put(within, Float.parseFloat(new String(ch, start, length)));
+                    @Override
+                    public void characters(char[] ch, int start, int length) throws SAXException {
+                        super.characters(ch, start, length);
+                        if (within != null) {
+                            a.put(within, Float.parseFloat(new String(ch, start, length)));
+                        }
                     }
-                }
-            });
-            //System.out.println(a.toString());
+                });
             return a.get(str);
         } catch (com.mashape.unirest.http.exceptions.UnirestException a) {
             System.out.println(a.getMessage());
