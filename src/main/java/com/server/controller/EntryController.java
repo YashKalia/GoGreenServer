@@ -79,48 +79,37 @@ public class EntryController {
         if (feature.getFeatureName().contains("vegetarian")) {
             Double co2 = calc.vegetarianMeal();
             feature.setCo2(co2);
-        }
-        else if (feature.getFeatureName().contains("produce")) {
+        } else if (feature.getFeatureName().contains("produce")) {
             Double co2 = calc.localProduce();
             feature.setCo2(co2);
-        }
-        else if (feature.getFeatureName().contains("bike")) {
+        } else if (feature.getFeatureName().contains("bike")) {
             Double co2 = calc.bikeInsteadCar();
             feature.setCo2(co2);
-        }
-        else if (feature.getFeatureName().contains("public transport")) {
+        } else if (feature.getFeatureName().contains("public transport")) {
             Double co2 = calc.publicInsteadCar();
             feature.setCo2(co2);
-        }
-        else if (feature.getFeatureName().contains("temperature")) {
+        } else if (feature.getFeatureName().contains("temperature")) {
             Double co2 = calc.temperatureLowered();
             feature.setCo2(co2);
-        }
-        else if (feature.getFeatureName().contains("solar panels")) {
+        } else if (feature.getFeatureName().contains("solar panels")) {
             Double co2 = calc.solarPanelInstall();
             feature.setCo2(co2);
-        }
-        else if (feature.getFeatureName().contains("cold water")) {
+        } else if (feature.getFeatureName().contains("cold water")) {
             Double co2 = calc.washingCold();
             feature.setCo2(co2);
-        }
-        else if (feature.getFeatureName().contains("tree")) {
+        } else if (feature.getFeatureName().contains("tree")) {
             Double co2 = calc.plantATree();
             feature.setCo2(co2);
-        }
-        else if (feature.getFeatureName().contains("Recycling")) {
+        } else if (feature.getFeatureName().contains("Recycling")) {
             Double co2 = calc.recycleWaste();
             feature.setCo2(co2);
-        }
-        else if (feature.getFeatureName().contains("vegan")) {
+        } else if (feature.getFeatureName().contains("vegan")) {
             Double co2 = calc.veganMeal();
             feature.setCo2(co2);
-        }
-        else if (feature.getFeatureName().contains("clothing")) {
+        } else if (feature.getFeatureName().contains("clothing")) {
             Double co2 = calc.secondHandClothing();
             feature.setCo2(co2);
-        }
-        else if (feature.getFeatureName().contains("Air-drying")) {
+        } else if (feature.getFeatureName().contains("Air-drying")) {
             Double co2 = calc.airDryClothes();
             feature.setCo2(co2);
         }
