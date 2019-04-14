@@ -1,5 +1,6 @@
 package com.server.controller;
 
+import com.server.api.Calculator;
 import com.server.entity.Entry;
 import com.server.entity.Feature;
 import com.server.entity.RequestUserFeature;
@@ -65,20 +66,75 @@ public class EntryController {
             return feature.getFeatureName()
                     + " is not a valid feature!";
         }
+        fe = getCo2Api(fe);
         Entry en = new Entry(fe, us);
         checkBadges(us, fe);
         entryRepository.save(en);
         return "Entry added successfully";
     }
 
-    //@GetMapping(value = "/getbyuser/{username}")
-    protected List<Entry> getEntriesByUsername(@PathVariable String username) {
+    protected Feature getCo2Api(Feature feature) {
+
+        Calculator calc = new Calculator();
+        if (feature.getFeatureName().contains("vegetarian")) {
+            Double co2 = calc.vegetarianMeal();
+            feature.setCo2(co2);
+        }
+        else if (feature.getFeatureName().contains("produce")) {
+            Double co2 = calc.localProduce();
+            feature.setCo2(co2);
+        }
+        else if (feature.getFeatureName().contains("bike")) {
+            Double co2 = calc.bikeInsteadCar();
+            feature.setCo2(co2);
+        }
+        else if (feature.getFeatureName().contains("public transport")) {
+            Double co2 = calc.publicInsteadCar();
+            feature.setCo2(co2);
+        }
+        else if (feature.getFeatureName().contains("temperature")) {
+            Double co2 = calc.temperatureLowered();
+            feature.setCo2(co2);
+        }
+        else if (feature.getFeatureName().contains("solar panels")) {
+            Double co2 = calc.solarPanelInstall();
+            feature.setCo2(co2);
+        }
+        else if (feature.getFeatureName().contains("cold water")) {
+            Double co2 = calc.washingCold();
+            feature.setCo2(co2);
+        }
+        else if (feature.getFeatureName().contains("tree")) {
+            Double co2 = calc.plantATree();
+            feature.setCo2(co2);
+        }
+        else if (feature.getFeatureName().contains("Recycling")) {
+            Double co2 = calc.recycleWaste();
+            feature.setCo2(co2);
+        }
+        else if (feature.getFeatureName().contains("vegan")) {
+            Double co2 = calc.veganMeal();
+            feature.setCo2(co2);
+        }
+        else if (feature.getFeatureName().contains("clothing")) {
+            Double co2 = calc.secondHandClothing();
+            feature.setCo2(co2);
+        }
+        else if (feature.getFeatureName().contains("Air-drying")) {
+            Double co2 = calc.airDryClothes();
+            feature.setCo2(co2);
+        }
+
+        return feature;
+
+    }
+
+    protected List<Entry> getEntriesByUsername(String username) {
         long id = userRepository.findByUsername(username).getId();
         return entryRepository.findByUserId(id);
     }
 
-    //@GetMapping(value = "/getbyfeature/{feature}")
-    protected List<Entry> getEntriesByFeature(@PathVariable String feature) {
+    protected List<Entry> getEntriesByFeature(String feature) {
         long id = featureRepository.findByFeatureName(feature).getId();
         return entryRepository.findByFeatureId(id);
     }

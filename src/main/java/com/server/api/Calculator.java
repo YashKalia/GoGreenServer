@@ -84,7 +84,7 @@ public class Calculator {
         return coEmission;
     }
 
-    public double hangDryClothes() {
+    public double airDryClothes() {
         double coEmission = 0;
         try {
             double coPerKWh = Connect.retrieveData("input_footprint_housing_gco2_per_kwh").doubleValue();
@@ -138,6 +138,14 @@ public class Calculator {
 
     public double plantATree() {
         double yearly = 20.3; // according to https://www.grow-trees.com/offset.php
+        double coEmission;
+        coEmission = yearly / 12;
+        return coEmission;
+
+    }
+
+    public double recycleWaste() {
+        double yearly = 1090;
         double coEmission;
         coEmission = yearly / 12;
         return coEmission;
